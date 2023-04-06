@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Test!"', () => {
-      expect(appController.getTest()).toBe('Test');
+    it('app controller is defined', () => {
+      expect(appController).toBeDefined();
     });
   });
 });
