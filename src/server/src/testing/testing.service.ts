@@ -4,7 +4,7 @@ import { TestDataDto } from './dto/TestDataDTO';
 @Injectable()
 export class TestingService {
   getTest(): string {
-    return 'Test';
+    return 'Test.....';
   }
 
   postTest(): string {
