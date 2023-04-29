@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import './App.css';
 import axios from 'axios';
 import ChangeSubjectPopUp from './components/pop-ups/ChangeSubjectPopUp';
@@ -7,7 +7,7 @@ function App() {
   const[grade, setGrade] = React.useState("");
   const[name, setName] = React.useState("");
   const[text, setText] = React.useState("");
-
+  const[isPopupOpen, setIsPopupOpen] = React.useState(false);
 
   async function handleClick() {
     
@@ -23,12 +23,15 @@ function App() {
 
   return (
     <>
-      <input type='number' min={0} max={100}  onChange={e => setGrade(e.target.value)}/>
+      <input type='number' min={0} max={100} onChange={e => setGrade(e.target.value)}/>
       <input type='text' onChange={e => setName(e.target.value)}/>
       <button onClick={handleClick}>кнопка</button>
       <p>{text}</p>
-      <ChangeSubjectPopUp></ChangeSubjectPopUp>
-      
+
+      <button className='border border-gray-200 px-2' onClick={() => {setIsPopupOpen(true)}}>Изменить дисциплину</button>
+      <button className='border border-gray-200 px-2 ml-5' onClick={() => {setIsPopupOpen(false)}}>Закрыть pop-up</button>
+
+      {isPopupOpen ? <ChangeSubjectPopUp/> : <></>} 
 
     </>
   )
