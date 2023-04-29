@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import './App.css';
 import axios from 'axios';
+import ChangeSubjectPopUp from './components/pop-ups/ChangeSubjectPopUp';
 
 function App() {
   const[grade, setGrade] = React.useState("");
@@ -26,6 +27,9 @@ function App() {
       <input type='text' onChange={e => setName(e.target.value)}/>
       <button onClick={handleClick}>кнопка</button>
       <p>{text}</p>
+      <ChangeSubjectPopUp></ChangeSubjectPopUp>
+      
+
     </>
   )
 }
