@@ -1,4 +1,4 @@
-import { Modal, Box } from '@mui/material';
+import { Modal, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
 interface AddGroupPopUpProps {
@@ -17,9 +17,10 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
       aria-describedby="modal-modal-description"
     >
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
-        <button className="self-end">
+      <button className="self-end">
           <AiOutlineClose onClick={handleClose} />
         </button>
+        <h2 className='self-center font-bold text-2xl pb-8'>Добавить группу</h2>
         {/* кнопка закрытия */}
         <div className="flex flex-col gap-5 self-center">
           <div>
