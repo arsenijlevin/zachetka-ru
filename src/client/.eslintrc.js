@@ -13,6 +13,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'google',
     'prettier',
+    'plugin:@next/next/recommended',
   ],
   root: true,
   env: {

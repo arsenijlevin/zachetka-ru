@@ -1,7 +1,6 @@
 import React from 'react';
-import './App.css';
 import axios from 'axios';
-import ChangeSubjectPopUp from '../src/components/pop-ups/ChangeSubjectPopUp';
+import ChangeSubjectPopUp from '../components/pop-ups/ChangeSubjectPopUp';
 import { Modal, Box } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import Select from 'react-select';
