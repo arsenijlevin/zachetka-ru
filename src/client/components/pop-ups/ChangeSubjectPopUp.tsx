@@ -1,7 +1,6 @@
 import { Modal, Box } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import Select from 'react-select';
-import React from 'react';
 
 interface ChangeSubjectPopUpProps {
   open: boolean;

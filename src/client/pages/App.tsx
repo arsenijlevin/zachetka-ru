@@ -1,14 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import ChangeSubjectPopUp from '../components/pop-ups/ChangeSubjectPopUp';
+import AddGroupPopUp from '../src/components/pop-ups/AddGroupPopUp';
+
 
 function App() {
   const [grade, setGrade] = React.useState('');
   const [name, setName] = React.useState('');
   const [text, setText] = React.useState('');
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [isAddGroupPopupOpen, setIsAddGroupPopupOpen] = React.useState(false);
 
   const handleOpen = () => setIsPopupOpen(true);
+  const handleAddGroupOpen = () => setIsAddGroupPopupOpen(true);
 
   async function handleClick() {
     const FormData = {
@@ -57,8 +61,14 @@ function App() {
           Изменить дисциплину
         </button>
       </div>
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleAddGroupOpen}>
+          Добавить группу
+        </button>
+      </div>
 
       {isPopupOpen ? <ChangeSubjectPopUp open={isPopupOpen} setOpen={setIsPopupOpen}/> : <></>}
+      {isAddGroupPopupOpen ? <AddGroupPopUp open={isAddGroupPopupOpen} setOpen={setIsAddGroupPopupOpen}/> : <></>}
     </>
   );
 }
