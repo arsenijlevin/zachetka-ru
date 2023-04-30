@@ -1,5 +1,6 @@
 import { Modal, Box } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
+import Select from 'react-select';
 
 interface AddLecturePopUpProps {
   open: boolean;
@@ -9,6 +10,24 @@ interface AddLecturePopUpProps {
 function AddLecturePopUp({ open, setOpen }: AddLecturePopUpProps) {
 
   const handleClose = () => setOpen(0);
+
+  const subjects = [
+    { value: 'ТП', label: 'ТП' },
+    { value: 'ИПС', label: 'ИПС' },
+    { value: 'ИСиС', label: 'ИСиС' },
+  ];
+
+  const lecturers = [
+    { value: 'Преподаватель 1', label: 'Преподаватель 1' },
+    { value: 'Преподаватель 2', label: 'Преподаватель 2' },
+    { value: 'Преподаватель 3', label: 'Преподаватель 3' },
+  ];
+
+  const groups = [
+    { value: '1', label: '1' },
+    { value: '2', label: '2' },
+    { value: '3', label: '3' },
+  ];
 
   return (
     <Modal
@@ -21,30 +40,36 @@ function AddLecturePopUp({ open, setOpen }: AddLecturePopUpProps) {
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
-        <div className="flex flex-col gap-5 self-center">
-            <div>
-                <h4 className="font-bold text-blue-950">Введите номер студенческого</h4>
-                <input type="text" className="mt-2 border border-grey" />
-                {/* Ввод номера студенческого*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Введите Ф.И.О.</h4>
-                <input type="text" className="mt-2 border border-grey" />
-                {/* Ввод Ф.И.О.*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Введите группу</h4>
-                <input type="email" className="mt-2 border border-grey" />
-                {/* Ввод группы*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Введите направление обучения</h4>
-                <input type="text" className="mt-2 border border-grey" />
-                {/* Ввод направления обучения*/}
-            </div>
-            <button className="self-center border border-gray px-2 py-1 bg-gray-100">
-                Добавить
-            </button>
+        <h2 className='self-center font-bold text-2xl pb-8'>Добавить пару</h2>
+        <div className="flex flex-col gap-5">
+          <div>
+            <h4 className="font-bold text-blue-950">Выбор дисциплины</h4>
+            <Select placeholder="Выберите..." options={subjects} className="mt-2"/>
+            {/* Выбор дисциплины*/}
+          </div>
+          <div>
+              <h4 className="font-bold text-blue-950">Введите время</h4>
+              <input type="text" className="mt-2 border border-grey" />
+              {/* Ввод времени*/}
+          </div>
+          <div>
+              <h4 className="font-bold text-blue-950">Введите аудиторию</h4>
+              <input type="number" className="mt-2 border border-grey" />
+              {/* Ввод аудитории*/}
+          </div>
+          <div>
+              <h4 className="font-bold text-blue-950">Выберите преподавателя</h4>
+              <Select placeholder="Выберите..." options={lecturers} className="mt-2"/>
+              {/* Выбор преподавателей*/}
+          </div>
+          <div>
+              <h4 className="font-bold text-blue-950">Выберите группы</h4>
+              <Select placeholder="Выберите..." isMulti options={groups} className="mt-2"/>
+              {/* Выбор групп*/}
+          </div>
+          <button className="self-center border border-gray px-2 py-1 bg-gray-100">
+              Добавить
+          </button>
         </div>
       </Box>
     </Modal>

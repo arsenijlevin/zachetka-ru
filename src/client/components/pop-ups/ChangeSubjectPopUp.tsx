@@ -1,4 +1,4 @@
-import { Modal, Box } from '@mui/material';
+import { Modal, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import Select from 'react-select';
 
@@ -45,6 +45,7 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
+        <Typography variant="h5" fontWeight="bold">Изменить дисциплину</Typography>
         <div className="flex flex-col gap-5">
           <div>
             <h4 className="font-bold text-blue-950">Выбор семестра</h4>

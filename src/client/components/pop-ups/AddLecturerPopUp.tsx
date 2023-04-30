@@ -21,6 +21,7 @@ function AddLecturerPopUp({ open, setOpen }: AddLecturerPopUpProps) {
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
+        <h2 className='self-center font-bold text-2xl pb-8'>Добавить преподавателя</h2>
         <div className="flex flex-col gap-5 self-center">
           <div>
             <h4 className="font-bold text-blue-950">Введите Ф.И.О.</h4>

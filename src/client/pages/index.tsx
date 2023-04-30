@@ -5,6 +5,9 @@ import AddGroupPopUp from '../components/pop-ups/AddGroupPopUp';
 import AddLecturePopUp from '../components/pop-ups/AddLecturePopUp';
 import AddLecturerPopUp from '../components/pop-ups/AddLecturerPopUp';
 import AddStudentPopUp from '../components/pop-ups/AddStudentPopUp';
+import DeleteSubjectPopUp from '../components/pop-ups/DeleteSubjectPopUp';
+import DeleteLecturePopUp from '../components/pop-ups/DeleteLecturePopUp';
+import AddSubjectPopUp from '../components/pop-ups/AddSubjectPopUp';
 
 
 function App() {
@@ -18,7 +21,10 @@ function App() {
   const handleOpenAddLecturer = () => setIsPopupOpen(3);
   const handleOpenAddStudent = () => setIsPopupOpen(4);
   const handleOpenAddLecture = () => setIsPopupOpen(5);
-  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp, AddLecturerPopUp, AddStudentPopUp, AddLecturePopUp];
+  const handleOpenDeleteSubject = () => setIsPopupOpen(6);
+  const handleOpenDeleteLecture = () => setIsPopupOpen(7);
+  const handleOpenAddSubject = () => setIsPopupOpen(8);
+  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp, AddLecturerPopUp, AddStudentPopUp, AddLecturePopUp, DeleteSubjectPopUp, DeleteLecturePopUp, AddSubjectPopUp];
 
   async function handleClick() {
     const FormData = {
@@ -70,6 +76,21 @@ function App() {
       <div>
         <button className="border border-gray-200 px-2" onClick={handleOpenAddLecture}>
           Добавить пару
+        </button>
+      </div>
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleOpenDeleteSubject}>
+          Удалить дисциплину
+        </button>
+      </div>
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleOpenDeleteLecture}>
+          Удалить пару
+        </button>
+      </div>
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleOpenAddSubject}>
+          Добавить дисциплину
         </button>
       </div>
 

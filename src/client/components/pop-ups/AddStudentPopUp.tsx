@@ -21,10 +21,11 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
+        <h2 className='self-center font-bold text-2xl pb-8'>Добавить студента</h2>
         <div className="flex flex-col gap-5 self-center">
             <div>
                 <h4 className="font-bold text-blue-950">Введите номер студенческого</h4>
-                <input type="text" className="mt-2 border border-grey" />
+                <input type="number" className="mt-2 border border-grey" />
                 {/* Ввод номера студенческого*/}
             </div>
             <div>
