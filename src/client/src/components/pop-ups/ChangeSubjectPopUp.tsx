@@ -4,12 +4,12 @@ import Select from 'react-select';
 
 interface ChangeSubjectPopUpProps {
   open: boolean;
-  setOpen: (value: boolean) => void;
+  setOpen: (value: number) => void;
 }
 
 function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setOpen(0);
 
   const subjects = [
     { value: 'ТП', label: 'ТП' },

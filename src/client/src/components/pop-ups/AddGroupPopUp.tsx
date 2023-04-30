@@ -3,12 +3,12 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 interface AddGroupPopUpProps {
   open: boolean;
-  setOpen: (value: boolean) => void;
+  setOpen: (value: number) => void;
 }
 
 function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => setOpen(0);
 
   return (
     <Modal

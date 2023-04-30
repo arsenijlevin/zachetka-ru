@@ -8,11 +8,11 @@ function App() {
   const [grade, setGrade] = React.useState('');
   const [name, setName] = React.useState('');
   const [text, setText] = React.useState('');
-  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
-  const [isAddGroupPopupOpen, setIsAddGroupPopupOpen] = React.useState(false);
+  const [isPopupOpen, setIsPopupOpen] = React.useState(0);
 
-  const handleOpen = () => setIsPopupOpen(true);
-  const handleAddGroupOpen = () => setIsAddGroupPopupOpen(true);
+  const handleOpenChangeSubject = () => setIsPopupOpen(1);
+  const handleOpenAddGroup = () => setIsPopupOpen(2);
+  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp];
 
   async function handleClick() {
     const FormData = {
@@ -28,6 +28,8 @@ function App() {
     setText(data);
   }
 
+  const SelectedModal = modals[isPopupOpen];
+
   return (
     <>
       <input
@@ -39,36 +41,19 @@ function App() {
       <input type="text" onChange={(e) => setName(e.target.value)} />
       <button onClick={handleClick}>кнопка</button>
       <p>{text}</p>
-
-      <button
-        className="border border-gray-200 px-2"
-        onClick={() => {
-          setIsPopupOpen(true);
-        }}
-      >
-        Изменить дисциплину
-      </button>
-      <button
-        className="border border-gray-200 px-2 ml-5"
-        onClick={() => {
-          setIsPopupOpen(false);
-        }}
-      >
-        Закрыть pop-up
-      </button>
       <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpen}>
+        <button className="border border-gray-200 px-2" onClick={handleOpenChangeSubject}>
           Изменить дисциплину
         </button>
       </div>
       <div>
-        <button className="border border-gray-200 px-2" onClick={handleAddGroupOpen}>
+        <button className="border border-gray-200 px-2" onClick={handleOpenAddGroup}>
           Добавить группу
         </button>
       </div>
+      
 
-      {isPopupOpen ? <ChangeSubjectPopUp open={isPopupOpen} setOpen={setIsPopupOpen}/> : <></>}
-      {isAddGroupPopupOpen ? <AddGroupPopUp open={isAddGroupPopupOpen} setOpen={setIsAddGroupPopupOpen}/> : <></>}
+      {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
     </>
   );
 }
