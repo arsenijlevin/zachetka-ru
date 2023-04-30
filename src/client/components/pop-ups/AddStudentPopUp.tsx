@@ -1,4 +1,4 @@
-import { Modal, Box } from '@mui/material';
+import { Modal, Input, Button, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
 interface AddStudentPopUpProps {
@@ -16,37 +16,37 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
+      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
         <button className="self-end">
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
-        <h2 className='self-center font-bold text-2xl pb-8'>Добавить студента</h2>
-        <div className="flex flex-col gap-5 self-center">
-            <div>
-                <h4 className="font-bold text-blue-950">Введите номер студенческого</h4>
-                <input type="number" className="mt-2 border border-grey" />
-                {/* Ввод номера студенческого*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Введите Ф.И.О.</h4>
-                <input type="text" className="mt-2 border border-grey" />
-                {/* Ввод Ф.И.О.*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Введите группу</h4>
-                <input type="email" className="mt-2 border border-grey" />
-                {/* Ввод группы*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Введите направление обучения</h4>
-                <input type="text" className="mt-2 border border-grey" />
-                {/* Ввод направления обучения*/}
-            </div>
-            <button className="self-center border border-gray px-2 py-1 bg-gray-100">
-                Добавить
-            </button>
-        </div>
+        <Box className="flex flex-col gap-8 self-center">
+          <Typography variant="h5" fontWeight="bold">Добавить студента</Typography>
+          <Box>
+              <Typography variant="h5" fontWeight="bold">Введите номер студенческого</Typography>
+              <Input type="number" className="mt-2 p-1" fullWidth/>
+              {/* Ввод номера студенческого*/}
+          </Box>
+          <Box>
+              <Typography variant="h5" fontWeight="bold">Введите Ф.И.О.</Typography>
+              <Input type="text" className="mt-2 p-1" fullWidth/>
+              {/* Ввод Ф.И.О.*/}
+          </Box>
+          <Box>
+              <Typography variant="h5" fontWeight="bold">Введите группу</Typography>
+              <Input type="text" className="mt-2 p-1" fullWidth/>
+              {/* Ввод группы*/}
+          </Box>
+          <Box>
+              <Typography variant="h5" fontWeight="bold">Введите направление обучения</Typography>
+              <Input type="text" className="mt-2 p-1" fullWidth/>
+              {/* Ввод направления обучения*/}
+          </Box>
+          <Button variant="contained" size="medium" className="px-2 py-1">
+              Добавить
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );

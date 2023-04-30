@@ -1,4 +1,4 @@
-import { Modal, Box, Typography } from '@mui/material';
+import { Modal, Input, Button, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import Select from 'react-select';
 
@@ -40,29 +40,37 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
+      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
         <button className="self-end">
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
-        <Typography variant="h5" fontWeight="bold">Изменить дисциплину</Typography>
-        <div className="flex flex-col gap-5">
-          <div>
-            <h4 className="font-bold text-blue-950">Выбор семестра</h4>
-            <input type="number" className="mt-2 border border-grey" />
-            {/* Выбор семестра*/}
-          </div>
-          <div>
-            <h4 className="font-bold text-blue-950">Выбор дисциплины</h4>
+        
+        <Box className="flex flex-col gap-8 self-center">
+          <Typography variant="h5" fontWeight="bold">Изменить дисциплину</Typography>
+          {/* Выбор семестра*/}
+          <Box>
+            <Typography variant="body1">Выбор семестра</Typography>
+            <Input 
+              type='number'
+              className="mt-2 p-1" 
+              inputProps={{
+                min: 1,
+                max: 12,
+              }}
+              fullWidth/>
+          </Box>
+          {/* Выбор дисциплины*/}
+          <Box>
+            <Typography variant="body1">Выбор дисциплины</Typography>
             <Select
               placeholder="Выберите..."
               options={subjects}
               className="mt-2"
             />
-            {/* Выбор дисциплины*/}
-          </div>
-          <div>
-            <h4 className="font-bold text-blue-950">Выбор преподавателей</h4>
+          </Box>
+          <Box>
+            <Typography variant="body1">Выбор преподавателей</Typography>
             <Select
               placeholder="Выберите..."
               isMulti
@@ -70,9 +78,9 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
               className="mt-2"
             />
             {/* Выбор преподавателей*/}
-          </div>
-          <div>
-            <h4 className="font-bold text-blue-950">Выбор группы</h4>
+          </Box>
+          <Box>
+            <Typography variant="body1">Выбор группы</Typography>
             <Select
               placeholder="Выберите..."
               isMulti
@@ -80,20 +88,20 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
               className="mt-2"
             />
             {/* Выбор группы*/}
-          </div>
-          <div>
-            <h4 className="font-bold text-blue-950">Выбор отчётности</h4>
+          </Box>
+          <Box>
+            <Typography variant="body1">Выбор отчётности</Typography>
             <Select
               placeholder="Выберите..."
               options={examType}
               className="mt-2"
             />
             {/* Выбор отчётности*/}
-          </div>
-          <button className="self-center border border-gray px-2 py-1 bg-gray-100">
+          </Box>
+          <Button variant="contained" size="medium" className="px-2 py-1">
             Применить
-          </button>
-        </div>
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );

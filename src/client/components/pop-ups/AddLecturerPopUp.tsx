@@ -1,4 +1,4 @@
-import { Modal, Box } from '@mui/material';
+import { Modal, Input, Button, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
 interface AddLecturerPopUpProps {
@@ -16,32 +16,32 @@ function AddLecturerPopUp({ open, setOpen }: AddLecturerPopUpProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
+      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
         <button className="self-end">
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
-        <h2 className='self-center font-bold text-2xl pb-8'>Добавить преподавателя</h2>
-        <div className="flex flex-col gap-5 self-center">
-          <div>
-            <h4 className="font-bold text-blue-950">Введите Ф.И.О.</h4>
-            <input type="text" className="mt-2 border border-grey" />
+        <Box className="flex flex-col gap-8 self-center">
+          <Typography variant="h5" fontWeight="bold">Добавить преподавателя</Typography>
+          <Box>
+            <Typography variant="body1">Введите Ф.И.О.</Typography>
+            <Input type="text" className="mt-2 p-1" fullWidth/>
             {/* Ввод Ф.И.О.*/}
-          </div>
-          <div>
-            <h4 className="font-bold text-blue-950">Введите E-mail</h4>
-            <input type="email" className="mt-2 border border-grey" />
+          </Box>
+          <Box>
+            <Typography variant="body1">Введите E-mail</Typography>
+            <Input type="text" className="mt-2 p-1" fullWidth/>
             {/* Ввод E-mail*/}
-          </div>
-          <div>
-            <h4 className="font-bold text-blue-950">Введите Telegram</h4>
-            <input type="text" className="mt-2 border border-grey" />
+          </Box>
+          <Box>
+            <Typography variant="body1">Введите Telegram</Typography>
+            <Input type="text" className="mt-2 p-1" fullWidth/>
             {/* Ввод Telegram*/}
-          </div>
-          <button className="self-center border border-gray px-2 py-1 bg-gray-100">
+          </Box>
+          <Button variant="contained" size="medium" className="px-2 py-1">
             Добавить
-          </button>
-        </div>
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
