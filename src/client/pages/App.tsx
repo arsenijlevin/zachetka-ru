@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import ChangeSubjectPopUp from '../components/pop-ups/ChangeSubjectPopUp';
 import AddGroupPopUp from '../src/components/pop-ups/AddGroupPopUp';
+import AddLecturePopUp from '../src/components/pop-ups/AddLecturePopUp';
+import AddLecturerPopUp from '../src/components/pop-ups/AddLecturerPopUp';
+import AddStudentPopUp from '../src/components/pop-ups/AddStudentPopUp';
 
 
 function App() {
@@ -12,7 +15,10 @@ function App() {
 
   const handleOpenChangeSubject = () => setIsPopupOpen(1);
   const handleOpenAddGroup = () => setIsPopupOpen(2);
-  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp];
+  const handleOpenAddLecturer = () => setIsPopupOpen(3);
+  const handleOpenAddStudent = () => setIsPopupOpen(4);
+  const handleOpenAddLecture = () => setIsPopupOpen(5);
+  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp, AddLecturerPopUp, AddStudentPopUp, AddLecturePopUp];
 
   async function handleClick() {
     const FormData = {
@@ -51,7 +57,21 @@ function App() {
           Добавить группу
         </button>
       </div>
-      
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleOpenAddLecturer}>
+          Добавить преподавателя
+        </button>
+      </div>
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleOpenAddStudent}>
+          Добавить студента
+        </button>
+      </div>
+      <div>
+        <button className="border border-gray-200 px-2" onClick={handleOpenAddLecture}>
+          Добавить пару
+        </button>
+      </div>
 
       {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
     </>

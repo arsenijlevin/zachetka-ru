@@ -1,12 +1,12 @@
 import { Modal, Box } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
-interface AddGroupPopUpProps {
+interface AddLecturerPopUpProps {
   open: boolean;
   setOpen: (value: number) => void;
 }
 
-function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
+function AddLecturerPopUp({ open, setOpen }: AddLecturerPopUpProps) {
 
   const handleClose = () => setOpen(0);
 
@@ -23,14 +23,19 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
         {/* кнопка закрытия */}
         <div className="flex flex-col gap-5 self-center">
           <div>
-            <h4 className="font-bold text-blue-950">Введите код группы</h4>
-            <input type="number" className="mt-2 border border-grey" />
-            {/* Ввод код группы*/}
+            <h4 className="font-bold text-blue-950">Введите Ф.И.О.</h4>
+            <input type="text" className="mt-2 border border-grey" />
+            {/* Ввод Ф.И.О.*/}
           </div>
           <div>
-            <h4 className="font-bold text-blue-950">Введите семестр обучения</h4>
-            <input type="number" className="mt-2 border border-grey" />
-            {/* Ввод семестра обучения*/}
+            <h4 className="font-bold text-blue-950">Введите E-mail</h4>
+            <input type="email" className="mt-2 border border-grey" />
+            {/* Ввод E-mail*/}
+          </div>
+          <div>
+            <h4 className="font-bold text-blue-950">Введите Telegram</h4>
+            <input type="text" className="mt-2 border border-grey" />
+            {/* Ввод Telegram*/}
           </div>
           <button className="self-center border border-gray px-2 py-1 bg-gray-100">
             Добавить
@@ -41,4 +46,4 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
   );
 }
 
-export default AddGroupPopUp;
+export default AddLecturerPopUp;
