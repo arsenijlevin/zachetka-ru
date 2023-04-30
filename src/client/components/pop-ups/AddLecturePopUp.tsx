@@ -1,4 +1,4 @@
-import { Modal, Box } from '@mui/material';
+import { Modal, Input, Button, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import Select from 'react-select';
 
@@ -35,42 +35,42 @@ function AddLecturePopUp({ open, setOpen }: AddLecturePopUpProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
+      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
         <button className="self-end">
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
-        <h2 className='self-center font-bold text-2xl pb-8'>Добавить пару</h2>
-        <div className="flex flex-col gap-5">
-          <div>
-            <h4 className="font-bold text-blue-950">Выбор дисциплины</h4>
+        <Box className="flex flex-col gap-8 self-center">
+          <Typography variant="h5" fontWeight="bold">Добавить пару</Typography>
+          <Box>
+            <Typography variant="body1">Выбор дисциплины</Typography>
             <Select placeholder="Выберите..." options={subjects} className="mt-2"/>
             {/* Выбор дисциплины*/}
-          </div>
-          <div>
-              <h4 className="font-bold text-blue-950">Введите время</h4>
-              <input type="text" className="mt-2 border border-grey" />
+          </Box>
+          <Box>
+              <Typography variant="body1">Введите время</Typography>
+              <Input type="text" className="mt-2 p-1" fullWidth/>
               {/* Ввод времени*/}
-          </div>
-          <div>
-              <h4 className="font-bold text-blue-950">Введите аудиторию</h4>
-              <input type="number" className="mt-2 border border-grey" />
+          </Box>
+          <Box>
+              <Typography variant="body1">Введите аудиторию</Typography>
+              <Input type="text" className="mt-2 p-1" fullWidth/>
               {/* Ввод аудитории*/}
-          </div>
-          <div>
-              <h4 className="font-bold text-blue-950">Выберите преподавателя</h4>
+          </Box>
+          <Box>
+              <Typography variant="body1">Выберите преподавателя</Typography>
               <Select placeholder="Выберите..." options={lecturers} className="mt-2"/>
               {/* Выбор преподавателей*/}
-          </div>
-          <div>
-              <h4 className="font-bold text-blue-950">Выберите группы</h4>
+          </Box>
+          <Box>
+              <Typography variant="body1">Выберите группы</Typography>
               <Select placeholder="Выберите..." isMulti options={groups} className="mt-2"/>
               {/* Выбор групп*/}
-          </div>
-          <button className="self-center border border-gray px-2 py-1 bg-gray-100">
+          </Box>
+          <Button variant="contained" size="medium" className="px-2 py-1">
               Добавить
-          </button>
-        </div>
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );

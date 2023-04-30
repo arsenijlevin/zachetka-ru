@@ -24,7 +24,8 @@ function App() {
   const handleOpenDeleteSubject = () => setIsPopupOpen(6);
   const handleOpenDeleteLecture = () => setIsPopupOpen(7);
   const handleOpenAddSubject = () => setIsPopupOpen(8);
-  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp, AddLecturerPopUp, AddStudentPopUp, AddLecturePopUp, DeleteSubjectPopUp, DeleteLecturePopUp, AddSubjectPopUp];
+  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp, AddLecturerPopUp,
+    AddStudentPopUp, AddLecturePopUp, DeleteSubjectPopUp, DeleteLecturePopUp, AddSubjectPopUp];
 
   async function handleClick() {
     const FormData = {

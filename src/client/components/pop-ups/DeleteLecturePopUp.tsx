@@ -1,4 +1,4 @@
-import { Modal, Box, Typography } from '@mui/material';
+import { Modal, Button, Box, Typography } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import Select from 'react-select';
 
@@ -40,27 +40,27 @@ function DeleteLecturePopUp({ open, setOpen }: DeleteLecturePopUpProps) {
           <AiOutlineClose onClick={handleClose} />
         </button>
         {/* кнопка закрытия */}
-        <h2 className='self-center font-bold text-2xl pb-8'>Удалить дисциплину</h2>
-        <div className="flex flex-col gap-5 self-center">
-            <div>
-                <h4 className="font-bold text-blue-950">Выберите дисциплину</h4>
-                <Select placeholder="Выберите..." options={subjects} className="mt-2"/>
-                {/* Выбор дисциплины*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Выберите группу</h4>
-                <Select placeholder="Выберите..." options={groups} className="mt-2"/>
-                {/* Выбор группы*/}
-            </div>
-            <div>
-                <h4 className="font-bold text-blue-950">Выберите пару</h4>
-                <Select placeholder="Выберите..." options={lectures} className="mt-2"/>
-                {/* Выбор пары*/}
-            </div>
-            <button className="self-center border border-gray px-2 py-1 bg-gray-100">
+        <Box className="flex flex-col gap-8 self-center">
+          <Typography variant="h5" fontWeight="bold">Удалить пару</Typography>
+          <Box>
+              <Typography variant="body1">Выберите дисциплину</Typography>
+              <Select placeholder="Выберите..." options={subjects} className="mt-2"/>
+              {/* Выбор дисциплины*/}
+          </Box>
+          <Box>
+            <Typography variant="body1">Выберите группу</Typography>
+            <Select placeholder="Выберите..." options={groups} className="mt-2"/>
+            {/* Выбор группы*/}
+          </Box>
+          <Box>
+              <Typography variant="body1">Выберите пару</Typography>
+              <Select placeholder="Выберите..." options={lectures} className="mt-2"/>
+              {/* Выбор пары*/}
+          </Box>
+          <Button variant="contained" size="medium" className="px-2 py-1">
             Удалить
-            </button>
-        </div>
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );

@@ -24,22 +24,22 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
         <Box className="flex flex-col gap-8 self-center">
           <Typography variant="h5" fontWeight="bold">Добавить студента</Typography>
           <Box>
-              <Typography variant="h5" fontWeight="bold">Введите номер студенческого</Typography>
+              <Typography variant="body1">Введите номер студенческого</Typography>
               <Input type="number" className="mt-2 p-1" fullWidth/>
               {/* Ввод номера студенческого*/}
           </Box>
           <Box>
-              <Typography variant="h5" fontWeight="bold">Введите Ф.И.О.</Typography>
+              <Typography variant="body1">Введите Ф.И.О.</Typography>
               <Input type="text" className="mt-2 p-1" fullWidth/>
               {/* Ввод Ф.И.О.*/}
           </Box>
           <Box>
-              <Typography variant="h5" fontWeight="bold">Введите группу</Typography>
+              <Typography variant="body1">Введите группу</Typography>
               <Input type="text" className="mt-2 p-1" fullWidth/>
               {/* Ввод группы*/}
           </Box>
           <Box>
-              <Typography variant="h5" fontWeight="bold">Введите направление обучения</Typography>
+              <Typography variant="body1">Введите направление обучения</Typography>
               <Input type="text" className="mt-2 p-1" fullWidth/>
               {/* Ввод направления обучения*/}
           </Box>
