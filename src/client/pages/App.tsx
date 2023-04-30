@@ -47,7 +47,7 @@ function App() {
       'http://localhost:5001/api/testing/test-post-with-data',
       FormData,
     );
-    const data = await response.data as string;
+    const data = (await response.data) as string;
 
     setText(data);
   }
