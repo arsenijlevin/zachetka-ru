@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import ChangeSubjectPopUp from '../components/pop-ups/ChangeSubjectPopUp';
-import AddGroupPopUp from '../src/components/pop-ups/AddGroupPopUp';
-import AddLecturePopUp from '../src/components/pop-ups/AddLecturePopUp';
-import AddLecturerPopUp from '../src/components/pop-ups/AddLecturerPopUp';
-import AddStudentPopUp from '../src/components/pop-ups/AddStudentPopUp';
+import AddGroupPopUp from '../components/pop-ups/AddGroupPopUp';
+import AddLecturePopUp from '../components/pop-ups/AddLecturePopUp';
+import AddLecturerPopUp from '../components/pop-ups/AddLecturerPopUp';
+import AddStudentPopUp from '../components/pop-ups/AddStudentPopUp';
 
 
 function App() {
