@@ -8,6 +8,7 @@ import AddStudentPopUp from '../components/pop-ups/AddStudentPopUp';
 import DeleteSubjectPopUp from '../components/pop-ups/DeleteSubjectPopUp';
 import DeleteLecturePopUp from '../components/pop-ups/DeleteLecturePopUp';
 import AddSubjectPopUp from '../components/pop-ups/AddSubjectPopUp';
+import Link from 'next/link';
 
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
 
   return (
     <>
+      <Link href="table">Ссылка на table</Link>
+      <br />
+      <br />
+      <br />
       <input
         type="number"
         min={0}
