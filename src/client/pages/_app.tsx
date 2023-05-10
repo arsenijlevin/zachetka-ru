@@ -12,4 +12,4 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 console.log("URL:");
-console.log(process.env.SERVER_URL);
+console.log(process.env.NEXT_PUBLIC_SERVER_URL);
