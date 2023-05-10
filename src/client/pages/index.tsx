@@ -33,7 +33,7 @@ function App() {
       someText: name,
     };
     const response = await axios.post(
-      'http://localhost:5001/api/testing/test-post-with-data',
+      `${process.env.SERVER_URL || "http://localhost:5001"}/api/testing/test-post-with-data`,
       FormData,
     );
     const data = (await response.data) as string;

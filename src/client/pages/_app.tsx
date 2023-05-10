@@ -10,3 +10,6 @@ export default function App({ Component, pageProps }: AppProps) {
     </ErrorBoundary>
   );
 }
+
+console.log("URL:");
+console.log(process.env.SERVER_URL);
