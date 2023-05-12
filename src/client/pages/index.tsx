@@ -46,7 +46,7 @@ function App() {
 
   return (
     <>
-      <Link href="table">Ссылка на table</Link>
+      <Link href="attendance-table">Ссылка на table</Link>
       <br />
       <br />
       <br />
