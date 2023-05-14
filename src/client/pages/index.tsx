@@ -48,6 +48,8 @@ function App() {
     <>
       <Link href="attendance-table">Ссылка на table</Link>
       <br />
+      <Link href="schedule-table">Ссылка на студента</Link>
+      <br />
       <br />
       <br />
       <input
