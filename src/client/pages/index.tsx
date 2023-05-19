@@ -8,11 +8,12 @@ import AddStudentPopUp from '../components/pop-ups/AddStudentPopUp';
 import DeleteSubjectPopUp from '../components/pop-ups/DeleteSubjectPopUp';
 import DeleteLecturePopUp from '../components/pop-ups/DeleteLecturePopUp';
 import AddSubjectPopUp from '../components/pop-ups/AddSubjectPopUp';
+import Link from 'next/link';
 
 
 function App() {
-  // const [grade, setGrade] = React.useState('');
-  // const [name, setName] = React.useState('');
+  const [grade, setGrade] = React.useState('');
+  const [name, setName] = React.useState('');
   const [text, setText] = React.useState('');
   const [isPopupOpen, setIsPopupOpen] = React.useState(0);
 
@@ -28,18 +29,15 @@ function App() {
     AddStudentPopUp, AddLecturePopUp, DeleteSubjectPopUp, DeleteLecturePopUp, AddSubjectPopUp];
 
   async function handleClick() {
-    // const FormData = {
-    //   someNumber: parseInt(grade),
-    //   someText: name,
-    // };
-    // const response = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5001"}/api/testing/test-post-with-data`,
-    //   FormData,
-    // );
-    const responseText = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5001"}/api/testing/test`
+    const FormData = {
+      someNumber: parseInt(grade),
+      someText: name,
+    };
+    const response = await axios.post(
+      'http://localhost:5001/api/testing/test-post-with-data',
+      FormData,
     );
-    const data = (await responseText.data) as string;
+    const data = (await response.data) as string;
 
     setText(data);
   }
@@ -48,13 +46,19 @@ function App() {
 
   return (
     <>
-      {/* <input
+      <Link href="attendance-table">Ссылка на table</Link>
+      <br />
+      <Link href="schedule-table">Ссылка на студента</Link>
+      <br />
+      <br />
+      <br />
+      <input
         type="number"
         min={0}
         max={100}
         onChange={(e) => setGrade(e.target.value)}
       />
-      <input type="text" onChange={(e) => setName(e.target.value)} /> */}
+      <input type="text" onChange={(e) => setName(e.target.value)} />
       <button onClick={handleClick}>кнопка</button>
       <p>{text}</p>
       <div>
