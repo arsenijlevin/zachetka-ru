@@ -1,108 +1,48 @@
 import React from 'react';
-import axios from 'axios';
-import ChangeSubjectPopUp from '../components/pop-ups/ChangeSubjectPopUp';
-import AddGroupPopUp from '../components/pop-ups/AddGroupPopUp';
-import AddLecturePopUp from '../components/pop-ups/AddLecturePopUp';
-import AddLecturerPopUp from '../components/pop-ups/AddLecturerPopUp';
-import AddStudentPopUp from '../components/pop-ups/AddStudentPopUp';
-import DeleteSubjectPopUp from '../components/pop-ups/DeleteSubjectPopUp';
-import DeleteLecturePopUp from '../components/pop-ups/DeleteLecturePopUp';
-import AddSubjectPopUp from '../components/pop-ups/AddSubjectPopUp';
-import Link from 'next/link';
+import Router from 'next/router';
+import { Box, Input, Button, Typography } from '@mui/material';
 
 
 function App() {
-  const [grade, setGrade] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [text, setText] = React.useState('');
-  const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+  const [login, setLogin] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setError] = React.useState('');
 
-  const handleOpenChangeSubject = () => setIsPopupOpen(1);
-  const handleOpenAddGroup = () => setIsPopupOpen(2);
-  const handleOpenAddLecturer = () => setIsPopupOpen(3);
-  const handleOpenAddStudent = () => setIsPopupOpen(4);
-  const handleOpenAddLecture = () => setIsPopupOpen(5);
-  const handleOpenDeleteSubject = () => setIsPopupOpen(6);
-  const handleOpenDeleteLecture = () => setIsPopupOpen(7);
-  const handleOpenAddSubject = () => setIsPopupOpen(8);
-  const modals = [null, ChangeSubjectPopUp, AddGroupPopUp, AddLecturerPopUp,
-    AddStudentPopUp, AddLecturePopUp, DeleteSubjectPopUp, DeleteLecturePopUp, AddSubjectPopUp];
-
-  async function handleClick() {
-    const FormData = {
-      someNumber: parseInt(grade),
-      someText: name,
-    };
-    const response = await axios.post(
-      'http://localhost:5001/api/testing/test-post-with-data',
-      FormData,
-    );
-    const data = (await response.data) as string;
-
-    setText(data);
+  function handleClick() {
+    if (login === 'admin' && password === '0000') {
+      return Router.push('/admin-panel');
+    }
+    else if (login === 'lecturer' && password === '0000') {
+      return Router.push('/attendance-table');
+    }
+    else if (login === 'student' && password === '0000') {
+      return Router.push('/schedule-table');
+    }
+    else {
+      setError('Неверный логин или пароль');
+    }
   }
-
-  const SelectedModal = modals[isPopupOpen];
 
   return (
     <>
-      <Link href="attendance-table">Ссылка на table</Link>
-      <br />
-      <Link href="schedule-table">Ссылка на студента</Link>
-      <br />
-      <br />
-      <br />
-      <input
-        type="number"
-        min={0}
-        max={100}
-        onChange={(e) => setGrade(e.target.value)}
-      />
-      <input type="text" onChange={(e) => setName(e.target.value)} />
-      <button onClick={handleClick}>кнопка</button>
-      <p>{text}</p>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenChangeSubject}>
-          Изменить дисциплину
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenAddGroup}>
-          Добавить группу
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenAddLecturer}>
-          Добавить преподавателя
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenAddStudent}>
-          Добавить студента
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenAddLecture}>
-          Добавить пару
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenDeleteSubject}>
-          Удалить дисциплину
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenDeleteLecture}>
-          Удалить пару
-        </button>
-      </div>
-      <div>
-        <button className="border border-gray-200 px-2" onClick={handleOpenAddSubject}>
-          Добавить дисциплину
-        </button>
-      </div>
-
-      {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
+      <Box sx={{ marginX: 'auto', width: '500', height: '500', position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+        <Typography variant='h3'>Вход в систему</Typography>
+        <Box sx={{ alignItems: 'center', justifyContent: 'center' }}>
+          <br />
+          <Box>
+            <Typography variant="body1">Введите логин</Typography>
+            <Input type="text" className="mt-2 p-1" fullWidth onChange={(e) => setLogin(e.target.value)}></Input>
+          </Box>
+          <br />
+          <Box>
+            <Typography variant="body1">Введите пароль</Typography>
+            <Input type="password" className="mt-2 p-1" fullWidth onChange={(e) => setPassword(e.target.value)}></Input>
+          </Box>
+          <br />
+          <Typography variant="body1" color={'red'}>{error}</Typography>
+          <Button variant='outlined' style={{ width: '100%', margin: 'center' }} onClick={handleClick}>Войти</Button>
+        </Box>
+      </Box>
     </>
   );
 }

@@ -24,7 +24,7 @@ function createData(
 export default function GradesTable() {
     return(
         <>
-        <Box sx={{ width: '500', position: 'relative', left: '5%' }}>
+        <Box sx={{ width: '500px', position: 'relative', left: '5%' }}>
           <Typography variant='h3'>Учёт успеваемости</Typography>
         </Box>
         <Box sx={{ width: '90%', position: 'fixed', left: '5%' }}>
