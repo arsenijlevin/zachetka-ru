@@ -34,22 +34,18 @@ module.exports = {
       'error',
       {
         selector: ['default', 'variable'],
-        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-      },
-      {
-        selector: 'objectLiteralProperty',
-        format: null,
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'],
       },
       {
         selector: 'classProperty',
         modifiers: ['private'],
-        format: ['camelCase', 'UPPER_CASE'],
+        format: ['camelCase', 'UPPER_CASE', 'snake_case'],
         leadingUnderscore: 'require',
       },
       {
         selector: 'classProperty',
         modifiers: ['protected'],
-        format: ['camelCase', 'UPPER_CASE'],
+        format: ['camelCase', 'UPPER_CASE', 'snake_case'],
         leadingUnderscore: 'require',
       },
       {
