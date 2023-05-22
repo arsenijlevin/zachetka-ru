@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import React from 'react';
@@ -20,7 +20,7 @@ function PrismaTest(props : {data: UserResponse}) {
     return(
         <>
             <Box sx={{ marginX: 'auto', width: '500', height: '500', position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                
+                <Typography variant='h3'>Тест базы данных</Typography>
             </Box>
         </>
     );
