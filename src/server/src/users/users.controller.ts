@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FindAllUsersDTO } from './dto/find-all.dto';
+import { User } from './entities/user.entity';
 
 @Controller('Users')
 export class UsersController {
@@ -19,10 +20,17 @@ export class UsersController {
   }
 
   @Get(':login')
-  findOne(@Param('login') login: string) {
-    return this.usersService.findOne({
+  async findOne(@Param('login') login: string): Promise<User> {
+    const user = await this.usersService.findOne({
       login: login
     });
+
+    return {
+      login: user.login,
+      name: user.name,
+      rights_id: user.rights_id,
+      password: user.password
+    }
   }
 
   @Patch(':login')
