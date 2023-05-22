@@ -5,7 +5,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ["prettier", "@typescript-eslint/eslint-plugin"],
+  plugins: ["@typescript-eslint/eslint-plugin", "prettier"],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
