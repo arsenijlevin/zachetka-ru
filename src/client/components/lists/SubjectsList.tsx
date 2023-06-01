@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const list = [
     'Технологии программирования (6 семестр)'
-]
+];
 
 function SubjectsList() {
     
@@ -14,7 +14,7 @@ function SubjectsList() {
             <br />
             <br />
             {list.map((item) => (
-                <Link href='grades-table' passHref style={{ textDecoration: 'underline', color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
+                <Link href='groups-list' passHref style={{ textDecoration: 'underline', color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
             ))}
         </Box>
         </>

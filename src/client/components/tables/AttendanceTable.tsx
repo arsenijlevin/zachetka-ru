@@ -1,4 +1,4 @@
-import { Box, Button, Table, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Table, Typography } from '@mui/material';
 import * as React from 'react';
 import Link from 'next/link';
 
@@ -12,6 +12,9 @@ import Link from 'next/link';
 // ) {
 //   return { name, attendance, n, p, b, sum };
 // }
+
+const subject = 'Технологии программирования (6 семестр)';
+const group = 'Группа 1';
 
 function createData(
   name: string,
@@ -39,12 +42,19 @@ const rows = [
 export default function AttendanceTable() {
   return (
     <Box sx={{ width: '2000px' }}>
-      <Typography variant='h3'>Учёт посещаемости</Typography>
+      <Typography variant='h3' position={'sticky'} left={'5%'} width={'500px'}>Учёт посещаемости</Typography>
       <Link href='grades-table' passHref>
         <Button variant='outlined' style={{ width: '200px', position: 'fixed', right: 0 }}>Открыть оценки</Button>
       </Link>
+      <Box sx={{ position: 'sticky', left: '5%', width: '600px' }}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link>
+          <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='groups-list'>{group}</Link>
+          <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='attendance-table'>Учёт посещаемости</Link>
+        </Breadcrumbs>
+      </Box>
       <br />
-      <Typography variant='h5' style={{ width: '400px', position: 'sticky', left: 0 }}>Общее количество занятий: {dates.length}</Typography>
+      <Typography variant='h5' style={{ width: '400px', position: 'sticky', left: '5%' }}>Общее количество занятий: {dates.length}</Typography>
       <br />
       <Table
         sx={{

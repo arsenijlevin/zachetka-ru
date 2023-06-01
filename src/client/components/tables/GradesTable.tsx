@@ -1,5 +1,8 @@
-import { Box, Button, Table, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Table, Typography } from '@mui/material';
 import Link from 'next/link';
+
+const subject ='Технологии программирования (6 семестр)';
+const group = 'Группа 1';
 
 function createData(
     name: string,
@@ -32,6 +35,11 @@ export default function GradesTable() {
                 <Button variant='outlined' style={{ width: '250px', position: 'fixed', right: '5%' }}>Открыть посещаемость</Button>
             </Link>
             <br/>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link>
+              <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='groups-list'>{group}</Link>
+              <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='attendance-table'>Учёт успеваемости</Link>
+            </Breadcrumbs>
             <br/>
             <Table
               sx={{ 
