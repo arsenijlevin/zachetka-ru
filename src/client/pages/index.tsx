@@ -13,7 +13,7 @@ function App() {
       return Router.push('/admin-panel');
     }
     else if (login === 'lecturer' && password === '0000') {
-      return Router.push('/attendance-table');
+      return Router.push('/subjects-list');
     }
     else if (login === 'student' && password === '0000') {
       return Router.push('/schedule-table');
