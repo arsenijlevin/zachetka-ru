@@ -1,18 +1,14 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
+    project: true,
     tsconfigRootDir: __dirname,
-    sourceType: 'module',
   },
-  plugins: ["prettier", "@typescript-eslint/eslint-plugin"],
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'google',
-    'prettier'
   ],
   root: true,
   env: {
@@ -34,22 +30,18 @@ module.exports = {
       'error',
       {
         selector: ['default', 'variable'],
-        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-      },
-      {
-        selector: 'objectLiteralProperty',
-        format: ['PascalCase', 'camelCase', 'UPPER_CASE'],
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'],
       },
       {
         selector: 'classProperty',
         modifiers: ['private'],
-        format: ['camelCase', 'UPPER_CASE'],
+        format: ['camelCase', 'UPPER_CASE', 'snake_case'],
         leadingUnderscore: 'require',
       },
       {
         selector: 'classProperty',
         modifiers: ['protected'],
-        format: ['camelCase', 'UPPER_CASE'],
+        format: ['camelCase', 'UPPER_CASE', 'snake_case'],
         leadingUnderscore: 'require',
       },
       {

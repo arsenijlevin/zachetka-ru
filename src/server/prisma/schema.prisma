@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model attendance {
+  student_login String   @id
+  lesson_id     Int
+  status        String
+  date          DateTime @db.Date
+  lessons       lessons  @relation(fields: [lesson_id], references: [id], map: "lesson_id")
+  users         users    @relation(fields: [student_login], references: [login], map: "student_login")
+}
+
+model attendance_codes {
+  code      String  @id
+  lesson_id Int
+  lessons   lessons @relation(fields: [lesson_id], references: [id], map: "lesson_id")
+}
+
+model groups {
+  id       Int        @id @default(autoincrement())
+  title    String
+  semester Int
+  lessons  lessons[]
+  students students[]
+}
+
+model lessons {
+  id               Int                @id @default(autoincrement())
+  group_id         Int
+  week_day         String
+  time             String
+  subject_id       Int
+  place            String
+  frequency        String
+  attendance       attendance[]
+  attendance_codes attendance_codes[]
+  groups           groups             @relation(fields: [group_id], references: [id], map: "group_id")
+  subjects         subjects           @relation(fields: [subject_id], references: [id], map: "subject_id")
+}
+
+model professor_subject {
+  professor_login String
+  subject_id      Int
+  users           users    @relation(fields: [professor_login], references: [login], map: "professor_login")
+  subjects        subjects @relation(fields: [subject_id], references: [id], map: "subject_id")
+
+  @@id([professor_login, subject_id])
+}
+
+model rights {
+  id    Int     @id @default(autoincrement())
+  title String
+  users users[]
+}
+
+model student_performance {
+  student_login String
+  subject_id    Int
+  point1        Int?
+  point2        Int?
+  point3        Int?
+  exam_mark     Int?
+  users         users    @relation(fields: [student_login], references: [login], map: "student_login")
+  subjects      subjects @relation(fields: [subject_id], references: [id], map: "subject_id")
+
+  @@id([student_login, subject_id])
+}
+
+model students {
+  login    String @id
+  group_id Int
+  groups   groups @relation(fields: [group_id], references: [id], map: "group_id")
+}
+
+model subjects {
+  id                  Int                   @id @default(autoincrement())
+  title               String
+  semester            Int
+  reporting_type      String
+  lessons             lessons[]
+  professor_subject   professor_subject[]
+  student_performance student_performance[]
+}
+
+model users {
+  login               String                @id
+  password            String
+  rights_id           Int
+  name                String
+  attendance          attendance?
+  professor_subject   professor_subject[]
+  student_performance student_performance[]
+  rights              rights                @relation(fields: [rights_id], references: [id], map: "rights_id")
+}
