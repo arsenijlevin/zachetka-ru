@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '@src/auth/guards/jwt-auth.guard';
 import { ChangePasswordDto } from '@shared/types/auth/change-password.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')
 export class UsersController {
@@ -18,6 +19,7 @@ export class UsersController {
     return this.usersService.delete(login);
   }
 
+  @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Patch('change-password')
   public changePassword(@Body() changePassword: ChangePasswordDto) {
