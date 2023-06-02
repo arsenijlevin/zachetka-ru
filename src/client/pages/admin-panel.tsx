@@ -7,6 +7,7 @@ import AddStudentPopUp from '../components/pop-ups/AddStudentPopUp';
 import DeleteSubjectPopUp from '../components/pop-ups/DeleteSubjectPopUp';
 import DeleteLecturePopUp from '../components/pop-ups/DeleteLecturePopUp';
 import AddSubjectPopUp from '../components/pop-ups/AddSubjectPopUp';
+import Header from "components/Header";
 
 function AdminPanel() {
     // const [grade, setGrade] = React.useState('');
@@ -54,6 +55,7 @@ function AdminPanel() {
   
   return (
     <>
+      <Header />
       <div>
         <button className="border border-gray-200 px-2" onClick={handleOpenChangeSubject}>
           Изменить дисциплину
