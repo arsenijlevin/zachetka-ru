@@ -6,6 +6,8 @@
     "@emotion/react": "^11.10.8",
     "@emotion/styled": "^11.10.8",
     "@mui/material": "^5.12.2",
+    "@mui/x-data-grid": "^6.6.0",
+    "@mui/x-data-grid-pro": "^6.6.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.23",
     "@types/react": "^18.0.33",
