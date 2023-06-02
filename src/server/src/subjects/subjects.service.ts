@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSubjectDto } from './dto/create-subject.dto';
+import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 
 @Injectable()
 export class SubjectsService {
-  public create(createSubjectDto: CreateSubjectDto) {
+  public create(createSubjectDto: SubjectDto) {
     return 'This action adds a new subject';
   }
 

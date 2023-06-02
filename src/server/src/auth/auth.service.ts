@@ -2,9 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserDto } from '@shared/types/user/user.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UserDto, UserUnsafeDto } from '../users/dto/user.dto';
 import { LoginDto } from './dto/login.dto';
+import { ConfigService } from '@nestjs/config';
+
 
 const saltOrRounds = 10;
 
@@ -12,7 +13,8 @@ const saltOrRounds = 10;
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private configService: ConfigService
   ) { }
 
   public async validateUser(username: string, pass: string): Promise<UserDto | null> {
@@ -39,13 +41,13 @@ export class AuthService {
 
     return {
       token: this.jwtService.sign(payload, {
-        privateKey: process.env.JWT_PRIVATE_KEY,
+        privateKey: this.configService.get("JWT_SECRET"),
         expiresIn: '6000s'
       }),
     };
   }
 
-  public async signup(userDto: CreateUserDto): Promise<UserDto> {
+  public async signup(userDto: UserUnsafeDto): Promise<UserDto> {
     const user = await this.usersService.findOne(userDto.login);
     if (user) {
       throw new HttpException('Error', HttpStatus.BAD_REQUEST);

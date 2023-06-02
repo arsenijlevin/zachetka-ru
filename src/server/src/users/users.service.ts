@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ChangePasswordDto } from '@shared/types/auth/change-password.dto';
-import { UserDto, UserUnsafeDto } from '@shared/types/user/user.dto';
 import { FindAllUsersDTO } from './dto/find-all.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from "bcrypt"
+import { UserDto, UserUnsafeDto } from '@src/users/dto/user.dto';
+import { ChangePasswordDto } from '@src/users/dto/change-password.dto';
 
 @Injectable()
 export class UsersService {

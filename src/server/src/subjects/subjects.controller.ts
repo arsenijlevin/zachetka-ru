@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SubjectsService } from './subjects.service';
-import { CreateSubjectDto } from './dto/create-subject.dto';
+import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 
 @Controller('subjects')
@@ -8,8 +8,8 @@ export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) { }
 
   @Post()
-  public create(@Body() createSubjectDto: CreateSubjectDto) {
-    return this.subjectsService.create(createSubjectDto);
+  public create(@Body() subjectDto: SubjectDto) {
+    return this.subjectsService.create(subjectDto);
   }
 
   @Get()
@@ -28,7 +28,7 @@ export class SubjectsController {
   }
 
   @Delete(':id')
-  public remove(@Param('id') id: string) {
-    return this.subjectsService.remove(+id);
+  public delete(@Param('id') id: string) {
+    return this.subjectsService.delete(+id);
   }
 }

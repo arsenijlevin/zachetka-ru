@@ -1,30 +1,46 @@
-import { Box, Typography } from '@mui/material';
-import axios from 'axios';
-import { GetServerSideProps } from 'next';
+import { Box, Button, Typography } from '@mui/material';
+import axios, { AxiosResponse } from 'axios';
 import React from 'react';
-import { UserDto } from '../../server/shared/types/user/user.dto';
+import { LoginResponseDto } from '@shared/types/auth/login.dto';
 
-
-interface UserResponse {
-    data: UserDto
+interface LoginPayload {
+    login: string;
+    password: string;
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const { data } = await axios.get<UserResponse>(`${process.env.NEXT_PUBLIC_API_URL || ""}/api/users/findOne?login=0`);
+type LoginResponse = AxiosResponse<LoginResponseDto>
 
-    return { props: { data } };
-};
+function PrismaTest() {
+    const [result, setResult] = React.useState('');
 
-function PrismaTest(props: { data: UserResponse }) {
-    console.log(props.data);
+    const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        try {
+            const body = {
+                login: 'back_test',
+                password: 'back_test'
+            }
+            const loginRequest = await axios.post<LoginPayload, LoginResponse>(`${process.env.NEXT_PUBLIC_API_HOST || ""}auth/login`, body);
+            const loginResponse = loginRequest.data;
 
+            if (!loginResponse) {
+                throw new Error()
+            }
+
+            setResult(loginResponse.token || "");
+        } catch (error) {
+            return;
+        }
+    }
     return (
         <>
-            <Box sx={{ marginX: 'auto', width: '500', height: '500', position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                <Typography variant='h3'>Тест базы данных</Typography>
+            <Box>
+                <Typography variant='h5'>Тест базы данных</Typography>
+                <Button onClick={handleClick}>Тест логин!</Button>
+                <Typography variant='body2'>Результат: {result}</Typography>
             </Box>
         </>
     );
 }
+
 
 export default PrismaTest;
