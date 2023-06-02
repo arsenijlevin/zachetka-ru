@@ -17,8 +17,8 @@ export class AuthService {
     private configService: ConfigService
   ) { }
 
-  public async validateUser(username: string, pass: string): Promise<UserDto | null> {
-    const user = await this.usersService.findOne(username);
+  public async validateUser(login: string, pass: string): Promise<UserDto | null> {
+    const user = await this.usersService.findOne(login);
 
     if (user) {
       const isMatch = await bcrypt.compare(pass, user.password);
@@ -32,8 +32,7 @@ export class AuthService {
   }
 
   public async login(user: LoginDto) {
-    const payload = { username: user.login, sub: user.password };
-    console.log(payload);
+    const payload = { login: user.login };
 
     const validUser = await this.validateUser(user.login, user.password);
 
