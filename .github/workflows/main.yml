@@ -1,4 +1,4 @@
-name: Testing client workflow [lint & build]
+name: Testing client/server workflow [lint & build]
 on: 
   workflow_dispatch:
   pull_request:
@@ -6,7 +6,7 @@ on:
     - '**'
     types: [opened, edited, reopened]
 jobs:
-  build:
+  build_client:
     runs-on: ubuntu-20.04
     steps:
       - name: Get repository code
@@ -17,7 +17,7 @@ jobs:
       - name: Application building
         working-directory: ./src/client
         run: npm run build
-  lint:
+  lint_client:
     runs-on: ubuntu-20.04
     steps:
       - name: Get repository code
@@ -27,4 +27,26 @@ jobs:
         run: npm ci
       - name: Code linting
         working-directory: ./src/client
+        run: npm run lint
+  build_server:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install deps
+        working-directory: ./src/server
+        run: npm ci
+      - name: Application building
+        working-directory: ./src/server
+        run: npm run build
+  lint_server:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install deps
+        working-directory: ./src/server
+        run: npm ci
+      - name: Code linting
+        working-directory: ./src/server
         run: npm run lint
