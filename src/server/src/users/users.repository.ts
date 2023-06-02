@@ -22,12 +22,7 @@ export class UsersRepository {
 
   public async save(user: UserDto): Promise<UserDto> {
     const newUser = await this.prismaService.users.create({
-      data: {
-        login: user.login,
-        name: user.name,
-        password: user.password,
-        rights_id: user.rights_id
-      }
+      data: user
     });
     return newUser;
   }

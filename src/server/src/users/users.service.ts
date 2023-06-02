@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserDto } from '@src/users/dto/user.dto';
+import { ChangePasswordDto } from '@shared/types/auth/change-password.dto';
+import { UserDto } from './dto/user.dto';
 import { FindAllUsersDTO } from './dto/find-all.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
@@ -33,5 +34,13 @@ export class UsersService {
   public async delete(login: string): Promise<UserDto | undefined> {
     const user = await this.userRepository.delete(login);
     return user;
+  }
+
+  public async changePassword(changePassword: ChangePasswordDto) {
+    const user = await this.findOne(changePassword.login);
+
+    if (!user) {
+      return undefined;
+    }
   }
 }

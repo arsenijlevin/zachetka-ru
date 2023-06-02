@@ -3,6 +3,6 @@ export type UserDto = {
   name: string;
   password: string;
   rights_id: number;
-}
+};
 
-export type UserSafeDto = Omit<UserDto, 'password'>;
+export type UserSafeDto = Omit<UserDto, "password">
