@@ -1,4 +1,4 @@
-export type ChangePasswordDto = {
+export class ChangePasswordDto {
   login: string;
   oldPassword: string;
   newPassword: string;

@@ -2,10 +2,11 @@ import { Controller, Body, Patch, Param, Delete, UseGuards } from '@nestjs/commo
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '@src/auth/guards/jwt-auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ChangePasswordDto } from '@src/users/dto/change-password.dto';
 
 @Controller('users')
+@ApiTags('Пользователи')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
