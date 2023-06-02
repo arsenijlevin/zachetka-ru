@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { SubjectsRepository } from './subjects.repository';
 import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
+import { FindAllSubjectsDTO } from '@src/subjects/dto/find-all.dto';
 
 @Injectable()
 export class SubjectsService {
-  public create(createSubjectDto: SubjectDto) {
-    return 'This action adds a new subject';
+  constructor(private readonly subjectsRepository: SubjectsRepository) { }
+
+  public async create(createSubjectDto: SubjectDto) {
+    return await this.subjectsRepository.save(createSubjectDto);
   }
 
-  public findAll() {
-    return `This action returns all subjects`;
+  public async findAll(findAllSubjectsDTO: FindAllSubjectsDTO) {
+    return await this.subjectsRepository.findAll(findAllSubjectsDTO);
   }
 
-  public findOne(id: number) {
-    return `This action returns a #${id} subject`;
+  public async findOne(id: number) {
+    return await this.subjectsRepository.findOne(id);
   }
 
-  public update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    return `This action updates a #${id} subject`;
+  public async update(id: number, updateSubjectDto: UpdateSubjectDto) {
+    return await this.subjectsRepository.update(id, updateSubjectDto);
   }
 
-  public delete(id: number) {
-    return `This action deletes a #${id} subject`;
+  public async delete(id: number) {
+    return await this.subjectsRepository.delete(id);
   }
 }

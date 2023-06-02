@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SubjectsService } from './subjects.service';
 import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
+import { FindAllSubjectsDTO } from '@src/subjects/dto/find-all.dto';
 
 @Controller('subjects')
 export class SubjectsController {
@@ -13,21 +14,21 @@ export class SubjectsController {
   }
 
   @Get("findAll")
-  public findAll() {
-    return this.subjectsService.findAll();
+  public findAll(@Body() findAllSubjectsDTO: FindAllSubjectsDTO) {
+    return this.subjectsService.findAll(findAllSubjectsDTO);
   }
 
-  @Get('findOne')
+  @Get('findOne/:id')
   public findOne(@Param('id') id: string) {
     return this.subjectsService.findOne(+id);
   }
 
-  @Patch('update')
+  @Patch('update/:id')
   public update(@Param('id') id: string, @Body() updateSubjectDto: UpdateSubjectDto) {
     return this.subjectsService.update(+id, updateSubjectDto);
   }
 
-  @Delete('delete')
+  @Delete('delete/:id')
   public delete(@Param('id') id: string) {
     return this.subjectsService.delete(+id);
   }

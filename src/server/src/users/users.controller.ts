@@ -9,12 +9,12 @@ import { ChangePasswordDto } from '@src/users/dto/change-password.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Patch('update')
+  @Patch('update/:login')
   public update(@Param('login') login: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(login, updateUserDto);
   }
 
-  @Delete('delete')
+  @Delete('delete/:login')
   public delete(@Param('login') login: string) {
     return this.usersService.delete(login);
   }
