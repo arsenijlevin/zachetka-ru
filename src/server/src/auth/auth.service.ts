@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserSafeDto } from '../users/dto/user.dto';
+import { UserDto } from '@shared/types/user/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 
@@ -15,7 +15,7 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
 
-  public async validateUser(username: string, pass: string): Promise<UserSafeDto | null> {
+  public async validateUser(username: string, pass: string): Promise<UserDto | null> {
     const user = await this.usersService.findOne(username);
 
     if (user) {
@@ -29,16 +29,23 @@ export class AuthService {
     return null;
   }
 
-  public login(user: LoginDto) {
+  public async login(user: LoginDto) {
     const payload = { username: user.login, sub: user.password };
     console.log(payload);
 
+    const validUser = await this.validateUser(user.login, user.password);
+
+    if (!validUser) throw new HttpException("Invalid login or password", HttpStatus.BAD_REQUEST);
+
     return {
-      token: this.jwtService.sign(payload),
+      token: this.jwtService.sign(payload, {
+        privateKey: process.env.JWT_PRIVATE_KEY,
+        expiresIn: '6000s'
+      }),
     };
   }
 
-  public async signup(userDto: CreateUserDto): Promise<UserSafeDto> {
+  public async signup(userDto: CreateUserDto): Promise<UserDto> {
     const user = await this.usersService.findOne(userDto.login);
     if (user) {
       throw new HttpException('Error', HttpStatus.BAD_REQUEST);
@@ -47,7 +54,8 @@ export class AuthService {
 
     userDto.password = hash;
 
-    const { password, ...newUser } = await this.usersService.create(userDto);
-    return newUser;
+    const newSafeUser = await this.usersService.create(userDto);
+
+    return newSafeUser;
   }
 }

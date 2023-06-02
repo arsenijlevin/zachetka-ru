@@ -3,3 +3,7 @@ export type UserDto = {
   name: string;
   rights_id: number;
 };
+
+export type UserUnsafeDto = UserDto & {
+  password: string;
+}

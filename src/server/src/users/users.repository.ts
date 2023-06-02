@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
 import { FindAllUsersDTO } from "./dto/find-all.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { UserDto } from "./dto/user.dto";
+import { UserUnsafeDto } from "@shared/types/user/user.dto";
 
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UsersRepository {
     private readonly prismaService: PrismaService
   ) { }
 
-  public async findOne(login: string): Promise<UserDto | undefined> {
+  public async findOne(login: string): Promise<UserUnsafeDto | undefined> {
     const user = await this.prismaService.users.findUnique({
       where: {
         login
@@ -20,19 +20,14 @@ export class UsersRepository {
     return user;
   }
 
-  public async save(user: UserDto): Promise<UserDto> {
+  public async save(user: UserUnsafeDto): Promise<UserUnsafeDto> {
     const newUser = await this.prismaService.users.create({
-      data: {
-        login: user.login,
-        name: user.name,
-        password: user.password,
-        rights_id: user.rights_id
-      }
+      data: user
     });
     return newUser;
   }
 
-  public async findAll(findAllUsersDTO: FindAllUsersDTO): Promise<UserDto[]> {
+  public async findAll(findAllUsersDTO: FindAllUsersDTO): Promise<UserUnsafeDto[]> {
     const users = await this.prismaService.users.findMany({
       skip: findAllUsersDTO.skip,
       take: findAllUsersDTO.take
@@ -40,7 +35,7 @@ export class UsersRepository {
     return users;
   }
 
-  public async update(login: string, updateUserDto: UpdateUserDto): Promise<UserDto | null> {
+  public async update(login: string, updateUserDto: UpdateUserDto): Promise<UserUnsafeDto | null> {
     try {
       const user = await this.prismaService.users.update({
         where: {
@@ -54,7 +49,7 @@ export class UsersRepository {
     }
   }
 
-  public async delete(login: string): Promise<UserDto | undefined> {
+  public async delete(login: string): Promise<UserUnsafeDto | undefined> {
     const user = await this.prismaService.users.delete({
       where: {
         login: login

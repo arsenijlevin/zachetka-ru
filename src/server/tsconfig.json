@@ -9,6 +9,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
+    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -20,16 +21,16 @@
     "declarationMap": true,
     "paths": {
       "@src/*": [
-        "./src/*"
+        "src/*"
       ],
       "@prisma/*": [
-        "./prisma/*"
+        "prisma/*"
       ],
       "@test/*": [
-        "./test/*"
+        "test/*"
       ],
       "@shared/*": [
-        "./shared/*"
+        "shared/*"
       ],
     }
   }
