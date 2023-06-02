@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
 import axios, { AxiosResponse } from 'axios';
 import React from 'react';
-import { LoginResponseDto } from '@shared/types/auth/login.dto';
 
+import { LoginResponseDto } from '@shared/types/auth/login.dto';
 interface LoginPayload {
     login: string;
     password: string;

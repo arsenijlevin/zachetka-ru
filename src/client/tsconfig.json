@@ -32,8 +32,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "../server/shared/**/*.ts"
+    "**/*.tsx"
   ],
   "references": [
     {

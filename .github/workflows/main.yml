@@ -62,7 +62,7 @@ jobs:
           cd ./server
           npm ci
       - name: Application building
-        working-directory: ./server
+        working-directory: ./src
         run: |
-          cd ./client
+          cd ./server
           npm run lint
