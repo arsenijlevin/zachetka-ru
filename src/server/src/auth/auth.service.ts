@@ -2,8 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserDto, UserSafeDto } from '../users/dto/user.dto';
+import { UserSafeDto } from '../users/dto/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { LoginDto } from './dto/login.dto';
 
 const saltOrRounds = 10;
 
@@ -28,8 +29,10 @@ export class AuthService {
     return null;
   }
 
-  public login(user: UserDto) {
-    const payload = { username: user.name, sub: user.login };
+  public login(user: LoginDto) {
+    const payload = { username: user.login, sub: user.password };
+    console.log(payload);
+
     return {
       token: this.jwtService.sign(payload),
     };
