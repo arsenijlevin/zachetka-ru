@@ -1,4 +1,5 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { UserDto } from '@shared/types/user/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -18,7 +19,7 @@ export class AuthController {
 
   @UseGuards(LocalStrategy)
   @Post("/signup")
-  public signup(@Body() signupDto: CreateUserDto) {
+  public signup(@Body() signupDto: CreateUserDto): Promise<UserDto> {
     return this.authService.signup(signupDto);
   }
 }
