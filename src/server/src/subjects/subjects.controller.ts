@@ -7,27 +7,27 @@ import { UpdateSubjectDto } from './dto/update-subject.dto';
 export class SubjectsController {
   constructor(private readonly subjectsService: SubjectsService) { }
 
-  @Post()
+  @Post("create")
   public create(@Body() subjectDto: SubjectDto) {
     return this.subjectsService.create(subjectDto);
   }
 
-  @Get()
+  @Get("findAll")
   public findAll() {
     return this.subjectsService.findAll();
   }
 
-  @Get(':id')
+  @Get('findOne')
   public findOne(@Param('id') id: string) {
     return this.subjectsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update')
   public update(@Param('id') id: string, @Body() updateSubjectDto: UpdateSubjectDto) {
     return this.subjectsService.update(+id, updateSubjectDto);
   }
 
-  @Delete(':id')
+  @Delete('delete')
   public delete(@Param('id') id: string) {
     return this.subjectsService.delete(+id);
   }

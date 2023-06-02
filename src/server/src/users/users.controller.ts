@@ -14,8 +14,8 @@ export class UsersController {
     return this.usersService.update(login, updateUserDto);
   }
 
-  @Delete('remove')
-  public remove(@Param('login') login: string) {
+  @Delete('delete')
+  public delete(@Param('login') login: string) {
     return this.usersService.delete(login);
   }
 
