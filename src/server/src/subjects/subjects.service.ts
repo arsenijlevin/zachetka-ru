@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { SubjectsRepository } from './subjects.repository';
 import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
@@ -17,14 +17,32 @@ export class SubjectsService {
   }
 
   public async findOne(id: number) {
-    return await this.subjectsRepository.findOne(id);
+    const subject = await this.subjectsRepository.findOne(id);
+
+    if (!subject) {
+      throw new HttpException('Subject not found', 404);
+    }
+
+    return subject;
   }
 
   public async update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    return await this.subjectsRepository.update(id, updateSubjectDto);
+    const updatedSubject = await this.subjectsRepository.update(id, updateSubjectDto);
+
+    if (!updatedSubject) {
+      throw new HttpException('Subject not found', 404);
+    }
+
+    return updatedSubject;
   }
 
   public async delete(id: number) {
-    return await this.subjectsRepository.delete(id);
+    const deletedSubject = await this.subjectsRepository.delete(id);
+
+    if (!deletedSubject) {
+      throw new HttpException('Subject not found', 404);
+    }
+
+    return deletedSubject;
   }
 }

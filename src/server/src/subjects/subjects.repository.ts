@@ -12,18 +12,23 @@ export class SubjectsRepository {
   ) { }
 
   public async findOne(id: number): Promise<SubjectDto | undefined> {
-    const subject = await this.prismaService.subjects.findUnique({
-      where: {
-        id
-      }
-    });
-    return subject;
+    try {
+      const subject = await this.prismaService.subjects.findUnique({
+        where: {
+          id
+        }
+      });
+      return subject;
+    } catch (error) {
+      return null;
+    }
   }
 
   public async save(subject: SubjectDto): Promise<SubjectDto> {
     const newSubject = await this.prismaService.subjects.create({
       data: subject
     });
+
     return newSubject;
   }
 
@@ -50,11 +55,15 @@ export class SubjectsRepository {
   }
 
   public async delete(id: number): Promise<SubjectDto | undefined> {
-    const subject = await this.prismaService.subjects.delete({
-      where: {
-        id: id
-      }
-    });
-    return subject;
+    try {
+      const subject = await this.prismaService.subjects.delete({
+        where: {
+          id: id
+        }
+      });
+      return subject;
+    } catch (error) {
+      return null;
+    }
   }
 }
