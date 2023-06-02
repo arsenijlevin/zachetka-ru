@@ -7,17 +7,17 @@ export class TestingController {
   constructor(private readonly testingService: TestingService) { }
 
   @Get('/test')
-  getTest(): string {
+  public getTest(): string {
     return this.testingService.getTest();
   }
 
   @Post('/test')
-  postTest(): string {
+  public postTest(): string {
     return this.testingService.postTest();
   }
 
   @Post('/test-post-with-data')
-  postTestWithData(@Body() body: TestDataDto) {
+  public postTestWithData(@Body() body: TestDataDto) {
     this.testingService.postTestWithData(body);
   }
 }
