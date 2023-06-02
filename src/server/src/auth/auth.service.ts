@@ -1,11 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { UserDto, UserSafeDto } from '../users/dto/user.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 
-export interface AuthUser {
-  login: string;
-  username: string;
-}
+const saltOrRounds = 10;
 
 @Injectable()
 export class AuthService {
@@ -14,14 +14,37 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
 
-  async signIn(login: string, pass: string) {
-    const user = await this.usersService.findOne({ login });
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+  public async validateUser(username: string, pass: string): Promise<UserSafeDto | null> {
+    const user = await this.usersService.findOne(username);
+
+    if (user) {
+      const isMatch = await bcrypt.compare(pass, user.password);
+      if (!isMatch) {
+        return null;
+      }
+      const { password, ...result } = user;
+      return result;
     }
-    const payload: AuthUser = { login: user.login, username: user.name };
+    return null;
+  }
+
+  public login(user: UserDto) {
+    const payload = { username: user.name, sub: user.login };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      token: this.jwtService.sign(payload),
     };
+  }
+
+  public async signup(userDto: CreateUserDto): Promise<UserSafeDto> {
+    const user = await this.usersService.findOne(userDto.login);
+    if (user) {
+      throw new HttpException('Error', HttpStatus.BAD_REQUEST);
+    }
+    const hash = await bcrypt.hash(userDto.password, saltOrRounds);
+
+    userDto.password = hash;
+
+    const { password, ...newUser } = await this.usersService.create(userDto);
+    return newUser;
   }
 }

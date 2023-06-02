@@ -1,51 +1,20 @@
-
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma.service';
+import { Inject, Injectable } from '@nestjs/common';
+import { UserDto } from './dto/user.dto';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
+  constructor(@Inject('USER_REPOSITORY')
+  private userRepository: UsersRepository,
+  ) { }
 
-  async create(createUserDto: Prisma.usersUncheckedCreateInput) {
-    return await this.prisma.users.create({
-      data: createUserDto,
-    });
+  public async findOne(username: string): Promise<UserDto | undefined> {
+    const user = await this.userRepository.findOne(username);
+    return user;
   }
 
-  async findAll(params: {
-    skip?: number;
-    take?: number;
-  }) {
-    const { skip, take } = params;
-    return this.prisma.users.findMany({
-      skip,
-      take,
-    });
-  }
-
-  async findOne(
-    usersWhereUniqueInput: Prisma.usersWhereUniqueInput,
-  ) {
-    return await this.prisma.users.findUnique({
-      where: usersWhereUniqueInput,
-    });
-  }
-
-  async update(params: {
-    where: Prisma.usersWhereUniqueInput;
-    data: Prisma.usersUpdateInput;
-  }) {
-    const { where, data } = params;
-    return this.prisma.users.update({
-      data,
-      where,
-    });
-  }
-
-  async delete(where: Prisma.usersWhereUniqueInput) {
-    return await this.prisma.users.delete({
-      where
-    });
+  public async create(user: UserDto): Promise<UserDto | undefined> {
+    await this.userRepository.save(user);
+    return user;
   }
 }

@@ -50,7 +50,7 @@ module.exports = {
       },
     ],
     "new-cap": 0,
-    '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'none', "ignoreRestSiblings": true }],
     '@typescript-eslint/no-var-requires': 'off',
     camelcase: 'off',
     'no-unused-vars': 'off',
@@ -83,5 +83,18 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      {
+        "accessibility": "explicit",
+        "overrides": {
+          "accessors": "off",
+          "constructors": "no-public",
+          "methods": "explicit",
+          "properties": "off",
+          "parameterProperties": "explicit"
+        }
+      }
+    ]
   },
 };
