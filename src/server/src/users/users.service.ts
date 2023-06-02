@@ -1,51 +1,37 @@
-
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { PrismaService } from '../prisma.service';
+import { UserDto } from '@src/users/dto/user.dto';
+import { FindAllUsersDTO } from './dto/find-all.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) { }
+  constructor(
+    private userRepository: UsersRepository,
+  ) { }
 
-  async create(createUserDto: Prisma.usersUncheckedCreateInput) {
-    return await this.prisma.users.create({
-      data: createUserDto,
-    });
+  public async findOne(username: string): Promise<UserDto | undefined> {
+    const user = await this.userRepository.findOne(username);
+    return user;
   }
 
-  async findAll(params: {
-    skip?: number;
-    take?: number;
-  }) {
-    const { skip, take } = params;
-    return this.prisma.users.findMany({
-      skip,
-      take,
-    });
+  public async create(user: UserDto): Promise<UserDto | undefined> {
+    await this.userRepository.save(user);
+    return user;
   }
 
-  async findOne(
-    usersWhereUniqueInput: Prisma.usersWhereUniqueInput,
-  ) {
-    return await this.prisma.users.findUnique({
-      where: usersWhereUniqueInput,
-    });
+  public async findAll(findAllUsersDTO: FindAllUsersDTO): Promise<UserDto[] | undefined> {
+    const users = await this.userRepository.findAll(findAllUsersDTO);
+    return users;
   }
 
-  async update(params: {
-    where: Prisma.usersWhereUniqueInput;
-    data: Prisma.usersUpdateInput;
-  }) {
-    const { where, data } = params;
-    return this.prisma.users.update({
-      data,
-      where,
-    });
+  public async update(login: string, updateUserDto: UpdateUserDto): Promise<UserDto | undefined> {
+    const user = await this.userRepository.update(login, updateUserDto);
+    return user;
   }
 
-  async delete(where: Prisma.usersWhereUniqueInput) {
-    return await this.prisma.users.delete({
-      where
-    });
+  public async delete(login: string): Promise<UserDto | undefined> {
+    const user = await this.userRepository.delete(login);
+    return user;
   }
 }
