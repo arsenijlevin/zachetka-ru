@@ -1,9 +1,13 @@
 import StudentGradesTable from "../components/tables/StudentGradesTable";
+import Header from "components/Header";
 
 
 function Table() {
   return (
-    <StudentGradesTable />
+    <>
+      <Header />
+      <StudentGradesTable />
+    </>
   )
     
 }
