@@ -12,8 +12,8 @@ export class UsersService {
     private userRepository: UsersRepository,
   ) { }
 
-  public async findOne(username: string): Promise<UserUnsafeDto | undefined> {
-    const user = await this.userRepository.findOne(username);
+  public async findOne(login: string): Promise<UserUnsafeDto | undefined> {
+    const user = await this.userRepository.findOne(login);
     return user;
   }
 
