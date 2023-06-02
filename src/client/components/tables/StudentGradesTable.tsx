@@ -1,26 +1,25 @@
-import { Box, Button, Table, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import Link from 'next/link';
 
-function createData(
-    semester: number,
-    course: number,
-    name: string,
-    examType: string,
-    lecturer: string,
-    kt1: number,
-    kt2: number,
-    kt3: number,
-    average: number,
-    exam: number,
-    result: string,
-  ) {
-    return { semester, course, name, examType, lecturer, kt1, kt2, kt3, average, exam, result };
-  }
-
-  const rows = [
-    createData(5, 3, 'Информационные технологии', 'Зачёт', 'Михайлов Е. М.', 40, 40, 40, 40, 40, 'Зачтено'),
-    createData(5, 3, 'Электродинамика', 'Экзамен', 'Запрягаев С. А.', 25, 32, 42, 33, 33, 'Удовлетворительно'),
-    createData(4, 2, 'Механика и оптика', 'Экзамен', 'Киселев Е. А.', 45, 25, 38, 36, 35, 'Хорошо')
+  const rows: GridRowsProp = [
+    { id: 1, col1: 5, col2: 3, col3: 'Информационные технологии', col4: 'Зачёт', col5: 'Михайлов Е. М.', col6: 40, col7: 40, col8: 40, col9: 40, col10: 40, col11: 'Зачтено' },
+    { id: 2, col1: 5, col2: 3, col3: 'Электродинамика', col4: 'Экзамен', col5: 'Запрягаев С. А.', col6: 25, col7: 32, col8: 42, col9: 33, col10: 33, col11: 'Удовлетворительно' },
+    { id: 3, col1: 4, col2: 2, col3: 'Механика и оптика', col4: 'Экзамен', col5: 'Киселев Е. А.', col6: 45, col7: 25, col8: 38, col9: 36, col10: 35, col11: 'Хорошо' }
+  ];
+  
+  const columns: GridColDef[] = [
+    { field: 'col1', headerName: 'Семестр', flex: 0.05  },
+    { field: 'col2', headerName: 'Курс', flex: 0.05 },
+    { field: 'col3', headerName: 'Дисциплина', flex: 0.2 },
+    { field: 'col4', headerName: 'Отчётность', flex: 0.08 },
+    { field: 'col5', headerName: 'Преподаватель', flex: 0.2 },
+    { field: 'col6', headerName: 'КТ 1', flex: 0.05 },
+    { field: 'col7', headerName: 'КТ 2', flex: 0.05 },
+    { field: 'col8', headerName: 'КТ 3', flex: 0.05 },
+    { field: 'col9', headerName: 'Средний балл', flex: 0.1 },
+    { field: 'col10', headerName: 'Экзамен', flex: 0.1 },
+    { field: 'col11', headerName: 'Итог', flex: 0.15 }
   ];
 
 export default function StudentGradesTable(){
@@ -38,45 +37,20 @@ export default function StudentGradesTable(){
             </Link>
             <br/>
             <br/>
-            <Table
-                sx={{ 
-                'td':{
-                  border: '1px solid black',
-                }
-               }}>
-                <thead>
-                    <tr>
-                        <th>Семестр</th>
-                        <th>Курс</th>
-                        <th>Дисциплина</th>
-                        <th>Отчётность</th>
-                        <th>Преподаватель</th>
-                        <th>КТ 1</th>
-                        <th>КТ 2</th>
-                        <th>КТ 3</th>
-                        <th>Средний балл</th>
-                        <th>Экзамен</th>
-                        <th>Итог</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows.map((row) => (
-                        <tr key={row.name}>
-                        <td>{row.semester}</td>
-                        <td>{row.course}</td>
-                        <td>{row.name}</td>
-                        <td>{row.examType}</td>
-                        <td>{row.lecturer}</td>
-                        <td style={{ fontWeight: 'bold' }}>{row.kt1}</td>
-                        <td style={{ fontWeight: 'bold' }}>{row.kt2}</td>
-                        <td style={{ fontWeight: 'bold' }}>{row.kt3}</td>
-                        <td style={{ fontWeight: 'bold' }}>{row.average}</td>
-                        <td style={{ fontWeight: 'bold' }}>{row.exam}</td>
-                        <td style={{ fontWeight: 'bold' }}>{row.result}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+            <DataGrid rows={rows} columns={columns} hideFooter={true}
+                sx={{
+                '.MuiDataGrid-columnHeaderTitle': { 
+                fontWeight: 'bold !important',
+                },
+                "& .MuiDataGrid-cell": {
+                    borderRight: 1,
+                    borderRightColor: 'rgb(220,220,220)',
+                    borderLeft: 1,
+                    borderLeftColor: 'rgb(220,220,220)',
+                },
+                borderRadius: '0px',
+                borderLeft: '0px',
+                }}/>
         </Box>
         </>
     );
