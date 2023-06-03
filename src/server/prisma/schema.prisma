@@ -8,12 +8,14 @@ datasource db {
 }
 
 model attendance {
-  student_login String   @id
+  student_login String
   lesson_id     Int
   status        String
   date          DateTime @db.Date
   lessons       lessons  @relation(fields: [lesson_id], references: [id], map: "lesson_id")
-  users         users    @relation(fields: [student_login], references: [login], map: "student_login")
+  users         students @relation(fields: [student_login], references: [login], map: "student_login")
+
+  @@id([student_login, lesson_id, date], map: "attendance_pkey1")
 }
 
 model attendance_codes {
@@ -73,9 +75,10 @@ model student_performance {
 }
 
 model students {
-  login    String @id
-  group_id Int
-  groups   groups @relation(fields: [group_id], references: [id], map: "group_id")
+  login      String       @id
+  group_id   Int
+  attendance attendance[]
+  groups     groups       @relation(fields: [group_id], references: [id], map: "group_id")
 }
 
 model subjects {
@@ -93,7 +96,6 @@ model users {
   password            String
   rights_id           Int
   name                String
-  attendance          attendance?
   professor_subject   professor_subject[]
   student_performance student_performance[]
   rights              rights                @relation(fields: [rights_id], references: [id], map: "rights_id")
