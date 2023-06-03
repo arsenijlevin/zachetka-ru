@@ -44,21 +44,42 @@ export class AttendanceRepository {
 
   public async upsert(updateAttendanceDto: UpdateAttendanceDto) {
     try {
+
+      console.log({
+        professor_login: updateAttendanceDto.professor_login,
+        time: updateAttendanceDto.time,
+        week_day: updateAttendanceDto.week_day,
+        subject_id: updateAttendanceDto.subject_id,
+        frequency: updateAttendanceDto.frequency
+      });
+
+      const lesson = await this.prismaService.lessons.findFirst({
+        where: {
+          professor_login: updateAttendanceDto.professor_login,
+          time: updateAttendanceDto.time,
+          week_day: updateAttendanceDto.week_day,
+          subject_id: updateAttendanceDto.subject_id,
+          frequency: updateAttendanceDto.frequency
+        }
+      })
+
       const attendance = await this.prismaService.attendance.upsert({
         where: {
           student_login_lesson_id_date: {
             student_login: updateAttendanceDto.student_login,
-            lesson_id: updateAttendanceDto.lesson_id,
+            lesson_id: lesson.id,
             date: updateAttendanceDto.date
           },
         },
         create: {
           student_login: updateAttendanceDto.student_login,
-          lesson_id: updateAttendanceDto.lesson_id,
+          lesson_id: lesson.id,
           date: updateAttendanceDto.date,
           status: updateAttendanceDto.status
         },
-        update: updateAttendanceDto,
+        update: {
+          status: updateAttendanceDto.status
+        },
         include: {
           lessons: {
             select: {
