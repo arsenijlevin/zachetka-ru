@@ -22,6 +22,16 @@ export class StudentPerformanceService {
     return await this.studentPerformanceRepository.findAll(findAllStudentPerformanceDTO);
   }
 
+  public async findAllForStudent(studentLogin: string) {
+    const studentPerformance = await this.studentPerformanceRepository.findAllForStudent(studentLogin);
+
+    if (!studentPerformance) {
+      throw new HttpException('Student-performance not found', 404);
+    }
+
+    return studentPerformance;
+  }
+
   public async findOne(studentLogin: string, subjectId: number) {
     const studentPerformance = await this.studentPerformanceRepository.findOne(studentLogin, subjectId);
 

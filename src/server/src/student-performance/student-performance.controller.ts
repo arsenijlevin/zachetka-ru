@@ -20,6 +20,13 @@ export class StudentPerformanceController {
     return this.studentPerformanceService.findAll(findAllStudentPerformancesDTO);
   }
 
+  @Get('findAll/:student_login')
+  public findAllForStudent(
+    @Param('student_login') studentLogin: string,
+  ) {
+    return this.studentPerformanceService.findAllForStudent(studentLogin);
+  }
+
   @Get('findOne/:student_login/:subject_id')
   public findOne(
     @Param('student_login') studentLogin: string,

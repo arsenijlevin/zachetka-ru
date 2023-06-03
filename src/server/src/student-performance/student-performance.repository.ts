@@ -47,6 +47,20 @@ export class StudentPerformanceRepository {
     return studentPerformances;
   }
 
+  public async findAllForStudent(studentLogin: string) {
+    try {
+      const studentPerformances = await this.prismaService.student_performance.findMany({
+        where: {
+          student_login: studentLogin
+        }
+      });
+
+      return studentPerformances;
+    } catch (error) {
+      return null;
+    }
+  }
+
   public async update(
     studentLogin: string,
     subjectId: number,
