@@ -61,19 +61,24 @@ export class StudentPerformanceRepository {
     }
   }
 
-  public async update(
+  public async upsert(
     studentLogin: string,
     subjectId: number,
     updateStudentPerformanceDto: UpdateStudentPerformanceDto): Promise<StudentPerformanceDto | null> {
     try {
-      const studentPerformance = await this.prismaService.student_performance.update({
+      const studentPerformance = await this.prismaService.student_performance.upsert({
         where: {
           student_login_subject_id: {
             student_login: studentLogin,
             subject_id: subjectId
           }
         },
-        data: updateStudentPerformanceDto
+        update: updateStudentPerformanceDto,
+        create: {
+          student_login: studentLogin,
+          subject_id: subjectId,
+          ...updateStudentPerformanceDto
+        }
       });
       return studentPerformance;
     } catch (error) {

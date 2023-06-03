@@ -42,8 +42,8 @@ export class StudentPerformanceService {
     return studentPerformance;
   }
 
-  public async update(studentLogin: string, subjectId: number, updateLessonDto: UpdateStudentPerformanceDto) {
-    const updatedStudentPerformance = await this.studentPerformanceRepository.update(studentLogin, subjectId, updateLessonDto);
+  public async upsert(studentLogin: string, subjectId: number, updateLessonDto: UpdateStudentPerformanceDto) {
+    const updatedStudentPerformance = await this.studentPerformanceRepository.upsert(studentLogin, subjectId, updateLessonDto);
 
     if (!updatedStudentPerformance) {
       throw new HttpException('Student-performance not found', 404);
