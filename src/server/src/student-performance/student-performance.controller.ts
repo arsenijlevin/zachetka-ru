@@ -20,18 +20,28 @@ export class StudentPerformanceController {
     return this.studentPerformancesService.findAll(findAllStudentPerformancesDTO);
   }
 
-  @Get('findOne/:id')
-  public findOne(@Param('id') id: string) {
-    return this.studentPerformancesService.findOne(+id);
+  @Get('findOne/:student_login/:subject_id')
+  public findOne(
+    @Param('student_login') studentLogin: string,
+    @Param('subject_id') subjectId: number
+  ) {
+    return this.studentPerformancesService.findOne(studentLogin, +subjectId);
   }
 
-  @Patch('update/:id')
-  public update(@Param('id') id: string, @Body() updateStudentPerformanceDto: UpdateStudentPerformanceDto) {
-    return this.studentPerformancesService.update(+id, updateStudentPerformanceDto);
+  @Patch('update/:student_login/:subject_id')
+  public update(
+    @Param('student_login') studentLogin: string,
+    @Param('subject_id') subjectId: number,
+    @Body() updateStudentPerformanceDto: UpdateStudentPerformanceDto
+  ) {
+    return this.studentPerformancesService.update(studentLogin, +subjectId, updateStudentPerformanceDto);
   }
 
-  @Delete('delete/:id')
-  public delete(@Param('id') id: string) {
-    return this.studentPerformancesService.delete(+id);
+  @Delete('delete/:student_login/:subject_id')
+  public delete(
+    @Param('student_login') studentLogin: string,
+    @Param('subject_id') subjectId: number
+  ) {
+    return this.studentPerformancesService.delete(studentLogin, +subjectId);
   }
 }
