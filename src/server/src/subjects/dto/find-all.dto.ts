@@ -1,6 +1,6 @@
 import { IsNumber, IsOptional } from "class-validator";
 
-export class FindAllUsersDTO {
+export class FindAllSubjectsDTO {
   @IsNumber()
   @IsOptional()
   skip?: number;

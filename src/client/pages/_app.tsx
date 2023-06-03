@@ -6,10 +6,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     // Wrap the Component prop with ErrorBoundary component
     <ErrorBoundary>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
     </ErrorBoundary>
   );
 }
-
-console.log("URL:");
-console.log(process.env.NEXT_PUBLIC_SERVER_URL);

@@ -1,12 +1,13 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-import { UserDto } from '@shared/types/user/user.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { UserDto, UserUnsafeDto } from '@shared/types/user/user.dto';
 import { JWTStrategy } from '@src/auth/strategies/jwt.strategy';
-import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 
 
 @Controller('auth')
+@ApiTags('Авторизация')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
@@ -18,7 +19,7 @@ export class AuthController {
 
   @UseGuards(JWTStrategy)
   @Post("/signup")
-  public signup(@Body() signupDto: CreateUserDto): Promise<UserDto> {
+  public signup(@Body() signupDto: UserUnsafeDto): Promise<UserDto> {
     return this.authService.signup(signupDto);
   }
 }

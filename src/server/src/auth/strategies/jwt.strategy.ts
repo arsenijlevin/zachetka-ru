@@ -3,8 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 
 export interface JWTPayload {
-  sub: string;
-  username: string;
+  login: string;
 }
 
 @Injectable()
@@ -18,6 +17,6 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
   }
 
   public validate(payload: JWTPayload) {
-    return { id: payload.sub, username: payload.username };
+    return { login: payload.login };
   }
 }
