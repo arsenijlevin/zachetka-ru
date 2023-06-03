@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LessonsService } from './lessons.service';
 import { LessonDto } from './dto/lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
-import { FindAllLessonsDTO } from '@src/lessons/dto/find-all.dto';
+import { FindAllLessonsDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('lessons')

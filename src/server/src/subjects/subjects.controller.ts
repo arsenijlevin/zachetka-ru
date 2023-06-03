@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SubjectsService } from './subjects.service';
 import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
-import { FindAllSubjectsDTO } from '@src/subjects/dto/find-all.dto';
+import { FindAllSubjectsDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('subjects')

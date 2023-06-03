@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { SubjectsRepository } from './subjects.repository';
 import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
-import { FindAllSubjectsDTO } from '@src/subjects/dto/find-all.dto';
+import { FindAllSubjectsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class SubjectsService {

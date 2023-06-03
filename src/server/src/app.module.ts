@@ -6,8 +6,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma.service';
-import { SubjectsModule } from '@src/subjects/subjects.module';
-import { LessonsModule } from '@src/lessons/lessons.module';
+import { SubjectsModule } from './subjects/subjects.module';
+import { LessonsModule } from './lessons/lessons.module';
+import { GroupsModule } from './groups/groups.module';
 
 export const moduleSettings = {
   imports: [
@@ -16,6 +17,7 @@ export const moduleSettings = {
     UsersModule,
     AuthModule,
     LessonsModule,
+    GroupsModule,
     ConfigModule.forRoot()
   ],
   controllers: [AppController],

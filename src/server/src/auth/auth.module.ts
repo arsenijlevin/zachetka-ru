@@ -8,7 +8,7 @@ import { AuthController } from './auth.controller';
 import { ConfigService } from '@nestjs/config';
 
 
-@Module({
+export const moduleSettings = {
   imports: [
     UsersModule,
     PassportModule,
@@ -19,5 +19,7 @@ import { ConfigService } from '@nestjs/config';
   ],
   controllers: [AuthController],
   providers: [AuthService, JWTStrategy, ConfigService],
-})
+}
+
+@Module(moduleSettings)
 export class AuthModule { }
