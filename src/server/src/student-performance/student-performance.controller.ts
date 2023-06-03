@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Param, Delete, Post } from '@nestjs/common';
 import { StudentPerformanceService } from './student-performance.service';
-import { StudentPerformanceDto } from './dto/student-performance.dto';
 import { UpdateStudentPerformanceDto } from './dto/update-student-performance.dto';
 import { FindAllStudentPerformanceDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -9,11 +8,6 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Успеваемость студентов')
 export class StudentPerformanceController {
   constructor(private readonly studentPerformanceService: StudentPerformanceService) { }
-
-  @Post("create")
-  public create(@Body() studentPerformanceDto: StudentPerformanceDto) {
-    return this.studentPerformanceService.create(studentPerformanceDto);
-  }
 
   @Get("findAll")
   public findAll(@Body() findAllStudentPerformancesDTO: FindAllStudentPerformanceDTO) {
@@ -35,13 +29,13 @@ export class StudentPerformanceController {
     return this.studentPerformanceService.findOne(studentLogin, +subjectId);
   }
 
-  @Patch('update/:student_login/:subject_id')
-  public update(
+  @Post('post-performance/:student_login/:subject_id')
+  public postPerformance(
     @Param('student_login') studentLogin: string,
     @Param('subject_id') subjectId: number,
     @Body() updateStudentPerformanceDto: UpdateStudentPerformanceDto
   ) {
-    return this.studentPerformanceService.update(studentLogin, +subjectId, updateStudentPerformanceDto);
+    return this.studentPerformanceService.upsert(studentLogin, +subjectId, updateStudentPerformanceDto);
   }
 
   @Delete('delete/:student_login/:subject_id')
