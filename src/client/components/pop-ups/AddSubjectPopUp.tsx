@@ -63,6 +63,18 @@ function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
               />
           </Box>
           <Box>
+            <Typography variant="body1">Введите семестр</Typography>
+            <Input
+              type="number"
+              fullWidth
+              className="mt-2 p-1"
+              inputProps={{
+                min: 1,
+                max: 12,
+              }}
+            />
+          </Box>
+          <Box>
               <Typography variant="body1">Выберите отчётность</Typography>
               <Select
               placeholder="Выберите..."

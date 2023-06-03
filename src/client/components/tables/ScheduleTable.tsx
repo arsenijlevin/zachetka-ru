@@ -1,5 +1,7 @@
 import { Box, Button, Table, Typography } from '@mui/material';
 import Link from 'next/link';
+import CodeCheckPopUp from 'components/pop-ups/CodeCheckPopUp';
+import React from 'react';
 
 function createData(
     dataEntry: string,
@@ -24,15 +26,18 @@ const data = [
 ];
 
 export default function ScheduleTable() {
+    const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+    const modals = [null, CodeCheckPopUp];
+    const handleOpenCodeCheck = () => setIsPopupOpen(1);
+    const SelectedModal = modals[isPopupOpen];
+
     return (
         <>
         <Box sx={{ position: 'relative', left: '5%', width: '700px' }}>
             <Typography variant='h3'>Еженедельное расписание</Typography>
         </Box>
         <Box sx={{ width: '90%', position: 'fixed', left: '5%' }}>
-            <Link href='student-grades-table' passHref>
-                <Button variant='outlined' style={{ width: '250px', position: 'fixed', right: '350px' }}>Код посещаемости</Button>
-            </Link>
+            <Button variant='outlined' style={{ width: '250px', position: 'fixed', right: '350px' }} onClick={handleOpenCodeCheck}>Код посещаемости</Button>
             <Link href='student-grades-table' passHref>
                 <Button variant='outlined' style={{ width: '250px', position: 'fixed', right: '5%' }}>Открыть успеваемость</Button>
             </Link>
@@ -341,6 +346,7 @@ export default function ScheduleTable() {
                 </Table>
             </Box>
         </Box>
+        {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
         </>
     )
 }

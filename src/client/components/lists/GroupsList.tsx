@@ -1,5 +1,7 @@
 import { Box, Breadcrumbs, Button, Typography } from '@mui/material';
+import AttendanceCheckPopUp from 'components/pop-ups/AttendanceCheckPopUp';
 import Link from 'next/link';
+import React from 'react';
 
 
 const list = [
@@ -9,12 +11,16 @@ const list = [
 const subject = 'Технологии программирования (6 семестр)';
 
 function GroupsList() {
-    
+    const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+    const modals = [null, AttendanceCheckPopUp];
+    const handleOpenAttendanceCheck = () => setIsPopupOpen(1);
+    const SelectedModal = modals[isPopupOpen];
+
     return(
         <>
         <Box sx={{ position: 'relative', left: '5%', width: '90%' }}>
             <Typography variant='h3'>Выберите группу</Typography>
-            <Button variant='outlined' style={{ width: '250px', position: 'fixed', right: '5%' }}>Проверка посещаемости</Button>
+            <Button variant='outlined' style={{ width: '250px', position: 'fixed', right: '5%' }} onClick={handleOpenAttendanceCheck} >Проверка посещаемости</Button>
             <br />
             <Breadcrumbs aria-label="breadcrumb">
                 <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link><></>
@@ -26,8 +32,9 @@ function GroupsList() {
                 ))}
             </Box>
         </Box>
+        {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
         </>
-    )
+    );
 }
 
 export default GroupsList;
