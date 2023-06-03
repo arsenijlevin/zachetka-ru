@@ -9,7 +9,13 @@ export class SubjectsService {
   constructor(private readonly subjectsRepository: SubjectsRepository) { }
 
   public async create(createSubjectDto: SubjectDto) {
-    return await this.subjectsRepository.save(createSubjectDto);
+    const newSubject = await this.subjectsRepository.save(createSubjectDto);
+
+    if (!newSubject) {
+      throw new HttpException('Cannot create subject with this parameters', 400);
+    }
+
+    return newSubject;
   }
 
   public async findAll(findAllSubjectsDTO: FindAllSubjectsDTO) {

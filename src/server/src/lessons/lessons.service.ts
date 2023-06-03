@@ -9,7 +9,13 @@ export class LessonsService {
   constructor(private readonly lessonsRepository: LessonsRepository) { }
 
   public async create(createLessonDto: LessonDto) {
-    return await this.lessonsRepository.save(createLessonDto);
+    const newLesson = await this.lessonsRepository.save(createLessonDto);
+
+    if (!newLesson) {
+      throw new HttpException('Cannot create lesson with this parameters', 400);
+    }
+
+    return newLesson;
   }
 
   public async findAll(findAllLessonsDTO: FindAllLessonsDTO) {

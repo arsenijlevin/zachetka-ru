@@ -25,11 +25,15 @@ export class LessonsRepository {
   }
 
   public async save(lesson: LessonDto): Promise<LessonDto> {
-    const newLesson = await this.prismaService.lessons.create({
-      data: lesson
-    });
+    try {
+      const newLesson = await this.prismaService.lessons.create({
+        data: lesson
+      });
 
-    return newLesson;
+      return newLesson;
+    } catch (error) {
+      return null;
+    }
   }
 
   public async findAll(findAllLessonsDTO: FindAllLessonsDTO): Promise<LessonDto[]> {
