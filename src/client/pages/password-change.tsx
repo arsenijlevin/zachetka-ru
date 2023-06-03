@@ -1,28 +1,78 @@
 import React from 'react';
 import Router from 'next/router';
 import { Box, Input, Button, Typography } from '@mui/material';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+import Cookies from 'universal-cookie';
 
-function PasswordChange() {
-    const [password, setPassword] = React.useState('0000');
+// eslint-disable-next-line @typescript-eslint/require-await
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+    const cookiesText = context.req.headers.cookie;
+
+    if (cookiesText) {
+        const cookies = new Cookies(cookiesText);
+
+        const token = cookies.get<string>("token");
+        const decodedCookie: Record<string, string> = jwt_decode(token);
+
+        return { props: { decodedCookie } } as {
+            props: {
+                decodedCookie: Record<string, string>
+            }
+        };
+    }
+
+    return { props: { decodedCookie: "" } }
+};
+
+function PasswordChange({ decodedCookie }: { decodedCookie: Record<string, unknown> }) {
     const [currentPassword, setCurrentPassword] = React.useState('');
     const [newPassword, setNewPassword] = React.useState('');
     const [newPasswordRepeated, setNewPasswordRepeated] = React.useState('');
     const [error, setError] = React.useState('');
 
-    function handleClick() {
-        if (currentPassword === password && newPassword === newPasswordRepeated) {
-            setPassword(newPassword);
-            return Router.push('/');
-        }
-        else if (newPassword !== newPasswordRepeated) {
+    async function handleClick() {
+        if (newPassword !== newPasswordRepeated) {
             setError('Пароли не совпадают');
         }
-        else {
-            setError('Неверный пароль');
+
+        try {
+            const cookies = new Cookies();
+            const token = cookies.get<string>("token");
+
+            if (!token) {
+                throw new Error()
+            }
+
+            const header = {
+                'Authorization': `Bearer ${token}`
+            }
+
+            const body = {
+                login: decodedCookie.login,
+                oldPassword: currentPassword,
+                newPassword: newPassword
+            }
+
+            const changePasswordRequest = await axios.patch(
+                `${process.env.NEXT_PUBLIC_API_HOST || ""}users/change-password`,
+                body,
+                { headers: header }
+            );
+
+            if (changePasswordRequest.status === 200) console.log("Пароль успешно изменен!");
+        } catch (error) {
+            console.log(error);
+
+            setError('Произошла непредвиденная ошибка!');
+            return;
         }
+
+        return Router.push('/');
     }
 
-    return(
+    return (
         <>
             <Box sx={{ marginX: 'auto', width: '500', height: '500', position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)' }}>
                 <Typography variant='h3'>Смена пароля</Typography>
