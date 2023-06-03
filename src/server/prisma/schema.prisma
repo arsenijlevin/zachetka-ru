@@ -8,12 +8,14 @@ datasource db {
 }
 
 model attendance {
-  student_login String   @id
+  student_login String
   lesson_id     Int
   status        String
   date          DateTime @db.Date
   lessons       lessons  @relation(fields: [lesson_id], references: [id], map: "lesson_id")
-  users         users    @relation(fields: [student_login], references: [login], map: "student_login")
+  users         students @relation(fields: [student_login], references: [login], map: "student_login")
+
+  @@id([student_login, lesson_id, date], map: "attendance_pkey1")
 }
 
 model attendance_codes {
@@ -23,24 +25,26 @@ model attendance_codes {
 }
 
 model groups {
-  id       Int        @id @default(autoincrement())
-  title    String
-  semester Int
-  lessons  lessons[]
-  students students[]
+  id             Int              @id @default(autoincrement())
+  title          String
+  semester       Int
+  groups_lesson  groups_lesson[]
+  groups_subject groups_subject[]
+  students       students[]
 }
 
 model lessons {
   id               Int                @id @default(autoincrement())
-  group_id         Int
   week_day         String
   time             String
   subject_id       Int
   place            String
   frequency        String
+  professor_login  String
   attendance       attendance[]
   attendance_codes attendance_codes[]
-  groups           groups             @relation(fields: [group_id], references: [id], map: "group_id")
+  groups_lesson    groups_lesson[]
+  users            users              @relation(fields: [professor_login], references: [login], map: "professor_login")
   subjects         subjects           @relation(fields: [subject_id], references: [id], map: "subject_id")
 }
 
@@ -73,9 +77,10 @@ model student_performance {
 }
 
 model students {
-  login    String @id
-  group_id Int
-  groups   groups @relation(fields: [group_id], references: [id], map: "group_id")
+  login      String       @id
+  group_id   Int
+  attendance attendance[]
+  groups     groups       @relation(fields: [group_id], references: [id], map: "group_id")
 }
 
 model subjects {
@@ -83,6 +88,7 @@ model subjects {
   title               String
   semester            Int
   reporting_type      String
+  groups_subject      groups_subject[]
   lessons             lessons[]
   professor_subject   professor_subject[]
   student_performance student_performance[]
@@ -93,8 +99,26 @@ model users {
   password            String
   rights_id           Int
   name                String
-  attendance          attendance?
+  lessons             lessons[]
   professor_subject   professor_subject[]
   student_performance student_performance[]
   rights              rights                @relation(fields: [rights_id], references: [id], map: "rights_id")
+}
+
+model groups_lesson {
+  group_id  Int
+  lesson_id Int
+  groups    groups  @relation(fields: [group_id], references: [id], map: "group_id")
+  lessons   lessons @relation(fields: [lesson_id], references: [id], map: "lesson_id")
+
+  @@id([group_id, lesson_id])
+}
+
+model groups_subject {
+  group_id   Int
+  subject_id Int
+  groups     groups   @relation(fields: [group_id], references: [id], map: "group_id")
+  subjects   subjects @relation(fields: [subject_id], references: [id], map: "subject_id")
+
+  @@id([group_id, subject_id])
 }

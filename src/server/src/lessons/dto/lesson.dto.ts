@@ -1,13 +1,13 @@
-import { IsString, IsNumber, Min } from "class-validator";
+import { IsString, IsNumber, Min, IsOptional } from "class-validator";
 
 export class LessonDto {
   @IsNumber()
   @Min(0)
-  id: number;
+  @IsOptional()
+  id?: number;
 
-  @IsNumber()
-  @Min(0)
-  group_id: number;
+  @IsNumber({}, { each: true })
+  groups_id: number[];
 
   @IsString()
   week_day: string;
@@ -24,4 +24,7 @@ export class LessonDto {
 
   @IsString()
   frequency: string
+
+  @IsString()
+  professor_login: string;
 }
