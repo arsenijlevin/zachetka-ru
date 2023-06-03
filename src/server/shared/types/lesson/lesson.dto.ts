@@ -1,4 +1,4 @@
-export class LessonDto {
+export type LessonDto = {
   id: number;
   group_id: number;
   week_day: string;
