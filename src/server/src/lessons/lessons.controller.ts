@@ -1,34 +1,37 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { LessonsService } from './lessons.service';
-import { CreateLessonDto } from './dto/lesson.dto';
+import { LessonDto } from './dto/lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { FindAllLessonsDTO } from '@src/lessons/dto/find-all.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('lessons')
+@ApiTags('Занятия')
 export class LessonsController {
   constructor(private readonly lessonsService: LessonsService) { }
 
-  @Post()
-  public create(@Body() createLessonDto: CreateLessonDto) {
-    return this.lessonsService.create(createLessonDto);
+  @Post("create")
+  public create(@Body() lessonDto: LessonDto) {
+    return this.lessonsService.create(lessonDto);
   }
 
-  @Get()
-  public findAll() {
-    return this.lessonsService.findAll();
+  @Get("findAll")
+  public findAll(@Body() findAllLessonsDTO: FindAllLessonsDTO) {
+    return this.lessonsService.findAll(findAllLessonsDTO);
   }
 
-  @Get(':id')
+  @Get('findOne/:id')
   public findOne(@Param('id') id: string) {
     return this.lessonsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   public update(@Param('id') id: string, @Body() updateLessonDto: UpdateLessonDto) {
     return this.lessonsService.update(+id, updateLessonDto);
   }
 
-  @Delete(':id')
-  public remove(@Param('id') id: string) {
-    return this.lessonsService.remove(+id);
+  @Delete('delete/:id')
+  public delete(@Param('id') id: string) {
+    return this.lessonsService.delete(+id);
   }
 }
