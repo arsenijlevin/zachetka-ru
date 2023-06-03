@@ -1,36 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { PostAttendanceDto } from './dto/post-attendance.dto';
 import { AttendanceService } from './attendance.service';
-import { CreateAttendanceDto } from './dto/attendance.dto';
-import { UpdateAttendanceDto } from './dto/update-attendance.dto';
 
 @Controller('attendance')
 @ApiTags("Посещаемость")
 export class AttendanceController {
   constructor(private readonly attendanceService: AttendanceService) { }
 
-  @Post("post")
-  public create(@Body() createAttendanceDto: CreateAttendanceDto) {
-    return this.attendanceService.create(createAttendanceDto);
+  @Get('findAllForStudent/:student_login/:subject_id')
+  public findAllForStudent
+    (
+      @Param('student_login') student_login: string,
+      @Param('subject_id') subject_id: number
+    ) {
+    return this.attendanceService.findAllForStudent(student_login, +subject_id);
   }
 
-  @Get("findAll")
-  public findAll() {
-    return this.attendanceService.findAll();
-  }
-
-  @Get('findOne/:id')
-  public findOne(@Param('id') id: string) {
-    return this.attendanceService.findOne(+id);
-  }
-
-  @Patch('update/:id')
-  public update(@Param('id') id: string, @Body() updateAttendanceDto: UpdateAttendanceDto) {
-    return this.attendanceService.update(+id, updateAttendanceDto);
-  }
-
-  @Delete('delete/:id')
-  public delete(@Param('id') id: string) {
-    return this.attendanceService.delete(+id);
+  @Patch('post')
+  public post(@Body() updateAttendanceDto: PostAttendanceDto) {
+    return this.attendanceService.post(updateAttendanceDto);
   }
 }

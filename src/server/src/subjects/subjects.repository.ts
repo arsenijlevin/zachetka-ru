@@ -49,85 +49,93 @@ export class SubjectsRepository {
   }
 
   public async save(subject: SubjectDto): Promise<SubjectDto> {
-    const newSubject = await this.prismaService.subjects.create({
-      data: {
-        title: subject.title,
-        semester: subject.semester,
-        reporting_type: subject.reporting_type
-      },
-      include: {
-        professor_subject: {
-          include: {
-            users: {
-              select: {
-                login: true
+    try {
+      const newSubject = await this.prismaService.subjects.create({
+        data: {
+          title: subject.title,
+          semester: subject.semester,
+          reporting_type: subject.reporting_type
+        },
+        include: {
+          professor_subject: {
+            include: {
+              users: {
+                select: {
+                  login: true
+                }
+              }
+            }
+          },
+          groups_subject: {
+            include: {
+              groups: {
+                select: {
+                  id: true
+                }
               }
             }
           }
         },
-        groups_subject: {
-          include: {
-            groups: {
-              select: {
-                id: true
-              }
-            }
+      });
+
+      await this.prismaService.professor_subject.createMany({
+        data: subject.professors_login.map(professor_login => {
+          return {
+            professor_login,
+            subject_id: newSubject.id
           }
-        }
-      },
-    });
-
-    await this.prismaService.professor_subject.createMany({
-      data: subject.professors_login.map(professor_login => {
-        return {
-          professor_login,
-          subject_id: newSubject.id
-        }
+        })
       })
-    })
 
-    await this.prismaService.groups_subject.createMany({
-      data: subject.groups_id.map(group_id => {
-        return {
-          group_id,
-          subject_id: newSubject.id
-        }
+      await this.prismaService.groups_subject.createMany({
+        data: subject.groups_id.map(group_id => {
+          return {
+            group_id,
+            subject_id: newSubject.id
+          }
+        })
       })
-    })
+    } catch (error) {
+      return null;
+    }
 
     return subject;
   }
 
   public async findAll(findAllSubjectsDTO: FindAllSubjectsDTO): Promise<SubjectDto[]> {
-    const subjects = await this.prismaService.subjects.findMany({
-      skip: findAllSubjectsDTO.skip,
-      take: findAllSubjectsDTO.take,
-      include: {
-        professor_subject: {
-          include: {
-            users: {
-              select: {
-                login: true
+    try {
+      const subjects = await this.prismaService.subjects.findMany({
+        skip: findAllSubjectsDTO.skip,
+        take: findAllSubjectsDTO.take,
+        include: {
+          professor_subject: {
+            include: {
+              users: {
+                select: {
+                  login: true
+                }
+              }
+            }
+          },
+          groups_subject: {
+            include: {
+              groups: {
+                select: {
+                  id: true
+                }
               }
             }
           }
         },
-        groups_subject: {
-          include: {
-            groups: {
-              select: {
-                id: true
-              }
-            }
-          }
-        }
-      },
-    });
-    return subjects.map(subject => ({
-      professors_login: subject.professor_subject.map(professor => professor.users.login),
-      groups_id: subject.groups_subject.map(group => group.groups.id),
-      ...subject
-    }));
+      });
+      return subjects.map(subject => ({
+        professors_login: subject.professor_subject.map(professor => professor.users.login),
+        groups_id: subject.groups_subject.map(group => group.groups.id),
+        ...subject
+      }));
+    } catch (error) {
+      return null;
+    }
   }
 
   public async update(id: number, updateSubjectDto: UpdateSubjectDto): Promise<SubjectDto | null> {
