@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { LessonsRepository } from './lessons.repository';
 import { LessonDto } from './dto/lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
-import { FindAllLessonsDTO } from '@src/lessons/dto/find-all.dto';
+import { FindAllLessonsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class LessonsService {

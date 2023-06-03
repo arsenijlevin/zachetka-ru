@@ -20,9 +20,6 @@
     "composite": true,
     "declarationMap": true,
     "paths": {
-      "@src/*": [
-        "src/*"
-      ],
       "@prisma/*": [
         "prisma/*"
       ],

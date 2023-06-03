@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { GroupsService } from './groups.service';
 import { GroupDto } from './dto/group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { FindAllGroupsDTO } from '@src/groups/dto/find-all.dto';
+import { FindAllGroupsDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('groups')

@@ -2,7 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { GroupsRepository } from './groups.repository';
 import { GroupDto } from './dto/group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { FindAllGroupsDTO } from '@src/groups/dto/find-all.dto';
+import { FindAllGroupsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class GroupsService {
