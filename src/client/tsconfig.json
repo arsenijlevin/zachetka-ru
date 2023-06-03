@@ -18,17 +18,17 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@shared/*": [
+        "../server/shared/*"
+      ]
+    },
   },
   "exclude": [
     "node_modules",
     "db"
   ],
-  "paths": {
-    "@shared/*": [
-      "./pages/*"
-    ]
-  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",

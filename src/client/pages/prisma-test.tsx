@@ -1,30 +1,39 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import axios from 'axios';
-import { GetServerSideProps } from 'next';
 import React from 'react';
-import { UserDto } from '../../server/shared/types/user/user.dto';
+import { LoginResponseDto } from '@shared/types/auth/login.dto';
 
+function PrismaTest() {
+    const [result, setResult] = React.useState('');
 
-interface UserResponse {
-    data: UserDto
-}
+    const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        try {
+            const body = {
+                login: 'back_test',
+                password: 'back_test'
+            }
+            const loginRequest = await axios.post<LoginResponseDto>(`${process.env.NEXT_PUBLIC_API_HOST || ""}auth/login`, body);
+            const loginResponse = loginRequest.data;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const { data } = await axios.get<UserResponse>(`${process.env.NEXT_PUBLIC_API_URL || ""}/api/users/findOne?login=0`);
+            if (!loginResponse) {
+                throw new Error()
+            }
 
-    return { props: { data } };
-};
-
-function PrismaTest(props: { data: UserResponse }) {
-    console.log(props.data);
-
+            setResult(loginResponse.token || "");
+        } catch (error) {
+            return;
+        }
+    }
     return (
         <>
-            <Box sx={{ marginX: 'auto', width: '500', height: '500', position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                <Typography variant='h3'>Тест базы данных</Typography>
+            <Box>
+                <Typography variant='h5'>Тест базы данных</Typography>
+                <Button onClick={handleClick}>Тест логин!</Button>
+                <Typography variant='body2'>Результат: {result}</Typography>
             </Box>
         </>
     );
 }
+
 
 export default PrismaTest;
