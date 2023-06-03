@@ -8,14 +8,14 @@ import { FindAllStudentPerformanceDTO } from './dto/find-all.dto';
 export class StudentPerformanceService {
   constructor(private readonly studentPerformanceRepository: StudentPerformanceRepository) { }
 
-  public async create(createLessonDto: StudentPerformanceDto) {
-    const newLesson = await this.studentPerformanceRepository.save(createLessonDto);
+  public async create(studentPerformanceDto: StudentPerformanceDto) {
+    const newStudentPerformance = await this.studentPerformanceRepository.save(studentPerformanceDto);
 
-    if (!newLesson) {
-      throw new HttpException('Cannot create lesson with this parameters', 400);
+    if (!newStudentPerformance) {
+      throw new HttpException('Cannot create student-performance with this parameters', 400);
     }
 
-    return newLesson;
+    return newStudentPerformance;
   }
 
   public async findAll(findAllStudentPerformanceDTO: FindAllStudentPerformanceDTO) {
@@ -23,32 +23,32 @@ export class StudentPerformanceService {
   }
 
   public async findOne(studentLogin: string, subjectId: number) {
-    const lesson = await this.studentPerformanceRepository.findOne(studentLogin, subjectId);
+    const studentPerformance = await this.studentPerformanceRepository.findOne(studentLogin, subjectId);
 
-    if (!lesson) {
-      throw new HttpException('Lesson not found', 404);
+    if (!studentPerformance) {
+      throw new HttpException('Student-performance not found', 404);
     }
 
-    return lesson;
+    return studentPerformance;
   }
 
   public async update(studentLogin: string, subjectId: number, updateLessonDto: UpdateStudentPerformanceDto) {
-    const updatedLesson = await this.studentPerformanceRepository.update(studentLogin, subjectId, updateLessonDto);
+    const updatedStudentPerformance = await this.studentPerformanceRepository.update(studentLogin, subjectId, updateLessonDto);
 
-    if (!updatedLesson) {
-      throw new HttpException('Lesson not found', 404);
+    if (!updatedStudentPerformance) {
+      throw new HttpException('Student-performance not found', 404);
     }
 
-    return updatedLesson;
+    return updatedStudentPerformance;
   }
 
   public async delete(studentLogin: string, subjectId: number) {
-    const deletedLesson = await this.studentPerformanceRepository.delete(studentLogin, subjectId);
+    const deletedStudentPerformance = await this.studentPerformanceRepository.delete(studentLogin, subjectId);
 
-    if (!deletedLesson) {
-      throw new HttpException('Lesson not found', 404);
+    if (!deletedStudentPerformance) {
+      throw new HttpException('Student-performance not found', 404);
     }
 
-    return deletedLesson;
+    return deletedStudentPerformance;
   }
 }

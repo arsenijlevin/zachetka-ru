@@ -1,4 +1,4 @@
-import { IsInt, IsNumber, IsString, Max, Min } from "class-validator";
+import { IsInt, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 
 export class StudentPerformanceDto {
   @IsString()
@@ -12,23 +12,27 @@ export class StudentPerformanceDto {
   @Min(0)
   @Max(50)
   @IsInt()
-  point1: number;
+  @IsOptional()
+  point1?: number;
 
   @IsNumber()
   @Min(0)
   @Max(50)
   @IsInt()
-  point2: number;
+  @IsOptional()
+  point2?: number;
 
   @IsNumber()
   @Min(0)
   @Max(50)
   @IsInt()
-  point3: number;
+  @IsOptional()
+  point3?: number;
 
   @IsNumber()
   @Min(0)
   @Max(50)
   @IsInt()
-  exam_mark: number;
+  @IsOptional()
+  exam_mark?: number;
 }

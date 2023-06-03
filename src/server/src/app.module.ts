@@ -9,6 +9,7 @@ import { PrismaService } from './prisma.service';
 import { SubjectsModule } from './subjects/subjects.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { GroupsModule } from './groups/groups.module';
+import { StudentPerformanceModule } from './student-performance/student-performance.module';
 
 export const moduleSettings = {
   imports: [
@@ -18,6 +19,7 @@ export const moduleSettings = {
     AuthModule,
     LessonsModule,
     GroupsModule,
+    StudentPerformanceModule,
     ConfigModule.forRoot()
   ],
   controllers: [AppController],
