@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { StudentPerformanceDto } from "./dto/studentPerformance.dto";
+import { StudentPerformanceDto } from "./dto/student-performance.dto";
 import { PrismaService } from "../prisma.service";
-import { FindAllStudentPerformancesDTO } from "./dto/find-all.dto";
-import { UpdateStudentPerformanceDto } from "./dto/update-studentPerformance.dto";
+import { FindAllStudentPerformanceDTO } from "./dto/find-all.dto";
+import { UpdateStudentPerformanceDto } from "./dto/update-student-performance.dto";
 
 
 @Injectable()
@@ -39,7 +39,7 @@ export class StudentPerformanceRepository {
     }
   }
 
-  public async findAll(findAllStudentPerformancesDTO: FindAllStudentPerformancesDTO): Promise<StudentPerformanceDto[]> {
+  public async findAll(findAllStudentPerformancesDTO: FindAllStudentPerformanceDTO): Promise<StudentPerformanceDto[]> {
     const studentPerformances = await this.prismaService.student_performance.findMany({
       skip: findAllStudentPerformancesDTO.skip,
       take: findAllStudentPerformancesDTO.take

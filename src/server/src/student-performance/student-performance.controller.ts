@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { StudentPerformancesService } from './student-performance.service';
+import { StudentPerformanceService } from './student-performance.service';
 import { StudentPerformanceDto } from './dto/student-performance.dto';
 import { UpdateStudentPerformanceDto } from './dto/update-student-performance.dto';
-import { FindAllStudentPerformancesDTO } from './dto/find-all.dto';
+import { FindAllStudentPerformanceDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('studentPerformances')
 @ApiTags('Занятия')
-export class StudentPerformancesController {
-  constructor(private readonly studentPerformancesService: StudentPerformancesService) { }
+export class StudentPerformanceController {
+  constructor(private readonly studentPerformancesService: StudentPerformanceService) { }
 
   @Post("create")
   public create(@Body() studentPerformanceDto: StudentPerformanceDto) {
@@ -16,7 +16,7 @@ export class StudentPerformancesController {
   }
 
   @Get("findAll")
-  public findAll(@Body() findAllStudentPerformancesDTO: FindAllStudentPerformancesDTO) {
+  public findAll(@Body() findAllStudentPerformancesDTO: FindAllStudentPerformanceDTO) {
     return this.studentPerformancesService.findAll(findAllStudentPerformancesDTO);
   }
 
