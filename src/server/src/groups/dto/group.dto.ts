@@ -1,10 +1,11 @@
-import { IsNumber, IsString, Min } from "class-validator";
+import { IsNumber, IsOptional, IsString, Min } from "class-validator";
 
 
 export class GroupDto {
   @IsNumber()
   @Min(0)
-  id: number;
+  @IsOptional()
+  id?: number;
 
   @IsString()
   title: string;
