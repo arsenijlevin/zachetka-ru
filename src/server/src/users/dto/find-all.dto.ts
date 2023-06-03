@@ -4,6 +4,7 @@ export class FindAllUsersDTO {
   @IsNumber()
   @IsOptional()
   skip?: number;
+
   @IsOptional()
   @IsNumber()
   take?: number;

@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { ChangePasswordDto } from '@shared/types/auth/change-password.dto';
-import { UserDto, UserUnsafeDto } from '@shared/types/user/user.dto';
+import { HttpException, Injectable } from '@nestjs/common';
 import { FindAllUsersDTO } from './dto/find-all.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from "bcrypt"
+import { UserDto, UserUnsafeDto } from './dto/user.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,8 +12,13 @@ export class UsersService {
     private userRepository: UsersRepository,
   ) { }
 
-  public async findOne(username: string): Promise<UserUnsafeDto | undefined> {
-    const user = await this.userRepository.findOne(username);
+  public async findOne(login: string): Promise<UserUnsafeDto | undefined> {
+    const user = await this.userRepository.findOne(login);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
     return user;
   }
 
@@ -29,11 +34,21 @@ export class UsersService {
 
   public async update(login: string, updateUserDto: UpdateUserDto): Promise<UserDto | undefined> {
     const user = await this.userRepository.update(login, updateUserDto);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
     return user;
   }
 
   public async delete(login: string): Promise<UserDto | undefined> {
     const user = await this.userRepository.delete(login);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
     return user;
   }
 
@@ -41,13 +56,13 @@ export class UsersService {
     const user = await this.findOne(changePassword.login);
 
     if (!user) {
-      return undefined;
+      throw new HttpException('User not found', 404);
     }
 
     const isOldPasswordCorrect = await bcrypt.compare(changePassword.oldPassword, user.password)
 
     if (!isOldPasswordCorrect) {
-      return undefined;
+      throw new HttpException('User not found', 400);
     }
 
     const newPassword = await bcrypt.hash(changePassword.newPassword, 10);

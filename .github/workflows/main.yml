@@ -4,49 +4,65 @@ on:
   pull_request:
     branches:
     - '**'
-    types: [opened, edited, reopened]
+    types: [opened, edited, reopened, synchronize]
 jobs:
   build_client:
     runs-on: ubuntu-20.04
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
-      - name: Install deps
-        working-directory: ./src/client
-        run: npm ci
+      - name: Installing deps
+        working-directory: ./src
+        run: |
+          cd ./client
+          npm ci
       - name: Application building
-        working-directory: ./src/client
-        run: npm run build
+        working-directory: ./src
+        run: |
+          cd ./client
+          npm run build
   lint_client:
     runs-on: ubuntu-20.04
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
-      - name: Install deps
-        working-directory: ./src/client
-        run: npm ci
-      - name: Code linting
-        working-directory: ./src/client
-        run: npm run lint
+      - name: Installing deps
+        working-directory: ./src
+        run: |
+          cd ./client
+          npm ci
+      - name: Application building
+        working-directory: ./src
+        run: |
+          cd ./client
+          npm run lint
   build_server:
     runs-on: ubuntu-20.04
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
-      - name: Install deps
-        working-directory: ./src/server
-        run: npm ci
+      - name: Installing deps
+        working-directory: ./src
+        run: |
+          cd ./server
+          npm ci
       - name: Application building
-        working-directory: ./src/server
-        run: npm run build
+        working-directory: ./src
+        run: |
+          cd ./server
+          npm run build
   lint_server:
     runs-on: ubuntu-20.04
     steps:
       - name: Get repository code
         uses: actions/checkout@v3
-      - name: Install deps
-        working-directory: ./src/server
-        run: npm ci
-      - name: Code linting
-        working-directory: ./src/server
-        run: npm run lint
+      - name: Installing deps
+        working-directory: ./src
+        run: |
+          cd ./server
+          npm ci
+      - name: Application building
+        working-directory: ./src
+        run: |
+          cd ./server
+          npm run lint

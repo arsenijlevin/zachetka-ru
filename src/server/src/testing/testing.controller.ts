@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { TestDataDto } from './dto/TestDataDTO';
 import { TestingService } from './testing.service';
 
 @Controller('testing')
+@ApiTags('Тестовые запросы')
 export class TestingController {
   constructor(private readonly testingService: TestingService) { }
 

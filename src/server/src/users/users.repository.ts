@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
+import { UserUnsafeDto } from "./dto/user.dto";
 import { PrismaService } from "../prisma.service";
 import { FindAllUsersDTO } from "./dto/find-all.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { UserUnsafeDto } from "@shared/types/user/user.dto";
 
 
 @Injectable()
@@ -12,12 +12,16 @@ export class UsersRepository {
   ) { }
 
   public async findOne(login: string): Promise<UserUnsafeDto | undefined> {
-    const user = await this.prismaService.users.findUnique({
-      where: {
-        login
-      }
-    });
-    return user;
+    try {
+      const user = await this.prismaService.users.findUnique({
+        where: {
+          login
+        }
+      });
+      return user;
+    } catch (error) {
+      return null;
+    }
   }
 
   public async save(user: UserUnsafeDto): Promise<UserUnsafeDto> {
@@ -50,11 +54,15 @@ export class UsersRepository {
   }
 
   public async delete(login: string): Promise<UserUnsafeDto | undefined> {
-    const user = await this.prismaService.users.delete({
-      where: {
-        login: login
-      }
-    });
-    return user;
+    try {
+      const user = await this.prismaService.users.delete({
+        where: {
+          login: login
+        }
+      });
+      return user;
+    } catch (error) {
+      return null;
+    }
   }
 }
