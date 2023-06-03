@@ -31,11 +31,18 @@ export class AuthService {
   }
 
   public async login(user: LoginDto) {
-    const payload = { login: user.login };
-
     const validUser = await this.validateUser(user.login, user.password);
 
     if (!validUser) throw new HttpException("Invalid login or password", HttpStatus.BAD_REQUEST);
+
+    const userFromDatabase = await this.usersService.findOne(user.login);
+
+    const payload: UserDto = {
+      login: userFromDatabase.login,
+      rights_id: userFromDatabase.rights_id,
+      name: userFromDatabase.name
+    };
+
 
     return {
       token: this.jwtService.sign(payload, {
