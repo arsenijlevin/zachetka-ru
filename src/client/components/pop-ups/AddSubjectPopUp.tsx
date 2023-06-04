@@ -35,55 +35,41 @@ function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
       aria-describedby="modal-modal-description"
     >
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
-        <button className="self-end">
-          <AiOutlineClose onClick={handleClose} />
-        </button>
+        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
         <Box className="flex flex-col gap-8 self-center">
           <Typography variant="h5" fontWeight="bold">Добавить дисциплину</Typography>
           <Box>
-              <Typography variant="body1">Введите название</Typography>
-              <Input type="text" className="mt-2 p-1" fullWidth></Input>
+            <Typography variant="body1">Введите название</Typography>
+            <Input type="text" className="mt-2 p-1" fullWidth></Input>
           </Box>
           <Box>
-              <Typography variant="body1">Выбор преподавателей</Typography>
-              <Select
+            <Typography variant="body1">Выбор преподавателей</Typography>
+            <Select
               placeholder="Выберите..."
               isMulti
               options={lecturers}
               className="mt-2"
-              />
+            />
           </Box>
           <Box>
-              <Typography variant="body1">Выберите группы</Typography>
-              <Select
+            <Typography variant="body1">Выберите группы</Typography>
+            <Select
               placeholder="Выберите..."
               isMulti
               options={groups}
               className="mt-2"
-              />
-          </Box>
-          <Box>
-            <Typography variant="body1">Введите семестр</Typography>
-            <Input
-              type="number"
-              fullWidth
-              className="mt-2 p-1"
-              inputProps={{
-                min: 1,
-                max: 12,
-              }}
             />
           </Box>
           <Box>
-              <Typography variant="body1">Выберите отчётность</Typography>
-              <Select
+            <Typography variant="body1">Выберите отчётность</Typography>
+            <Select
               placeholder="Выберите..."
               options={examType}
               className="mt-2"
-              />
+            />
           </Box>
           <Button variant="contained" size="medium" className="px-2 py-1">
-              Добавить
+            Добавить
           </Button>
         </Box>
       </Box>

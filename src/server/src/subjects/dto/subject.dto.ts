@@ -6,6 +6,12 @@ export class SubjectDto {
   @IsString()
   title: string;
 
+  @IsString({ each: true })
+  professors_login: string[];
+
+  @IsNumber({}, { each: true })
+  groups_id: number[];
+
   @IsNumber()
   @Min(0)
   semester: number;

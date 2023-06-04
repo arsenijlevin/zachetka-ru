@@ -1,6 +1,39 @@
 import React from 'react';
 import Router from 'next/router';
 import { Box, Input, Button, Typography } from '@mui/material';
+import axios, { AxiosResponse } from 'axios';
+import Cookies from 'universal-cookie';
+import jwt_decode from "jwt-decode";
+import { UserDto } from '@shared/types/user/user.dto';
+
+interface LoginPayload {
+  login: string;
+  password: string;
+}
+
+type LoginResponse = AxiosResponse<{
+  token?: string;
+}>
+
+/* export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  const cookiesText = context.req.headers.cookie;
+
+  if (cookiesText) {
+      const cookies = new Cookies(cookiesText);
+
+      const token = cookies.get<string>("token");
+      if (!token) return { props: { decodedCookie: "" } }
+      const decodedCookie: UserDto = jwt_decode(token);
+
+      return { props: { decodedCookie } } as {
+          props: {
+              decodedCookie: UserDto;
+          }
+      };
+  }
+
+  return { props: { decodedCookie: "" } }
+};*/
 
 
 function App() {
@@ -8,19 +41,54 @@ function App() {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
 
-  function handleClick() {
-    if (login === 'admin' && password === '0000') {
-      return Router.push('/admin-panel');
+  async function handleClick() {
+    const body = {
+      login,
+      password,
+    };
+    try {
+      const loginRequest = await axios.post<LoginPayload, LoginResponse>(`${process.env.NEXT_PUBLIC_API_HOST || ""}auth/login`, body);
+
+      const cookies =  new Cookies();
+
+      if (!loginRequest.data.token) {
+        throw new Error()
+      }
+
+      cookies.set('token', loginRequest.data.token, { path: '/' });
+      const token = cookies.get<string>("token");
+      if (!token) return { props: { decodedCookie: "" } }
+      const decodedCookie: UserDto = jwt_decode(token);
+      console.log(decodedCookie);
+      if (decodedCookie.rights_id === 3) {
+        return Router.push('/admin-panel');
+      }
+      else if (decodedCookie.rights_id === 1) {
+        return Router.push('/subjects-list');
+      }
+      else if (decodedCookie.rights_id === 2) {
+        return Router.push('/schedule-table');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          setError('Неверный логин или пароль');
+        } else {
+          setError('Произошла непредвиденная ошибка!');
+        }
+      } else {
+        setError('Произошла непредвиденная ошибка!');
+      }
+      return;
     }
-    else if (login === 'lecturer' && password === '0000') {
-      return Router.push('/subjects-list');
+
+    /* 
+    {
+      "login": "login",
+      "password": "password",
     }
-    else if (login === 'student' && password === '0000') {
-      return Router.push('/schedule-table');
-    }
-    else {
-      setError('Неверный логин или пароль');
-    }
+    */
+    
   }
 
   return (

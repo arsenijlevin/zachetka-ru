@@ -1,23 +1,25 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Typography } from '@mui/material';
 import Link from 'next/link';
 
-const list = [
-    'Технологии программирования (6 семестр)'
-];
+interface SubjectsListProps {
+    subjects: string[]
+}
 
-function SubjectsList() {
-    
-    return(
-        <>
-        <Box sx={{ position: 'relative', left: '5%', width: '90%' }}>
-            <Typography variant='h3'>Выберите дисциплину</Typography>
-            <br />
-            <br />
-            {list.map((item) => (
-                <Link href='groups-list' passHref style={{ textDecoration: 'underline', color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
-            ))}
-        </Box>
-        </>
+function SubjectsList({ subjects }: SubjectsListProps) {
+
+    return (
+        <Box width={'90%'} marginX={'auto'} display={'flex'} flexDirection={'column'} gap={2}>
+            <Box>
+                <Typography variant='h3'>Выберите дисциплину</Typography>
+            </Box>
+            <Box display={'flex'}>
+                {subjects.map((item, index) => (
+                    <Breadcrumbs key={index} aria-label="breadcrumb">
+                        <Link href='/groups-list' passHref style={{ color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
+                    </Breadcrumbs>
+                ))}
+            </Box>
+        </Box >
     )
 }
 

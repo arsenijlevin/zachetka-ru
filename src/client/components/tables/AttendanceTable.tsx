@@ -29,15 +29,8 @@ const group = 'Группа 1';
   return { name, attendance, n, p, b, sum };
 } */
 
-const rows: GridRowsProp = [
-  { id: 1, col2: '', col3: 'Н', col4: '', col5: '', col6: '', col7: '', col8: 'Н', col9: '', col10: '', col11: '', col12: 'П', col13: '', col14: 'П', col15: '', col16: 'Б', col17: 'П', col18: '', col19: 'П', col20: '', col21: 'Б', col22: 2, col23: 4, col24: 2, col25: 8 },
-  { id: 2, col2: '', col3: 'Н', col4: '', col5: '', col6: '', col7: '', col8: 'Н', col9: '', col10: '', col11: '', col12: 'П', col13: '', col14: 'П', col15: '', col16: 'Б', col17: 'П', col18: '', col19: 'П', col20: '', col21: 'Б', col22: 2, col23: 4, col24: 2, col25: 8 },
-  { id: 3, col2: '', col3: 'Н', col4: '', col5: '', col6: '', col7: '', col8: 'Н', col9: '', col10: '', col11: '', col12: 'П', col13: '', col14: 'П', col15: '', col16: 'Б', col17: 'П', col18: '', col19: 'П', col20: '', col21: 'Б', col22: 2, col23: 4, col24: 2, col25: 8 },
-  { id: 4, col2: '', col3: 'Н', col4: '', col5: '', col6: '', col7: '', col8: 'Н', col9: '', col10: '', col11: '', col12: 'П', col13: '', col14: 'П', col15: '', col16: 'Б', col17: 'П', col18: '', col19: 'П', col20: '', col21: 'Б', col22: 2, col23: 4, col24: 2, col25: 8 },
-];
-
-const columns: GridColDef[] = [
-  { field: 'col2', headerName: '1.12\n15:00', width: 100, editable: true },
+let columns: GridColDef[] = [
+  { field: 'col2', headerName: '1.12\n15:00', width: 100, editable: true, },
   { field: 'col3', headerName: '2.12\n8:00', width: 100, editable: true },
   { field: 'col4', headerName: '6.12\n8:00', width: 100, editable: true },
   { field: 'col5', headerName: '7.12\n8:00', width: 100, editable: true },
@@ -59,29 +52,79 @@ const columns: GridColDef[] = [
   { field: 'col21', headerName: '22.12\n8:00', width: 100, editable: true },
 ];
 
-const firstRows: GridRowsProp = [
-  { id: 1, col1: 'Иванов А. А.' },
-  { id: 2, col1: 'Иванов А. А.' },
-  { id: 3, col1: 'Иванов А. А.' },
-  { id: 4, col1: 'Иванов А. А.' },
-];
+const marks = ["", "", "", "", "", "", "", "", "", "Н", "Б", "П"];
+
+const getRandomMark = (items: string[]) => items[Math.floor(Math.random() * items.length)];
+
+
+columns = columns.map(column => ({
+  disableColumnMenu: true,
+  sortable: false,
+  ...column
+}))
+
+const names = [
+  "Головина М. А.",
+  "Петров А. Е.",
+  "Гусева И. М.",
+  "Петровская А. М.",
+  "Панова В. М.",
+  "Жукова А. А.",
+  "Александрова В. К.",
+  "Калинин И. И.",
+  "Андреева Е. Д.",
+  "Спиридонова А. А.",
+  "Еремина О. И.",
+  "Иванова С. С.",
+  "Ситникова В. М.",
+  "Баранов С. Т.",
+  "Чернышева В. В.",
+  "Антонов М. Ю.",
+  "Белов А. М.",
+  "Осипов М. А.",
+  "Маркин Б. М.",
+  "Филиппова К. А.",
+  "Носкова В. К.",
+  "Усов А. С.",
+  "Афанасьев Д. Т.",
+  "Васильева В. Г.",
+  "Козлова В. С."
+]
+
+const entryRows = () => columns.map((column, index) => ([
+  `col${index + 1}`, getRandomMark(marks),
+]));
+
+const rows = names.map((name, index) => {
+  const row: GridRowsProp = Object.fromEntries(entryRows());
+  return {
+    id: index,
+    ...row
+  }
+})
+
+const firstRows: GridRowsProp = names.map((name, index) => ({
+  id: index,
+  col1: name
+}))
 
 const firstColumns: GridColDef[] = [
-  { field: 'col1', headerName: 'ФИО студента', width: 150 },
+  { field: 'col1', headerName: 'ФИО студента', flex: 1, sortable: false, disableColumnMenu: true },
 ];
 
-const lastRows: GridRowsProp = [
-  { id: 1, col1: 2, col2: 4, col3: 2, col4: 8 },
-  { id: 2, col1: 3, col2: 4, col3: 2, col4: 8 },
-  { id: 3, col1: 1, col2: 4, col3: 2, col4: 8 },
-  { id: 4, col1: 0, col2: 4, col3: 2, col4: 8 },
-];
+const lastRows: GridRowsProp = rows.map((row, index) => ({
+  id: index,
+  col1: Object.values(row).filter(value => typeof value === "string" && value === "Н").length,
+  col2: Object.values(row).filter(value => typeof value === "string" && value === "П").length,
+  col3: Object.values(row).filter(value => typeof value === "string" && value === "Б").length,
+  col4: Object.values(row).filter(value => typeof value === "string" && (value === "Н" || value === "П" || value === "Б")).length,
+}));
 
 const lastColumns: GridColDef[] = [
-  { field: 'col1', headerName: 'Н', width: 50 },
-  { field: 'col2', headerName: 'П', width: 50 },
-  { field: 'col3', headerName: 'Б', width: 50 },
-  { field: 'col4', headerName: 'Сумма \n пропусков', width: 150 },
+  { field: 'col1', headerName: 'Н', flex: 0.15, maxWidth: 75, sortable: false, disableColumnMenu: true },
+  { field: 'col2', headerName: 'П', flex: 0.15, maxWidth: 75, sortable: false, disableColumnMenu: true },
+  { field: 'col3', headerName: 'Б', flex: 0.15, maxWidth: 75, sortable: false, disableColumnMenu: true },
+  { field: 'col4', headerName: 'Сумма \n пропусков', flex: 0.55, maxWidth: 150, sortable: false, disableColumnMenu: true },
 ];
 
 
@@ -115,34 +158,52 @@ export default function AttendanceTable() {
   );
 
   return (
-    <Box sx={{ width: '2000px' }}>
-      <Typography variant='h3' position={'sticky'} left={'5%'} width={'500px'}>Учёт посещаемости</Typography>
-      <Link href='grades-table' passHref>
-        <Button variant='outlined' style={{ width: '200px', position: 'fixed', right: '5%' }}>Открыть оценки</Button>
-      </Link>
-      <br />
-      <Box sx={{ position: 'sticky', left: '5%', width: '600px' }}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link>
-          <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='groups-list'>{group}</Link>
-          <Link className='underline hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='attendance-table'>Учёт посещаемости</Link>
-        </Breadcrumbs>
+    <Box width={'90%'} marginX={'auto'} display={'flex'} flexDirection={'column'} gap={2}>
+      <Box>
+        <Typography variant='h3'>Учёт посещаемости</Typography>
       </Box>
-      <br />
-      <Typography variant='h5' style={{ width: '400px', position: 'sticky', left: '5%' }}>Общее количество занятий: 20</Typography>
-      <br />
-      <Box sx={{ position: 'fixed', left: '5%', width: '90%' }}>
-        <Box sx={{ position: 'fixed', left: '5%', width: '10%' }}>
-          <DataGrid rows={firstRows} columns={firstColumns} hideFooter={true}
-          sx={{
-            borderRadius: '0px',
-          }}/>     
+      <Box display={'flex'} alignItems={'center'}>
+        <Box flex={1}>
+          <Breadcrumbs aria-label="breadcrumb" style={{ color: '#1E90FF', fontSize: '20px' }}>
+            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link>
+            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='groups-list'>{group}</Link>
+            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='attendance-table'>Учёт посещаемости</Link>
+          </Breadcrumbs>
         </Box>
-        <Box sx={{ position: 'fixed', left: '15%', width: '60%' }}>
-          <DataGrid rows={rows} columns={columns} hideFooter={true} processRowUpdate={processRowUpdate}
-          sx={{
-            '.MuiDataGrid-columnHeaderTitle': { 
-              fontWeight: 'bold !important',
+        <Box>
+          <Link href='grades-table' passHref>
+            <Button variant='outlined'>Открыть оценки</Button>
+          </Link>
+        </Box>
+      </Box>
+      <Box>
+        <Typography variant='h5'>Общее количество занятий: 20</Typography>
+      </Box>
+      <Box display={"flex"}>
+        <Box flex={0.2}>
+          <DataGrid rows={firstRows} columns={firstColumns} hideFooter={true}
+            sx={{
+              borderRadius: '0px',
+              borderBottom: '0',
+            }} />
+        </Box>
+        <Box flex={0.6} maxWidth={'60%'}>
+          <DataGrid showColumnVerticalBorder rows={rows} columns={columns} hideFooter={true} processRowUpdate={processRowUpdate}
+            sx={{
+              '.MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 'bold !important',
+              },
+              '& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
+                width: '0.4em',
+              },
+              '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track': {
+                background: '#f1f1f1',
+              },
+              '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb': {
+                backgroundColor: '#888',
+              },
+              '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
+                background: '#555',
               },
               "& .MuiDataGrid-cell": {
                 borderRight: 1,
@@ -150,16 +211,19 @@ export default function AttendanceTable() {
               },
               borderRadius: '0px',
               borderLeft: '0px',
-            }}
-            />
+            }
+            }
+          />
         </Box>
-        <Box sx={{ position: 'fixed', right: '5%', width: '20%' }}>
+        <Box flex={0.2}>
           <DataGrid rows={lastRows} columns={lastColumns} hideFooter={true}
-          sx={{
-            borderRadius: '0px',
-          }}/>
+            sx={{
+              borderRadius: '0px',
+              borderLeft: '0',
+              borderBottom: '0',
+            }} />
         </Box>
       </Box>
-    </Box>
+    </Box >
   );
 }

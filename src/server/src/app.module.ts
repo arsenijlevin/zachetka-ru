@@ -10,6 +10,7 @@ import { SubjectsModule } from './subjects/subjects.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { GroupsModule } from './groups/groups.module';
 import { StudentPerformanceModule } from './student-performance/student-performance.module';
+import { AttendanceModule } from './attendance/attendance.module';
 
 export const moduleSettings = {
   imports: [
@@ -19,6 +20,7 @@ export const moduleSettings = {
     AuthModule,
     LessonsModule,
     GroupsModule,
+    AttendanceModule,
     StudentPerformanceModule,
     ConfigModule.forRoot()
   ],

@@ -1,0 +1,23 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build:server": "npm run build:prisma && npm run build --workspace=server",
+    "build:client": "npm run build --workspace=client",
+    "start:server": "npm run start:prod --workspace=server",
+    "start:client": "npm run start --workspace=client",
+    "build:prisma": "npm run build:prisma-pull && npm run build:prisma-generate",
+    "build:prisma-pull": "npm run prisma:pull --workspace=server",
+    "build:prisma-generate": "npm run prisma:generate --workspace=server"
+
+  },
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}

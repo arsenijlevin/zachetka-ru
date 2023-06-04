@@ -24,7 +24,7 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
     const subjectName = 'Технологии программирования';
     const semester = 6;
     const handleClose = () => setOpen(0);
-    const[state, setState] = React.useState(0)
+    const [state, setState] = React.useState(0)
     const code = 'test';
     const time = 60000;
     const groups = [
@@ -62,24 +62,22 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
 
     const renderer = ({ minutes, seconds, completed }: TimerProps) => {
         if (completed) {
-          return <Typography variant="h1" textAlign={'center'}>00:00</Typography>;
+            return <Typography variant="h1" textAlign={'center'}>00:00</Typography>;
         } else {
-          return <Typography variant="h1" textAlign={'center'}>{minutes}:{seconds}</Typography>;
+            return <Typography variant="h1" textAlign={'center'}>{minutes}:{seconds}</Typography>;
         }
-      };
+    };
 
 
     if (state === 0) {
-        return(
+        return (
             <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
                 <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white mt-16">
-                    <button className="self-end">
-                        <AiOutlineClose onClick={handleClose} />
-                    </button>
+                    <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
                     <Box className="flex flex-col gap-8 self-center">
                         <Typography variant="h6" textAlign={'center'}>
                             Настройка проверки посещаемости
@@ -91,46 +89,42 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
                         <Typography variant="h6" textAlign={'center'} fontStyle={'italic'}>
                             Введите время проверки от 00:30 до 15:00
                         </Typography>
-                        <LocalizationProvider localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
-                            dateAdapter={AdapterLuxon} adapterLocale='ru'>
-                                <MultiSectionDigitalClock sx={{ width: '130px', margin: 'auto',
-                                '.css-1916zh5-MuiList-root-MuiMultiSectionDigitalClockSection-root': {
-                                    width: '60px',
-                                }
-                            }} timeSteps={{ minutes: 1 }} views={['minutes', 'seconds']} />
-                        </LocalizationProvider>
+                        <Box margin={'auto'}>
+                            <LocalizationProvider localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
+                                dateAdapter={AdapterLuxon} adapterLocale='ru'>
+                                <MultiSectionDigitalClock timeSteps={{ minutes: 1 }} views={['minutes', 'seconds']} />
+                            </LocalizationProvider>
+                        </Box>
                         <Select
-                        placeholder="Выберите день недели"
-                        options={days}/>
+                            placeholder="Выберите день недели"
+                            options={days} />
                         <Select
-                        placeholder="Числитель/знаменатель"
-                        options={frequency}/>
+                            placeholder="Числитель/знаменатель"
+                            options={frequency} />
                         <Typography variant="h6" textAlign={'center'}>
                             На занятии должно присутствовать {studentsQuantity} студентов
                         </Typography>
-                        <Button variant='outlined' style={{ width: '500px' }} onClick={handleChangeStateToMiddle}>Запустить проверку посещаемости</Button>
+                        <Button variant='outlined' onClick={handleChangeStateToMiddle}>Запустить проверку посещаемости</Button>
                     </Box>
                 </Box>
-            </Modal>
+            </Modal >
         );
     }
 
     if (state === 1) {
-        return(
+        return (
             <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
                 <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white mt-16">
                     <Box className="flex flex-col gap-8 self-center">
-                        <button className="self-end">
-                            <AiOutlineClose onClick={handleClose} />
-                        </button>
+                        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
                         <Typography variant="h6" textAlign={'center'}>
                             Идёт проверка посещаемости
                         </Typography>
-                        <Countdown date={Date.now() + time} renderer={renderer} className='text-center'/>
+                        <Countdown date={Date.now() + time} renderer={renderer} className='text-center' />
                         <Typography variant="h6" textAlign={'center'}>
                             Код: {code}
                         </Typography>
@@ -142,28 +136,28 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
     }
 
     if (state === 2) {
-        return(
+        return (
             <Modal
-            open={open}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
             >
-                <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white mt-16">
-                    <Box className="flex flex-col self-center">
-                        <button className="self-end">
-                            <AiOutlineClose onClick={handleClose} />
-                        </button>
-                        <Typography variant="h6" textAlign={'center'}>
-                            Итог проверки посещаемости
+                <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white mt-16 break-all">
+                    <Box className="flex flex-col self-center break-all">
+                        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
+                        <Typography variant="h3" textAlign={'center'} className={"break-all"}>
+                            Итог
                         </Typography>
-                        <Typography variant="h1" textAlign={'center'}>
+                        <Typography variant="h3" textAlign={'center'} marginY={3}>
                             00:00
                         </Typography>
-                        {groups.map((item) => (
-                            <Typography variant="h6" textAlign={'center'}>Группа {item.title} - студентов отметилось: {item.studentsChecked}</Typography>
-                        ))}
-                        <Typography variant="h6" textAlign={'center'}>Всего студентов на занятии: {studentsChecked}</Typography>
-                        <Typography variant="h6" textAlign={'center'}>
+                        <Box marginBottom={2}>
+                            {groups.map((item, index) => (
+                                <Typography key={index} variant="body1" textAlign={'center'} marginBottom={1}>Группа {item.title} - студентов отметилось: {item.studentsChecked}</Typography>
+                            ))}
+                        </Box>
+                        <Typography variant="body1" textAlign={'center'}>Всего студентов на занятии: {studentsChecked}</Typography>
+                        <Typography variant="body1" textAlign={'center'}>
                             На занятии должно присутствовать {studentsQuantity} студентов
                         </Typography>
                         <br />
@@ -174,7 +168,7 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
         );
     }
 
-    return(
+    return (
         <></>
     );
 }
