@@ -173,6 +173,10 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
             </Modal>
         );
     }
+
+    return(
+        <></>
+    );
 }
 
 export default AttendanceCheckPopUp;
