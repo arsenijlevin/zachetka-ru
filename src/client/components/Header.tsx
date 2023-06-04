@@ -8,24 +8,26 @@ function Header() {
     const handleLogout = async () => {
         const cookies = new Cookies();
         cookies.set('token', '', { path: '/', maxAge: -1 });
-        
-    };
-    
 
-    return(
+    };
+
+
+    return (
         <Box>
-            <AppBar position='static' sx={{ bgcolor: 'rgb(220, 220, 220)', minHeight: '50px' }}>
-                <Box sx={{ ml: 'auto', my: 'auto' }}>
-                    <Link href='password-change' passHref>
-                        <Button variant='contained' style={{ width: '250px', marginRight: '10px', backgroundColor: 'rgb(30, 144, 255)' }}>Сменить пароль</Button>
-                    </Link>
-                    <Link href='/' passHref>
-                        <Button variant='contained' style={{ width: '250px', marginRight: '10px', backgroundColor: 'rgb(30, 144, 255)' }} onClick={handleLogout}>Выход</Button>
-                    </Link>
+            <AppBar position='static' sx={{ bgcolor: 'rgb(250, 250, 250)', minHeight: '50px', paddingY: '20px' }}>
+                <Box sx={{ width: '90%', margin: "0 auto", display: 'flex', justifyContent: 'flex-end' }}>
+                    <Box sx={{ display: 'flex', gap: 5 }}>
+                        <Link href='password-change' passHref>
+                            <Button variant='contained' style={{ width: '250px', backgroundColor: 'rgb(30, 144, 255)' }}>Сменить пароль</Button>
+                        </Link>
+                        <Link href='/' passHref>
+                            <Button variant='contained' style={{ width: '250px', backgroundColor: 'rgb(30, 144, 255)' }} onClick={handleLogout}>Выход</Button>
+                        </Link>
+                    </Box>
                 </Box>
-            </AppBar>
-            <br/>
-        </Box>
+            </AppBar >
+            <br />
+        </Box >
     );
 }
 

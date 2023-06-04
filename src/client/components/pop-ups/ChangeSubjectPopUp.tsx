@@ -41,24 +41,22 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
       aria-describedby="modal-modal-description"
     >
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
-        <button className="self-end">
-          <AiOutlineClose onClick={handleClose} />
-        </button>
+        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
         {/* кнопка закрытия */}
-        
+
         <Box className="flex flex-col gap-8 self-center">
           <Typography variant="h5" fontWeight="bold">Изменить дисциплину</Typography>
           {/* Выбор семестра*/}
           <Box>
             <Typography variant="body1">Выбор семестра</Typography>
-            <Input 
+            <Input
               type='number'
-              className="mt-2 p-1" 
+              className="mt-2 p-1"
               inputProps={{
                 min: 1,
                 max: 12,
               }}
-              fullWidth/>
+              fullWidth />
           </Box>
           {/* Выбор дисциплины*/}
           <Box>

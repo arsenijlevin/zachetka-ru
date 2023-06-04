@@ -36,26 +36,24 @@ function DeleteLecturePopUp({ open, setOpen }: DeleteLecturePopUpProps) {
       aria-describedby="modal-modal-description"
     >
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
-      <button className="self-end">
-          <AiOutlineClose onClick={handleClose} />
-        </button>
+        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
         {/* кнопка закрытия */}
         <Box className="flex flex-col gap-8 self-center">
           <Typography variant="h5" fontWeight="bold">Удалить пару</Typography>
           <Box>
-              <Typography variant="body1">Выберите дисциплину</Typography>
-              <Select placeholder="Выберите..." options={subjects} className="mt-2"/>
-              {/* Выбор дисциплины*/}
+            <Typography variant="body1">Выберите дисциплину</Typography>
+            <Select placeholder="Выберите..." options={subjects} className="mt-2" />
+            {/* Выбор дисциплины*/}
           </Box>
           <Box>
             <Typography variant="body1">Выберите группу</Typography>
-            <Select placeholder="Выберите..." options={groups} className="mt-2"/>
+            <Select placeholder="Выберите..." options={groups} className="mt-2" />
             {/* Выбор группы*/}
           </Box>
           <Box>
-              <Typography variant="body1">Выберите пару</Typography>
-              <Select placeholder="Выберите..." options={lectures} className="mt-2"/>
-              {/* Выбор пары*/}
+            <Typography variant="body1">Выберите пару</Typography>
+            <Select placeholder="Выберите..." options={lectures} className="mt-2" />
+            {/* Выбор пары*/}
           </Box>
           <Button variant="contained" size="medium" className="px-2 py-1">
             Удалить
