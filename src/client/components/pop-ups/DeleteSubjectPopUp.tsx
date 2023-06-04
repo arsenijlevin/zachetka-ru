@@ -23,23 +23,21 @@ function DeleteSubjectPopUp({ open, setOpen }: DeleteSubjectPopUpProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-    <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
-      <button className="self-end">
-        <AiOutlineClose onClick={handleClose} />
-      </button>
-      {/* кнопка закрытия */}
-      <Box className="flex flex-col gap-8 self-center">
-      <Typography variant="h5" fontWeight="bold">Удалить дисциплину</Typography>
+      <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
+        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
+        {/* кнопка закрытия */}
+        <Box className="flex flex-col gap-8 self-center">
+          <Typography variant="h5" fontWeight="bold">Удалить дисциплину</Typography>
           <Box>
-          <Typography variant="body1">Выберите дисциплину</Typography>
-          <Select placeholder="Выберите..." options={subjects} className="mt-2"/>
-          {/* Выбор дисциплины*/}
+            <Typography variant="body1">Выберите дисциплину</Typography>
+            <Select placeholder="Выберите..." options={subjects} className="mt-2" />
+            {/* Выбор дисциплины*/}
+          </Box>
+          <Button variant="contained" size="medium" className="px-2 py-1">
+            Удалить
+          </Button>
         </Box>
-        <Button variant="contained" size="medium" className="px-2 py-1">
-          Удалить
-        </Button>
       </Box>
-    </Box>
     </Modal>
   );
 }

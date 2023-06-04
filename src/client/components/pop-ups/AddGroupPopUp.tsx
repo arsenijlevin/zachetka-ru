@@ -17,9 +17,7 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
     >
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
         {/* Кнопка закрытия */}
-        <button className="self-end">
-          <AiOutlineClose onClick={handleClose} />
-        </button>
+        <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
 
         <Box className="flex flex-col gap-8 self-center">
           <Typography variant="h5" fontWeight="bold">
