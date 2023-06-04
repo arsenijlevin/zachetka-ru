@@ -1,10 +1,16 @@
 import { Box, Button, Typography } from '@mui/material';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import CodeCheckPopUp from 'components/pop-ups/CodeCheckPopUp';
 import Link from 'next/link';
+import React from 'react';
 
 
 
 export default function StudentGradesTable() {
+    const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+    const modals = [null, CodeCheckPopUp];
+    const handleOpenCodeCheck = () => setIsPopupOpen(1);
+    const SelectedModal = modals[isPopupOpen];
     const rows: GridRowsProp = [
         { id: 1, col1: 5, col2: 3, col3: 'Информационные технологии', col4: 'Зачёт', col5: 'Михайлов Е. М.', col6: 40, col7: 40, col8: 40, col9: 40, col10: 40, col11: 'Зачтено' },
         { id: 2, col1: 5, col2: 3, col3: 'Электродинамика', col4: 'Экзамен', col5: 'Запрягаев С. А.', col6: 25, col7: 32, col8: 42, col9: 33, col10: 33, col11: 'Удовлетворительно' },
@@ -45,9 +51,7 @@ export default function StudentGradesTable() {
                         </Typography>
                     </Box>
                     <Box flex={0.49} display={'flex'} gap={5}>
-                        <Link href='student-grades-table' passHref style={{ flex: 1 }}>
-                            <Button variant='outlined' style={{ width: "100%" }}>Код посещаемости</Button>
-                        </Link>
+                        <Button variant='outlined' style={{ width: "100%" }} onClick={handleOpenCodeCheck}>Код посещаемости</Button>
                         <Link href='schedule-table' passHref style={{ flex: 1 }}>
                             <Button variant='outlined' style={{ width: "100%" }}>Открыть расписание</Button>
                         </Link>
@@ -56,6 +60,7 @@ export default function StudentGradesTable() {
 
                 <DataGrid rows={rows} columns={columns} hideFooter={true} showColumnVerticalBorder />
             </Box>
+            {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen} /> : <></>}
         </>
     );
 }

@@ -2,6 +2,8 @@ import { Box, Button, Table, TableBody, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Link from 'next/link';
+import CodeCheckPopUp from 'components/pop-ups/CodeCheckPopUp';
+import React from 'react';
 
 function createData(
     dataEntry: string,
@@ -26,12 +28,15 @@ const data = [
 ];
 
 export default function ScheduleTable() {
-    const tableBack = () => {
-        console.log("Back");
-    }
-
+    const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+    const modals = [null, CodeCheckPopUp];
+    const handleOpenCodeCheck = () => setIsPopupOpen(1);
+    const SelectedModal = modals[isPopupOpen];
     const tableForward = () => {
         console.log("Forward");
+    }
+    const tableBack = () => {
+        console.log("Back");
     }
 
     return (
@@ -47,9 +52,7 @@ export default function ScheduleTable() {
                         </Typography>
                     </Box>
                     <Box flex={0.49} display={'flex'} gap={5}>
-                        <Link href='student-grades-table' passHref style={{ flex: 1 }}>
-                            <Button variant='outlined' style={{ width: "100%" }}>Код посещаемости</Button>
-                        </Link>
+                        <Button variant='outlined' style={{ width: "100%" }} onClick={handleOpenCodeCheck}>Код посещаемости</Button>
                         <Link href='schedule-table' passHref style={{ flex: 1 }}>
                             <Button variant='outlined' style={{ width: "100%" }}>Открыть расписание</Button>
                         </Link>
@@ -379,6 +382,7 @@ export default function ScheduleTable() {
                     </Box>
                 </Box>
             </Box>
+            {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen} /> : <></>}
         </>
     )
 }
