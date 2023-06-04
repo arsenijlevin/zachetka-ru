@@ -54,7 +54,7 @@ export default function StudentGradesTable() {
                     </Box>
                 </Box>
 
-                <DataGrid rows={rows} columns={columns} hideFooter={true} showCellVerticalBorder />
+                <DataGrid rows={rows} columns={columns} hideFooter={true} showColumnVerticalBorder />
             </Box>
         </>
     );

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Typography } from '@mui/material';
 import Link from 'next/link';
 
 interface SubjectsListProps {
@@ -8,16 +8,18 @@ interface SubjectsListProps {
 function SubjectsList({ subjects }: SubjectsListProps) {
 
     return (
-        <>
-            <Box sx={{ position: 'relative', left: '5%', width: '90%' }}>
+        <Box width={'90%'} marginX={'auto'} display={'flex'} flexDirection={'column'} gap={2}>
+            <Box>
                 <Typography variant='h3'>Выберите дисциплину</Typography>
-                <br />
-                <br />
+            </Box>
+            <Box display={'flex'}>
                 {subjects.map((item, index) => (
-                    <Link key={index} href='/groups-list' passHref style={{ textDecoration: 'underline', color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
+                    <Breadcrumbs key={index} aria-label="breadcrumb">
+                        <Link href='/groups-list' passHref style={{ color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
+                    </Breadcrumbs>
                 ))}
             </Box>
-        </>
+        </Box >
     )
 }
 

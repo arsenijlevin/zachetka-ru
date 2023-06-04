@@ -14,7 +14,7 @@ function Header() {
 
     return (
         <Box>
-            <AppBar position='static' sx={{ bgcolor: 'rgb(250, 250, 250)', minHeight: '50px', paddingY: '20px' }}>
+            <AppBar position='static' sx={{ bgcolor: 'white', minHeight: '50px', paddingY: '20px' }}>
                 <Box sx={{ width: '90%', margin: "0 auto", display: 'flex', justifyContent: 'flex-end' }}>
                     <Box sx={{ display: 'flex', gap: 5 }}>
                         <Link href='password-change' passHref>
