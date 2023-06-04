@@ -32,7 +32,7 @@ function GroupsList() {
                     ))}
                 </Box>
             </Box>
-            {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
+            {SelectedModal !== undefined? <SelectedModal open={true} setOpen={setIsPopupOpen}/> : <></>}
         </>
     );
 }
