@@ -33,6 +33,13 @@ function GroupsList({ subject, groups }: GroupsListProps) {
                         <Button variant='outlined' onClick={handleOpenAttendanceCheck}>Проверка посещаемости</Button>
                     </Box>
                 </Box>
+                <Box>
+                    <Box display={'flex'} flexDirection={'column'} gap={4}>
+                        {groups.map((item, index) => (
+                            <Link key={index} href='/attendance-table' passHref style={{ color: '#1E90FF', fontSize: '20px' }}>{item}</Link>
+                        ))}
+                    </Box>
+                </Box>
                 {SelectedModal ? <SelectedModal open={true} setOpen={setIsPopupOpen} /> : <></>}
             </Box>
         </>

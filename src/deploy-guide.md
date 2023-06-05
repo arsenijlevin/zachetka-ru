@@ -49,6 +49,9 @@ $ npm run build:server
 $ npm run start:server
 ```
 
+Развёрнутый сервер доступен по адресу: *http://localhost:5001/*
+Swagger: *http://localhost:5001/swagger*
+
 ### *Клиент*
 
 ```bash
@@ -60,3 +63,5 @@ $ npm run build:client
 
 $ npm run start:client
 ```
+
+Доступ к развёрнутому веб-приложению: *http://localhost:3000/*
