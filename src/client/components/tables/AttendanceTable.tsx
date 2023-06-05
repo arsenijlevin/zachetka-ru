@@ -124,7 +124,7 @@ const lastColumns: GridColDef[] = [
   { field: 'col1', headerName: 'Н', flex: 0.15, maxWidth: 75, sortable: false, disableColumnMenu: true },
   { field: 'col2', headerName: 'П', flex: 0.15, maxWidth: 75, sortable: false, disableColumnMenu: true },
   { field: 'col3', headerName: 'Б', flex: 0.15, maxWidth: 75, sortable: false, disableColumnMenu: true },
-  { field: 'col4', headerName: 'Сумма \n пропусков', flex: 0.55, maxWidth: 150, sortable: false, disableColumnMenu: true },
+  { field: 'col4', headerName: 'Сумма', flex: 0.55, maxWidth: 150, sortable: false, disableColumnMenu: true },
 ];
 
 

@@ -53,8 +53,8 @@ export default function ScheduleTable() {
                     </Box>
                     <Box flex={0.49} display={'flex'} gap={5}>
                         <Button variant='outlined' style={{ width: "100%" }} onClick={handleOpenCodeCheck}>Код посещаемости</Button>
-                        <Link href='schedule-table' passHref style={{ flex: 1 }}>
-                            <Button variant='outlined' style={{ width: "100%" }}>Открыть расписание</Button>
+                        <Link href='student-grades-table' passHref style={{ flex: 1 }}>
+                            <Button variant='outlined' style={{ width: "100%" }}>Открыть успеваемость</Button>
                         </Link>
                     </Box>
 
