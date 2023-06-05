@@ -83,8 +83,8 @@ let columns: GridColDef[] = [
   { field: 'col4', headerName: 'КТ3', width: 150, flex: 0.1, editable: true },
   { field: 'col5', headerName: 'КТ сред.', flex: 0.1, width: 150 },
   { field: 'col6', headerName: 'Экзамен', flex: 0.1, width: 150, editable: true },
-  { field: 'col7', headerName: 'Итоговый балл', flex: 0.1, width: 150 },
-  { field: 'col8', headerName: 'Итог', flex: 0.4, width: 200 },
+  { field: 'col7', headerName: 'Итоговый балл', flex: 0.2, width: 150 },
+  { field: 'col8', headerName: 'Итог', flex: 0.2, width: 100 },
 ];
 
 columns = columns.map(column => ({

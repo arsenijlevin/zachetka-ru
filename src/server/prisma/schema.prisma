@@ -11,9 +11,9 @@ model attendance {
   student_login String
   lesson_id     Int
   status        String
-  date          DateTime @db.Date
-  lessons       lessons  @relation(fields: [lesson_id], references: [id], map: "lesson_id")
-  users         students @relation(fields: [student_login], references: [login], map: "student_login")
+  date          DateTime       @db.Date
+  lessons       lessons        @relation(fields: [lesson_id], references: [id], map: "lesson_id")
+  users         students_group @relation(fields: [student_login], references: [login], map: "student_login")
 
   @@id([student_login, lesson_id, date], map: "attendance_pkey1")
 }
@@ -30,7 +30,7 @@ model groups {
   semester       Int
   groups_lesson  groups_lesson[]
   groups_subject groups_subject[]
-  students       students[]
+  students_group students_group[]
 }
 
 model lessons {
@@ -76,13 +76,6 @@ model student_performance {
   @@id([student_login, subject_id])
 }
 
-model students {
-  login      String       @id
-  group_id   Int
-  attendance attendance[]
-  groups     groups       @relation(fields: [group_id], references: [id], map: "group_id")
-}
-
 model subjects {
   id                  Int                   @id @default(autoincrement())
   title               String
@@ -102,6 +95,7 @@ model users {
   lessons             lessons[]
   professor_subject   professor_subject[]
   student_performance student_performance[]
+  students_group      students_group?
   rights              rights                @relation(fields: [rights_id], references: [id], map: "rights_id")
 }
 
@@ -121,4 +115,12 @@ model groups_subject {
   subjects   subjects @relation(fields: [subject_id], references: [id], map: "subject_id")
 
   @@id([group_id, subject_id])
+}
+
+model students_group {
+  login      String       @id(map: "students_pkey")
+  group_id   Int
+  attendance attendance[]
+  groups     groups       @relation(fields: [group_id], references: [id], map: "group_id")
+  users      users        @relation(fields: [login], references: [login], map: "student_login")
 }
