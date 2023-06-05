@@ -21,7 +21,7 @@ interface TimerProps {
     completed: boolean;
 }
 
-const seconds30 = DateTime.now().set({ hour: 0, minute: 0, second: 30, millisecond: 0 });
+const seconds30 = DateTime.now().set({ hour: 0, minute: 0, second: 10, millisecond: 0 });
 const minutes15 = DateTime.now().set({ hour: 0, minute: 15, second: 0, millisecond: 0 })
 
 function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
@@ -95,7 +95,7 @@ function AttendanceCheckPopUp({ open, setOpen }: AttendanceCheckPopUpProps) {
                             {subjectName} ({semester} семестр)
                         </Typography>
                         <Typography variant="h6" textAlign={'center'} fontStyle={'italic'}>
-                            Введите время проверки от 00:30 до 15:00
+                            Введите время проверки от 00:10 до 15:00
                         </Typography>
                         <Box margin={'auto'} height={'100px'}>
                             <LocalizationProvider localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
