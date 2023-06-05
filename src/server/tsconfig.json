@@ -16,6 +16,19 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "composite": true,
+    "declarationMap": true,
+    "paths": {
+      "@prisma/*": [
+        "prisma/*"
+      ],
+      "@test/*": [
+        "test/*"
+      ],
+      "@shared/*": [
+        "shared/*"
+      ],
+    }
+  },
 }

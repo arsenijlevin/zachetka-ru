@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { TestingService } from './testing.service';
 import { TestingController } from './testing.controller';
 
-@Module({
+export const moduleSettings = {
   controllers: [TestingController],
   providers: [TestingService],
-})
-export class TestingModule {}
+}
+
+@Module(moduleSettings)
+export class TestingModule { }
