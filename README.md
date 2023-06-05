@@ -35,6 +35,12 @@
 
 *[Макеты в github](documentation/макеты)*
 
+## **Видео**
+
+*[Видеопрезентация](https://disk.yandex.ru/d/N6P32Gx2YJgc1Q)*
+
+*[Развёртывание проекта](https://disk.yandex.ru/d/5gSs0GdCkSTc2w)*
+
 ## **Развёрнутое веб-приложение. Swagger**
 
 *[Swagger](https://api-zachetka-ru-dev.up.railway.app/swagger)*
