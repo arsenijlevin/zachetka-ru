@@ -11,8 +11,10 @@
     "start:client": "npm run start --workspace=client",
     "build:prisma": "npm run build:prisma-pull && npm run build:prisma-generate",
     "build:prisma-pull": "npm run prisma:pull --workspace=server",
-    "build:prisma-generate": "npm run prisma:generate --workspace=server"
-
+    "build:prisma-push": "npm run build:prisma-push --workspace=server",
+    "build:prisma-generate": "npm run prisma:generate --workspace=server",
+    "install:server": "npm install --workspace=server",
+    "install:client": "npm install --workspace=client"
   },
   "author": "",
   "license": "ISC",
