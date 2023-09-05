@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { GroupDto } from './dto/group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
@@ -8,14 +16,14 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('groups')
 @ApiTags('Учебные группы')
 export class GroupsController {
-  constructor(private readonly groupsService: GroupsService) { }
+  constructor(private readonly groupsService: GroupsService) {}
 
-  @Post("create")
+  @Post('create')
   public create(@Body() groupDto: GroupDto) {
     return this.groupsService.create(groupDto);
   }
 
-  @Get("findAll")
+  @Get('findAll')
   public findAll(@Body() findAllGroupsDTO: FindAllGroupsDTO) {
     return this.groupsService.findAll(findAllGroupsDTO);
   }
@@ -26,7 +34,10 @@ export class GroupsController {
   }
 
   @Patch('update/:id')
-  public update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
+  public update(
+    @Param('id') id: string,
+    @Body() updateGroupDto: UpdateGroupDto,
+  ) {
     return this.groupsService.update(+id, updateGroupDto);
   }
 

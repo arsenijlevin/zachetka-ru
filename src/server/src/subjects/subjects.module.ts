@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma.service';
 export const moduleSettings = {
   controllers: [SubjectsController],
   providers: [SubjectsService, SubjectsRepository, PrismaService],
-}
+};
 
 @Module(moduleSettings)
-export class SubjectsModule { }
+export class SubjectsModule {}

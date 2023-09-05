@@ -6,7 +6,7 @@ import { FindAllGroupsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class GroupsService {
-  constructor(private readonly groupsRepository: GroupsRepository) { }
+  constructor(private readonly groupsRepository: GroupsRepository) {}
 
   public async create(createGroupDto: GroupDto) {
     const newGroup = await this.groupsRepository.save(createGroupDto);

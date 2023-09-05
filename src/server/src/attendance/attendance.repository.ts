@@ -53,11 +53,11 @@ export class AttendanceRepository {
             subject_id: subject_id,
             groups_lesson: {
               every: {
-                group_id: group_id
-              }
-            }
+                group_id: group_id,
+              },
+            },
           },
-        }
+        },
       });
 
       return attendance;

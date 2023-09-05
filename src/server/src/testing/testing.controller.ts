@@ -6,7 +6,7 @@ import { TestingService } from './testing.service';
 @Controller('testing')
 @ApiTags('Тестовые запросы')
 export class TestingController {
-  constructor(private readonly testingService: TestingService) { }
+  constructor(private readonly testingService: TestingService) {}
 
   @Get('/test')
   public getTest(): string {

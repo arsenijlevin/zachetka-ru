@@ -7,8 +7,8 @@ import { UsersRepository } from './users.repository';
 export const moduleSettings = {
   controllers: [UsersController],
   providers: [UsersService, PrismaService, UsersRepository],
-  exports: [UsersService]
+  exports: [UsersService],
 };
 
 @Module(moduleSettings)
-export class UsersModule { }
+export class UsersModule {}

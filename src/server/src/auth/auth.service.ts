@@ -13,10 +13,13 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private configService: ConfigService
-  ) { }
+    private configService: ConfigService,
+  ) {}
 
-  public async validateUser(login: string, pass: string): Promise<UserDto | null> {
+  public async validateUser(
+    login: string,
+    pass: string,
+  ): Promise<UserDto | null> {
     const user = await this.usersService.findOne(login);
 
     if (user) {
@@ -33,21 +36,24 @@ export class AuthService {
   public async login(user: LoginDto) {
     const validUser = await this.validateUser(user.login, user.password);
 
-    if (!validUser) throw new HttpException("Invalid login or password", HttpStatus.BAD_REQUEST);
+    if (!validUser)
+      throw new HttpException(
+        'Invalid login or password',
+        HttpStatus.BAD_REQUEST,
+      );
 
     const userFromDatabase = await this.usersService.findOne(user.login);
 
     const payload: UserDto = {
       login: userFromDatabase.login,
       rights_id: userFromDatabase.rights_id,
-      name: userFromDatabase.name
+      name: userFromDatabase.name,
     };
-
 
     return {
       token: this.jwtService.sign(payload, {
-        privateKey: this.configService.get("JWT_SECRET"),
-        expiresIn: '6000s'
+        privateKey: this.configService.get('JWT_SECRET'),
+        expiresIn: '6000s',
       }),
     };
   }

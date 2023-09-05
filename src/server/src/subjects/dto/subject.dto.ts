@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Min } from "class-validator";
+import { IsString, IsNumber, Min } from 'class-validator';
 
 export class SubjectDto {
   id: number;
@@ -17,5 +17,5 @@ export class SubjectDto {
   semester: number;
 
   @IsString()
-  reporting_type: string
+  reporting_type: string;
 }

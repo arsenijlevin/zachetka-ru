@@ -6,7 +6,9 @@ describe('GroupsController', () => {
   let controller: GroupsController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule(moduleSettings).compile();
+    const module: TestingModule = await Test.createTestingModule(
+      moduleSettings,
+    ).compile();
 
     controller = module.get<GroupsController>(GroupsController);
   });

@@ -6,7 +6,7 @@ import { FindAllLessonsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class LessonsService {
-  constructor(private readonly lessonsRepository: LessonsRepository) { }
+  constructor(private readonly lessonsRepository: LessonsRepository) {}
 
   public async create(createLessonDto: LessonDto) {
     const newLesson = await this.lessonsRepository.save(createLessonDto);
@@ -33,7 +33,10 @@ export class LessonsService {
   }
 
   public async update(id: number, updateLessonDto: UpdateLessonDto) {
-    const updatedLesson = await this.lessonsRepository.update(id, updateLessonDto);
+    const updatedLesson = await this.lessonsRepository.update(
+      id,
+      updateLessonDto,
+    );
 
     if (!updatedLesson) {
       throw new HttpException('Lesson not found', 404);

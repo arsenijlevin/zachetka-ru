@@ -6,13 +6,16 @@ import { FindAllSubjectsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class SubjectsService {
-  constructor(private readonly subjectsRepository: SubjectsRepository) { }
+  constructor(private readonly subjectsRepository: SubjectsRepository) {}
 
   public async create(createSubjectDto: SubjectDto) {
     const newSubject = await this.subjectsRepository.save(createSubjectDto);
 
     if (!newSubject) {
-      throw new HttpException('Cannot create subject with this parameters', 400);
+      throw new HttpException(
+        'Cannot create subject with this parameters',
+        400,
+      );
     }
 
     return newSubject;
@@ -33,7 +36,10 @@ export class SubjectsService {
   }
 
   public async update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    const updatedSubject = await this.subjectsRepository.update(id, updateSubjectDto);
+    const updatedSubject = await this.subjectsRepository.update(
+      id,
+      updateSubjectDto,
+    );
 
     if (!updatedSubject) {
       throw new HttpException('Subject not found', 404);
