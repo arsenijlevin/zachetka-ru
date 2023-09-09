@@ -1,9 +1,9 @@
-import { Box, Breadcrumbs, Button, Typography } from '@mui/material';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-import Link from 'next/link';
+import { Box, Breadcrumbs, Button, Typography } from "@mui/material";
+import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import Link from "next/link";
 
-const subject = 'Технологии программирования (6 семестр)';
-const group = 'Группа 1';
+const subject = "Технологии программирования (6 семестр)";
+const group = "Группа 1";
 
 const names = [
   "Головина М. А.",
@@ -30,8 +30,8 @@ const names = [
   "Усов А. С.",
   "Афанасьев Д. Т.",
   "Васильева В. Г.",
-  "Козлова В. С."
-]
+  "Козлова В. С.",
+];
 const rows: GridRowsProp = names.map((name, index) => {
   const id = index;
   const col1 = name;
@@ -64,10 +64,9 @@ const rows: GridRowsProp = names.map((name, index) => {
     col5,
     col6,
     col7,
-    col8
-  }
+    col8,
+  };
 });
-
 
 // const rows: GridRowsProp = [
 //   { id: 1, col1: 'Иванов А. А.', col2: 25, col3: 25, col4: 25, col5: 25, col6: 25, col7: 50, col8: 'Удовлетворительно' },
@@ -77,45 +76,64 @@ const rows: GridRowsProp = names.map((name, index) => {
 // ];
 
 let columns: GridColDef[] = [
-  { field: 'col1', headerName: 'ФИО студента', flex: 0.2, width: 200 },
-  { field: 'col2', headerName: 'КТ1', width: 150, flex: 0.1, editable: true },
-  { field: 'col3', headerName: 'КТ2', width: 150, flex: 0.1, editable: true },
-  { field: 'col4', headerName: 'КТ3', width: 150, flex: 0.1, editable: true },
-  { field: 'col5', headerName: 'КТ сред.', flex: 0.1, width: 150 },
-  { field: 'col6', headerName: 'Экзамен', flex: 0.1, width: 150, editable: true },
-  { field: 'col7', headerName: 'Итоговый балл', flex: 0.2, width: 150 },
-  { field: 'col8', headerName: 'Итог', flex: 0.2, width: 100 },
+  { field: "col1", headerName: "ФИО студента", flex: 0.2, width: 200 },
+  { field: "col2", headerName: "КТ1", width: 150, flex: 0.1, editable: true },
+  { field: "col3", headerName: "КТ2", width: 150, flex: 0.1, editable: true },
+  { field: "col4", headerName: "КТ3", width: 150, flex: 0.1, editable: true },
+  { field: "col5", headerName: "КТ сред.", flex: 0.1, width: 150 },
+  {
+    field: "col6",
+    headerName: "Экзамен",
+    flex: 0.1,
+    width: 150,
+    editable: true,
+  },
+  { field: "col7", headerName: "Итоговый балл", flex: 0.2, width: 150 },
+  { field: "col8", headerName: "Итог", flex: 0.2, width: 100 },
 ];
 
-columns = columns.map(column => ({
+columns = columns.map((column) => ({
   disableColumnMenu: true,
   sortable: false,
-  ...column
-}))
+  ...column,
+}));
 
 export default function GradesTable() {
   return (
-    <Box width={'90%'} marginX={'auto'} display={'flex'} flexDirection={'column'} gap={2}>
+    <Box width={"90%"} marginX={"auto"} display={"flex"} flexDirection={"column"} gap={2}>
       <Box>
-        <Typography variant='h3'>Учёт успеваемости</Typography>
+        <Typography variant="h3">Учёт успеваемости</Typography>
       </Box>
-      <Box display={'flex'} alignItems={'center'}>
+      <Box display={"flex"} alignItems={"center"}>
         <Box flex={1}>
-          <Breadcrumbs aria-label="breadcrumb" style={{ color: '#1E90FF', fontSize: '20px' }}>
-            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link>
-            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='groups-list'>{group}</Link>
-            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='attendance-table'>Учёт успеваемости</Link>
+          <Breadcrumbs aria-label="breadcrumb" style={{ color: "#1E90FF", fontSize: "20px" }}>
+            <Link className="hover:underline-offset-1 hover:text-blue-700 text-blue-500" href="subjects-list">
+              {subject}
+            </Link>
+            <Link className="hover:underline-offset-1 hover:text-blue-700 text-blue-500" href="groups-list">
+              {group}
+            </Link>
+            <Link className="hover:underline-offset-1 hover:text-blue-700 text-blue-500" href="attendance-table">
+              Учёт успеваемости
+            </Link>
           </Breadcrumbs>
         </Box>
-        <Link href='attendance-table' passHref>
-          <Button variant='outlined'>Открыть посещаемость</Button>
+        <Link href="attendance-table" passHref>
+          <Button variant="outlined">Открыть посещаемость</Button>
         </Link>
       </Box>
-      <DataGrid rows={rows} columns={columns} sx={{
-        '.MuiDataGrid-columnHeaderTitle': {
-          fontWeight: 'bold !important',
-        }
-      }} showColumnVerticalBorder showCellVerticalBorder hideFooter />
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        sx={{
+          ".MuiDataGrid-columnHeaderTitle": {
+            fontWeight: "bold !important",
+          },
+        }}
+        showColumnVerticalBorder
+        showCellVerticalBorder
+        hideFooter
+      />
     </Box>
   );
 }

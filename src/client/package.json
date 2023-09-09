@@ -30,7 +30,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "npx prettier ./ --write",
+    "lf": "npm run lint && npm run format"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.4",
