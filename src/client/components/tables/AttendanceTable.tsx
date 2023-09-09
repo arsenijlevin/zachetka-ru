@@ -3,31 +3,30 @@ import { DataGrid, GridRowsProp, GridColDef, GridRowModel } from '@mui/x-data-gr
 import * as React from 'react';
 import Link from 'next/link';
 import { useCallback } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
-// function createData(
-//   name: string,
-//   attendance: string[],
-//   n: number,
-//   p: number,
-//   b: number,
-//   sum: number,
-// ) {
-//   return { name, attendance, n, p, b, sum };
-// }
-
-const subject = 'Технологии программирования (6 семестр)';
-const group = 'Группа 1';
-
-/* function createData(
-  name: string,
-  attendance: string[],
-  n: number,
-  p: number,
-  b: number,
-  sum: number,
+function createData(
+  student_login: string,
+  attendance: string,
+  date: string,
 ) {
-  return { name, attendance, n, p, b, sum };
-} */
+  return { student_login, attendance, date };
+}
+const student_login = '';
+const subject = '0';
+const group = '2';
+
+const subjectName = 'ТП';
+
+const attendanceData = [] as any;
+const loginsSet = new Set();
+const lessonsSet = new Set();
+const logins = [] as any;
+const lessons = [] as any;
+const firstMap = [] as any;
+//const firstRows : GridRowsProp = [];
+//const [firstRows1, setFirstRows] = React.useState(new GridRowProps);
 
 let columns: GridColDef[] = [
   { field: 'col2', headerName: '1.12\n15:00', width: 100, editable: true, },
@@ -52,11 +51,6 @@ let columns: GridColDef[] = [
   { field: 'col21', headerName: '22.12\n8:00', width: 100, editable: true },
 ];
 
-const marks = ["", "", "", "", "", "", "", "", "", "Н", "Б", "П"];
-
-const getRandomMark = (items: string[]) => items[Math.floor(Math.random() * items.length)];
-
-
 columns = columns.map(column => ({
   disableColumnMenu: true,
   sortable: false,
@@ -65,48 +59,20 @@ columns = columns.map(column => ({
 
 const names = [
   "Головина М. А.",
-  "Петров А. Е.",
-  "Гусева И. М.",
-  "Петровская А. М.",
-  "Панова В. М.",
-  "Жукова А. А.",
-  "Александрова В. К.",
-  "Калинин И. И.",
-  "Андреева Е. Д.",
-  "Спиридонова А. А.",
-  "Еремина О. И.",
-  "Иванова С. С.",
-  "Ситникова В. М.",
-  "Баранов С. Т.",
-  "Чернышева В. В.",
-  "Антонов М. Ю.",
-  "Белов А. М.",
-  "Осипов М. А.",
-  "Маркин Б. М.",
-  "Филиппова К. А.",
-  "Носкова В. К.",
-  "Усов А. С.",
-  "Афанасьев Д. Т.",
-  "Васильева В. Г.",
-  "Козлова В. С."
+  "Петров А. Е."
 ]
 
 const entryRows = () => columns.map((column, index) => ([
-  `col${index + 1}`, getRandomMark(marks),
+  `col${index + 2}`, `Н`,
 ]));
 
 const rows = names.map((name, index) => {
-  const row: GridRowsProp = Object.fromEntries(entryRows());
+  const row : GridRowsProp = Object.fromEntries(entryRows());
   return {
-    id: index,
+    id : index,
     ...row
   }
 })
-
-const firstRows: GridRowsProp = names.map((name, index) => ({
-  id: index,
-  col1: name
-}))
 
 const firstColumns: GridColDef[] = [
   { field: 'col1', headerName: 'ФИО студента', flex: 1, sortable: false, disableColumnMenu: true },
@@ -127,36 +93,56 @@ const lastColumns: GridColDef[] = [
   { field: 'col4', headerName: 'Сумма', flex: 0.55, maxWidth: 150, sortable: false, disableColumnMenu: true },
 ];
 
-
-
-/* const useFakeMutation = () => {
-  return React.useCallback(
-    (user: Partial<User>) =>
-      new Promise<Partial<User>>((resolve, reject) => {
-        setTimeout(() => {
-          if (user.name?.trim() === '') {
-            reject(new Error("Error while saving user: name can't be empty."));
-          } else {
-            resolve({ ...user, name: user.name?.toUpperCase() });
-          }
-        }, 200);
-      }),
-    [],
-  );
-};
-*/
-
 export default function AttendanceTable() {
-  const processRowUpdate = useCallback(
+  const [position, setPosition] = useState({
+    id: 1,
+    col1: "st"
+  });
+  const getAttendance = axios.get(`${process.env.NEXT_PUBLIC_API_HOST || ""}attendance/findAllForSubjectGroup/${subject}/${group}`)
+  .then(function (response) {
+    response.data.forEach((element : any) => {
+      attendanceData.push(element);
+      loginsSet.add(element.student_login as string);
+      lessonsSet.add(element.lesson_id as string);
+    });
+    loginsSet.forEach(item => logins.push(item));
+    lessonsSet.forEach((element : any) => {
+      lessons.push(element);
+    })
+    let logins = Array.from(loginsSet);
+    console.log(logins);
+    logins.map((index : any, login : any) => {
+      setPosition({
+        id: index,
+        col1: login
+      })
+      firstMap.push(position);
+    })
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+    
+  });
+  async function updateRow() {
+    //const loginRequest = await axios.patch<LoginPayload, LoginResponse>(`${process.env.NEXT_PUBLIC_API_HOST || ""}attendance/findAllForSubjectGroup`, body);
+    return;
+  }
+  console.log(logins);
+  console.log("----------------");
+  console.log(firstMap);
+  /*const processRowUpdate = useCallback(
     (newRow: GridRowModel, oldRow: GridRowModel) => {
-      // Make the HTTP request to save in the backend
+      updateRow;
       // const response = await mutateRow(newRow);
       console.log(newRow);
+      console.log(logins[0]);
       return newRow;
     },
     [],
-  );
-
+  );*/
+  const firstRows : GridRowsProp = logins;
   return (
     <Box width={'90%'} marginX={'auto'} display={'flex'} flexDirection={'column'} gap={2}>
       <Box>
@@ -165,7 +151,7 @@ export default function AttendanceTable() {
       <Box display={'flex'} alignItems={'center'}>
         <Box flex={1}>
           <Breadcrumbs aria-label="breadcrumb" style={{ color: '#1E90FF', fontSize: '20px' }}>
-            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subject}</Link>
+            <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='subjects-list'>{subjectName}</Link>
             <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='groups-list'>{group}</Link>
             <Link className='hover:underline-offset-1 hover:text-blue-700 text-blue-500' href='attendance-table'>Учёт посещаемости</Link>
           </Breadcrumbs>
@@ -178,6 +164,7 @@ export default function AttendanceTable() {
       </Box>
       <Box>
         <Typography variant='h5'>Общее количество занятий: 20</Typography>
+        <Typography variant='h5'>dwa{logins[0]}awd</Typography>
       </Box>
       <Box display={"flex"}>
         <Box flex={0.2}>
@@ -188,7 +175,7 @@ export default function AttendanceTable() {
             }} />
         </Box>
         <Box flex={0.6} maxWidth={'60%'}>
-          <DataGrid showColumnVerticalBorder rows={rows} columns={columns} hideFooter={true} processRowUpdate={processRowUpdate}
+          <DataGrid showColumnVerticalBorder rows={rows} columns={columns} hideFooter={true} /*processRowUpdate={processRowUpdate}*/
             sx={{
               '.MuiDataGrid-columnHeaderTitle': {
                 fontWeight: 'bold !important',
@@ -226,4 +213,5 @@ export default function AttendanceTable() {
       </Box>
     </Box >
   );
+  
 }
