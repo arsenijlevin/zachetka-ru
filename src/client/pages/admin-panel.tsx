@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import ChangeSubjectPopUp from "../components/pop-ups/ChangeSubjectPopUp";
 import AddGroupPopUp from "../components/pop-ups/AddGroupPopUp";
 import AddLecturePopUp from "../components/pop-ups/AddLecturePopUp";
@@ -11,11 +11,16 @@ import Header from "components/Header";
 import { Box, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
+/**
+ * TODO: Рабочие формы в админ панели!
+ * TODO: Добавление пользователей через админ-панель!
+ */
+
 function AdminPanel() {
-  // const [grade, setGrade] = React.useState('');
-  // const [name, setName] = React.useState('');
-  // const [text, setText] = React.useState('');
-  const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+  // const [grade, setGrade] = useState('');
+  // const [name, setName] = useState('');
+  // const [text, setText] = useState('');
+  const [isPopupOpen, setIsPopupOpen] = useState(0);
 
   const handleOpenChangeSubject = () => setIsPopupOpen(1);
   const handleOpenAddGroup = () => setIsPopupOpen(2);
@@ -63,11 +68,6 @@ function AdminPanel() {
     <Button variant='contained' onClick={handleClick}>кнопка</Button>
     <p>{text}</p>
   */
-
-  /**
-   * TODO: Рабочие формы в админ панели!
-   * TODO: Добавление пользователей через админ-панель!
-   */
 
   return (
     <>

@@ -47,20 +47,55 @@ export class AttendanceRepository {
 
   public async findAllForSubjectGroup(subject_id: number, group_id: number) {
     try {
-      const attendance = await this.prismaService.attendance.findMany({
+      const attendance = await this.prismaService.users.findMany({
         where: {
+          students_group: {
+            group_id: group_id,
+          },
           lessons: {
-            subject_id: subject_id,
-            groups_lesson: {
-              every: {
-                group_id: group_id,
+            every: {
+              subject_id: subject_id,
+            },
+          },
+        },
+        include: {
+          students_group: {
+            select: {
+              attendance: {
+                where: {
+                  lessons: {
+                    subject_id: subject_id,
+                    groups_lesson: {
+                      every: {
+                        group_id: group_id,
+                      },
+                    },
+                  },
+                },
+                include: {
+                  lessons: {
+                    select: {
+                      time: true
+                    }
+                  }
+                }
               },
             },
           },
         },
       });
 
-      return attendance;
+      return attendance.map((item) => ({
+        student: {
+          login: item.login,
+          name: item.name,
+          attendance: item.students_group.attendance.map((i) => ({
+            date: i.date,
+            time: i.lessons.time,
+            status: i.status,
+          })),
+        },
+      }));
     } catch (error) {
       return null;
     }
@@ -68,14 +103,6 @@ export class AttendanceRepository {
 
   public async upsert(updateAttendanceDto: UpdateAttendanceDto) {
     try {
-      console.log({
-        professor_login: updateAttendanceDto.professor_login,
-        time: updateAttendanceDto.time,
-        week_day: updateAttendanceDto.week_day,
-        subject_id: updateAttendanceDto.subject_id,
-        frequency: updateAttendanceDto.frequency,
-      });
-
       const lesson = await this.prismaService.lessons.findFirst({
         where: {
           professor_login: updateAttendanceDto.professor_login,
@@ -85,6 +112,7 @@ export class AttendanceRepository {
           frequency: updateAttendanceDto.frequency,
         },
       });
+      
 
       const attendance = await this.prismaService.attendance.upsert({
         where: {

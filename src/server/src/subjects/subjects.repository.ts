@@ -101,41 +101,20 @@ export class SubjectsRepository {
     return subject;
   }
 
-  public async findAll(
-    findAllSubjectsDTO: FindAllSubjectsDTO,
-  ): Promise<SubjectDto[]> {
+  public async findAllForProfessor(
+    professor_login: string
+  ) {
     try {
       const subjects = await this.prismaService.subjects.findMany({
-        skip: findAllSubjectsDTO.skip,
-        take: findAllSubjectsDTO.take,
-        include: {
+        where: {
           professor_subject: {
-            include: {
-              users: {
-                select: {
-                  login: true,
-                },
-              },
-            },
-          },
-          groups_subject: {
-            include: {
-              groups: {
-                select: {
-                  id: true,
-                },
-              },
-            },
-          },
-        },
+            every: {
+              professor_login: professor_login
+            }
+          }
+        }
       });
-      return subjects.map((subject) => ({
-        professors_login: subject.professor_subject.map(
-          (professor) => professor.users.login,
-        ),
-        groups_id: subject.groups_subject.map((group) => group.groups.id),
-        ...subject,
-      }));
+      return subjects;
     } catch (error) {
       return null;
     }

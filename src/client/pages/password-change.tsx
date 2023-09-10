@@ -1,12 +1,16 @@
-import React from "react";
+import { useState } from "react";
 import Router from "next/router";
 import { Box, Input, Button, Typography } from "@mui/material";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import Cookies from "universal-cookie";
+import { toProps } from "lib/serverSideUtils";
 
-// eslint-disable-next-line @typescript-eslint/require-await
+/**
+ * TODO: Рефакторинг ?
+ */
+
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const cookiesText = context.req.headers.cookie;
 
@@ -16,21 +20,17 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const token = cookies.get<string>("token");
     const decodedCookie: Record<string, string> = jwt_decode(token);
 
-    return { props: { decodedCookie } } as {
-      props: {
-        decodedCookie: Record<string, string>;
-      };
-    };
+    return toProps({ decodedCookie });
   }
 
-  return { props: { decodedCookie: "" } };
+  return toProps({ decodedCookie: {} });
 };
 
 function PasswordChange({ decodedCookie }: { decodedCookie: Record<string, unknown> }) {
-  const [currentPassword, setCurrentPassword] = React.useState("");
-  const [newPassword, setNewPassword] = React.useState("");
-  const [newPasswordRepeated, setNewPasswordRepeated] = React.useState("");
-  const [error, setError] = React.useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordRepeated, setNewPasswordRepeated] = useState("");
+  const [error, setError] = useState("");
 
   async function handleClick() {
     if (newPassword !== newPasswordRepeated) {
@@ -55,11 +55,7 @@ function PasswordChange({ decodedCookie }: { decodedCookie: Record<string, unkno
         newPassword: newPassword,
       };
 
-      const changePasswordRequest = await axios.patch(
-        `${process.env.NEXT_PUBLIC_API_HOST || ""}users/change-password`,
-        body,
-        { headers: header }
-      );
+      const changePasswordRequest = await axios.patch(`users/change-password`, body, { headers: header });
 
       if (changePasswordRequest.status === 200) console.log("Пароль успешно изменен!");
     } catch (error) {

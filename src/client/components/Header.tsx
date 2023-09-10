@@ -1,5 +1,4 @@
 import { Box, AppBar, Button } from "@mui/material";
-import React from "react";
 import Link from "next/link";
 import Cookies from "universal-cookie";
 

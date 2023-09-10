@@ -8,6 +8,18 @@ import { UpdateGroupDto } from './dto/update-group.dto';
 export class GroupsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
+  public async save(group: GroupDto): Promise<GroupDto> {
+    try {
+      const newGroup = await this.prismaService.groups.create({
+        data: group,
+      });
+
+      return newGroup;
+    } catch (error) {
+      return null;
+    }
+  }
+
   public async findOne(id: number): Promise<GroupDto | undefined> {
     try {
       const group = await this.prismaService.groups.findUnique({
@@ -21,26 +33,31 @@ export class GroupsRepository {
     }
   }
 
-  public async save(group: GroupDto): Promise<GroupDto> {
+  public async getGroupsForSubjectProfessor(
+    subject_id: number,
+    professor_login: string,
+  ) {
     try {
-      const newGroup = await this.prismaService.groups.create({
-        data: group,
+      const groups = await this.prismaService.groups.findMany({
+        where: {
+          groups_subject: {
+            some: {
+              subject_id: subject_id,
+              subjects: {
+                professor_subject: {
+                  every: {
+                    professor_login: professor_login,
+                  },
+                },
+              },
+            },
+          },
+        },
       });
-
-      return newGroup;
+      return groups;
     } catch (error) {
       return null;
     }
-  }
-
-  public async findAll(
-    findAllGroupsDTO: FindAllGroupsDTO,
-  ): Promise<GroupDto[]> {
-    const groups = await this.prismaService.groups.findMany({
-      skip: findAllGroupsDTO.skip,
-      take: findAllGroupsDTO.take,
-    });
-    return groups;
   }
 
   public async update(

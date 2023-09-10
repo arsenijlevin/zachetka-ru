@@ -23,9 +23,9 @@ export class SubjectsController {
     return this.subjectsService.create(subjectDto);
   }
 
-  @Get('findAll')
-  public findAll(@Body() findAllSubjectsDTO: FindAllSubjectsDTO) {
-    return this.subjectsService.findAll(findAllSubjectsDTO);
+  @Get('findAllForProfessor/:professor_login')
+  public findAllForProfessor(@Param('professor_login') professor_login: string) {
+    return this.subjectsService.findAllForProfessor(professor_login);
   }
 
   @Get('findOne/:id')

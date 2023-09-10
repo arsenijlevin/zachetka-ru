@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostAttendanceDto } from './dto/post-attendance.dto';
 import { AttendanceService } from './attendance.service';
@@ -27,7 +27,7 @@ export class AttendanceController {
     );
   }
 
-  @Patch('post')
+  @Post('post')
   public post(@Body() updateAttendanceDto: PostAttendanceDto) {
     return this.attendanceService.post(updateAttendanceDto);
   }

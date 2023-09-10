@@ -2,10 +2,10 @@ import { Box, Button, Typography } from "@mui/material";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import CodeCheckPopUp from "components/pop-ups/CodeCheckPopUp";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
 
 export default function StudentGradesTable() {
-  const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(0);
   const modals = [null, CodeCheckPopUp];
   const handleOpenCodeCheck = () => setIsPopupOpen(1);
   const SelectedModal = modals[isPopupOpen];

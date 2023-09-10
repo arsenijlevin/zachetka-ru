@@ -48,9 +48,9 @@
 
 ## **Развёрнутое веб-приложение. Swagger**
 
-*[Swagger](https://api-zachetka-ru.up.railway.app/swagger)*
+*[Swagger](https://zachetka-ru-server.onrender.com/swagger)*
 
-*[zachetka-ru-dev.up.railway.app](https://zachetka-ru.up.railway.app/)*
+*[https://zachetka-ru-client.onrender.com/](https://zachetka-ru-client.onrender.com/)*
 
 ### **Учётные данные**
 

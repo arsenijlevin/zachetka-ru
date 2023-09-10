@@ -23,12 +23,15 @@ export class GroupsController {
     return this.groupsService.create(groupDto);
   }
 
-  @Get('findAll')
-  public findAll(@Body() findAllGroupsDTO: FindAllGroupsDTO) {
-    return this.groupsService.findAll(findAllGroupsDTO);
+  @Get('getGroupsForSubjectProfessor/:subject_id/:professor_login')
+  public getGroupsForSubjectProfessor(
+    @Param('subject_id') subject_id: number,
+    @Param('professor_login') professor_login: string,
+  ) {
+    return this.groupsService.getGroupsForSubjectProfessor(subject_id, professor_login)
   }
 
-  @Get('findOne/:id')
+    @Get('findOne/:id')
   public findOne(@Param('id') id: string) {
     return this.groupsService.findOne(+id);
   }

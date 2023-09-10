@@ -3,7 +3,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Link from "next/link";
 import CodeCheckPopUp from "components/pop-ups/CodeCheckPopUp";
-import React from "react";
+import { useState } from "react";
 
 function createData(dataEntry: string, attendance: string) {
   return { dataEntry, attendance };
@@ -25,7 +25,7 @@ const data = [
 ];
 
 export default function ScheduleTable() {
-  const [isPopupOpen, setIsPopupOpen] = React.useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(0);
   const modals = [null, CodeCheckPopUp];
   const handleOpenCodeCheck = () => setIsPopupOpen(1);
   const SelectedModal = modals[isPopupOpen];

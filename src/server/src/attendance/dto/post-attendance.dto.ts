@@ -10,7 +10,6 @@ export class PostAttendanceDto {
   @IsString()
   time: string;
 
-  @IsDateString()
   date: string;
 
   @IsString()

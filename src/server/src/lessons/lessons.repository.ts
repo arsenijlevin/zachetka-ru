@@ -3,6 +3,10 @@ import { LessonDto } from './dto/lesson.dto';
 import { PrismaService } from '../prisma.service';
 import { FindAllLessonsDTO } from './dto/find-all.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { FindLessonByProfessorParametersDto } from 'src/lessons/dto/find-lesson-by-professor-params.dto';
+import { FindLessonByStudentParametersDto } from 'src/lessons/dto/find-lesson-by-student-parameters.dto';
+import { GetTimesDto } from 'src/lessons/dto/get-times.dto';
+import { GetWeekDayDto } from 'src/lessons/dto/get-week-day.dto';
 
 @Injectable()
 export class LessonsRepository {
@@ -133,5 +137,132 @@ export class LessonsRepository {
     } catch (error) {
       return null;
     }
+  }
+
+  public async findLessonByStudentParameters(
+    findLessonByParametersDTO: FindLessonByStudentParametersDto,
+  ) {
+    try {
+      return await this.prismaService.lessons.findFirst({
+        where: {
+          week_day: findLessonByParametersDTO.week_day,
+          time: findLessonByParametersDTO.time,
+          frequency: findLessonByParametersDTO.frequency,
+          groups_lesson: {
+            some: {
+              groups: {
+                students_group: {
+                  some: {
+                    login: findLessonByParametersDTO.student_login,
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+    } catch (error) {
+      return null;
+    }
+  }
+  public async findLessonByProfessorParameters(
+    findLessonByParametersDTO: FindLessonByProfessorParametersDto,
+  ) {
+    try {
+      const lesson = await this.prismaService.lessons.findFirst({
+        where: {
+          ...findLessonByParametersDTO,
+        },
+        include: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          groups_lesson: {
+            select: {
+              groups: {
+                select: {
+                  students_group: {},
+                },
+              },
+            },
+          },
+        },
+      });
+
+      return {
+        id: lesson.id,
+        week_day: lesson.week_day,
+        time: lesson.time,
+        subject_id: lesson.subject_id,
+        place: lesson.place,
+        frequency: lesson.frequency,
+        professor_login: lesson.professor_login,
+        students_count: lesson.groups_lesson.reduce(
+          (prev, all) => prev + all.groups.students_group.length,
+          0,
+        ),
+      };
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public async getTimes(getTimesDto: GetTimesDto) {
+    try {
+      const times = await this.prismaService.lessons.findMany({
+        where: {
+          ...getTimesDto,
+        },
+        select: {
+          time: true,
+          id: true,
+        },
+      });
+      return [...new Set(times.map((time) => time.time))];
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public async getWeekDays(getWeekDays: GetWeekDayDto) {
+    try {
+      const weekDays = await this.prismaService.lessons.findMany({
+        where: {
+          ...getWeekDays,
+        },
+        select: {
+          week_day: true,
+        },
+      });
+      return [...new Set(weekDays.map((day) => day.week_day))];
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public async studentCountOnLesson(lessonId: number): Promise<number> {
+    return await this.prismaService.users.count({
+      where: {
+        lessons: {
+          some: {
+            id: lessonId,
+          },
+        },
+      },
+    });
+  }
+
+  public async findAllForSubjectGroup(
+    subject_id: number,
+    group_id: number,
+  ) {
+    return await this.prismaService.lessons.findMany({
+      where: {
+        groups_lesson: {
+          every: {
+            group_id: group_id
+          }
+        },
+        subject_id: subject_id
+      }
+    })
   }
 }

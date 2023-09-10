@@ -1,19 +1,23 @@
 import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import { useState, MouseEvent } from "react";
 import { LoginResponseDto } from "@shared/types/auth/login.dto";
 
-function PrismaTest() {
-  const [result, setResult] = React.useState("");
+/**
+ * TODO: Удалить
+ */
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+function PrismaTest() {
+  const [result, setResult] = useState("");
+
+  const handleClick = async (_: MouseEvent<HTMLButtonElement>) => {
     try {
       const body = {
         login: "back_test",
         password: "back_test",
       };
       const loginRequest = await axios.post<LoginResponseDto>(
-        `${process.env.NEXT_PUBLIC_API_HOST || ""}auth/login`,
+        `auth/login`,
         body
       );
       const loginResponse = loginRequest.data;
@@ -22,7 +26,7 @@ function PrismaTest() {
         throw new Error();
       }
 
-      setResult(loginResponse.token || "");
+      setResult(loginResponse.token ?? "");
     } catch (error) {
       return;
     }

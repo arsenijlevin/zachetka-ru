@@ -3,6 +3,10 @@ import { LessonsRepository } from './lessons.repository';
 import { LessonDto } from './dto/lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { FindAllLessonsDTO } from './dto/find-all.dto';
+import { FindLessonByProfessorParametersDto } from 'src/lessons/dto/find-lesson-by-professor-params.dto';
+import { FindLessonByStudentParametersDto } from 'src/lessons/dto/find-lesson-by-student-parameters.dto';
+import { GetTimesDto } from 'src/lessons/dto/get-times.dto';
+import { GetWeekDayDto } from 'src/lessons/dto/get-week-day.dto';
 
 @Injectable()
 export class LessonsService {
@@ -53,5 +57,40 @@ export class LessonsService {
     }
 
     return deletedLesson;
+  }
+
+  public async getTimes(getTimesDto: GetTimesDto) {
+    return await this.lessonsRepository.getTimes(getTimesDto);
+  }
+
+  public async getWeekDays(getWeekDays: GetWeekDayDto) {
+    return await this.lessonsRepository.getWeekDays(getWeekDays);
+  }
+
+  public async studentCountOnLesson(lessonId: number) {
+    return await this.lessonsRepository.studentCountOnLesson(lessonId);
+  }
+
+  public async findLessonByStudentParameters(
+    findLessonByParametersDTO: FindLessonByStudentParametersDto,
+  ) {
+    return await this.lessonsRepository.findLessonByStudentParameters(
+      findLessonByParametersDTO,
+    );
+  }
+
+  public async findLessonByProfessorParameters(
+    findLessonByParametersDTO: FindLessonByProfessorParametersDto,
+  ) {
+    return await this.lessonsRepository.findLessonByProfessorParameters(
+      findLessonByParametersDTO,
+    );
+  }
+
+  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
+    return await this.lessonsRepository.findAllForSubjectGroup(
+      subject_id,
+      group_id,
+    );
   }
 }
