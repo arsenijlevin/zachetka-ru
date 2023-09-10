@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,21 +16,11 @@
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@shared/*": [
-        "../server/shared/*"
-      ]
-    },
+      "@shared/*": ["../server/shared/*"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "db"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "../server/shared/**/*.ts"
-  ],
+  "exclude": ["node_modules", "db"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../server/shared/**/*.ts"],
   "references": [
     {
       "path": "../server"

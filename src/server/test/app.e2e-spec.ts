@@ -35,8 +35,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('/swagger (GET)', () => {
-    return request(app.getHttpServer()).get('/swagger')
-      .expect(200);
+    return request(app.getHttpServer()).get('/swagger').expect(200);
   });
 
   it('/api/testing/test (GET)', () => {
@@ -44,22 +43,22 @@ describe('AppController (e2e)', () => {
       .get('/api/testing/test')
       .expect(200)
       .expect('Test.....');
-  })
+  });
 
   it('/api/testing/test (POST)', () => {
     return request(app.getHttpServer())
       .post('/api/testing/test')
       .expect(201)
       .expect('postTest');
-  })
+  });
 
   it('/api/testing/test-post-with-data (POST)', () => {
     return request(app.getHttpServer())
       .post('/api/testing/test-post-with-data')
       .send({
-        "someNumber": 0,
-        "someText": "string"
+        someNumber: 0,
+        someText: 'string',
       })
-      .expect(201)
-  })
+      .expect(201);
+  });
 });

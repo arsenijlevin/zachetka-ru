@@ -1,5 +1,5 @@
-import { Modal, Input, Button, Box, Typography } from '@mui/material';
-import { AiOutlineClose } from 'react-icons/ai';
+import { Modal, Input, Button, Box, Typography } from "@mui/material";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface AddStudentPopUpProps {
   open: boolean;
@@ -7,20 +7,17 @@ interface AddStudentPopUpProps {
 }
 
 function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
-
   const handleClose = () => setOpen(0);
 
   return (
-    <Modal
-      open={open}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-20">
         <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />
         {/* кнопка закрытия */}
         <Box className="flex flex-col gap-8 self-center">
-          <Typography variant="h5" fontWeight="bold">Добавить студента</Typography>
+          <Typography variant="h5" fontWeight="bold">
+            Добавить студента
+          </Typography>
           <Box>
             <Typography variant="body1">Введите номер студенческого</Typography>
             <Input type="number" className="mt-2 p-1" fullWidth />

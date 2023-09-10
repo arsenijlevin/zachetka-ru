@@ -1,5 +1,5 @@
-import { Modal, Box, Input, Button, Typography } from '@mui/material';
-import { AiOutlineClose } from 'react-icons/ai';
+import { Modal, Box, Input, Button, Typography } from "@mui/material";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface AddGroupPopUpProps {
   open: boolean;
@@ -10,11 +10,7 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
   const handleClose = () => setOpen(0);
 
   return (
-    <Modal
-      open={open}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
+    <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
       <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white translate-y-1/3">
         {/* Кнопка закрытия */}
         <AiOutlineClose cursor={"pointer"} size={20} onClick={handleClose} style={{ alignSelf: "flex-end" }} />

@@ -6,7 +6,7 @@ import { FindAllGroupsDTO } from './dto/find-all.dto';
 
 @Injectable()
 export class GroupsService {
-  constructor(private readonly groupsRepository: GroupsRepository) { }
+  constructor(private readonly groupsRepository: GroupsRepository) {}
 
   public async create(createGroupDto: GroupDto) {
     const newGroup = await this.groupsRepository.save(createGroupDto);
@@ -18,8 +18,20 @@ export class GroupsService {
     return newGroup;
   }
 
-  public async findAll(findAllGroupsDTO: FindAllGroupsDTO) {
-    return await this.groupsRepository.findAll(findAllGroupsDTO);
+  public async getGroupsForSubjectProfessor(
+    subject_id: number,
+    professor_login: string,
+  ) {
+    const groups = await this.groupsRepository.getGroupsForSubjectProfessor(
+      subject_id,
+      professor_login,
+    );
+
+    if (!groups) {
+      throw new HttpException('Groups not found', 404);
+    }
+
+    return groups;
   }
 
   public async findOne(id: number) {

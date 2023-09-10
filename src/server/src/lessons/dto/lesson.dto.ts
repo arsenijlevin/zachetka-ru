@@ -1,4 +1,4 @@
-import { IsString, IsNumber, Min, IsOptional } from "class-validator";
+import { IsString, IsNumber, Min, IsOptional } from 'class-validator';
 
 export class LessonDto {
   @IsNumber()
@@ -23,7 +23,7 @@ export class LessonDto {
   place: string;
 
   @IsString()
-  frequency: string
+  frequency: string;
 
   @IsString()
   professor_login: string;

@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TestingModule } from './testing/testing.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
@@ -14,7 +13,6 @@ import { AttendanceModule } from './attendance/attendance.module';
 
 export const moduleSettings = {
   imports: [
-    TestingModule,
     SubjectsModule,
     UsersModule,
     AuthModule,
@@ -22,12 +20,12 @@ export const moduleSettings = {
     GroupsModule,
     AttendanceModule,
     StudentPerformanceModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  exports: [PrismaService]
+  exports: [PrismaService],
 };
 
 @Module(moduleSettings)
-export class AppModule { }
+export class AppModule {}

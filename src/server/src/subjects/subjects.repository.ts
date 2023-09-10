@@ -1,47 +1,46 @@
-import { Injectable } from "@nestjs/common";
-import { SubjectDto } from "./dto/subject.dto";
-import { PrismaService } from "../prisma.service";
-import { FindAllSubjectsDTO } from "./dto/find-all.dto";
-import { UpdateSubjectDto } from "./dto/update-subject.dto";
-
+import { Injectable } from '@nestjs/common';
+import { SubjectDto } from './dto/subject.dto';
+import { PrismaService } from '../prisma.service';
+import { FindAllSubjectsDTO } from './dto/find-all.dto';
+import { UpdateSubjectDto } from './dto/update-subject.dto';
 
 @Injectable()
 export class SubjectsRepository {
-  constructor(
-    private readonly prismaService: PrismaService
-  ) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   public async findOne(id: number): Promise<SubjectDto | undefined> {
     try {
       const subject = await this.prismaService.subjects.findUnique({
         where: {
-          id
+          id,
         },
         include: {
           professor_subject: {
             include: {
               users: {
                 select: {
-                  login: true
-                }
-              }
-            }
+                  login: true,
+                },
+              },
+            },
           },
           groups_subject: {
             include: {
               groups: {
                 select: {
-                  id: true
-                }
-              }
-            }
-          }
+                  id: true,
+                },
+              },
+            },
+          },
         },
       });
       return {
-        professors_login: subject.professor_subject.map(professor => professor.users.login),
-        groups_id: subject.groups_subject.map(group => group.groups.id),
-        ...subject
+        professors_login: subject.professor_subject.map(
+          (professor) => professor.users.login,
+        ),
+        groups_id: subject.groups_subject.map((group) => group.groups.id),
+        ...subject,
       };
     } catch (error) {
       return null;
@@ -54,47 +53,47 @@ export class SubjectsRepository {
         data: {
           title: subject.title,
           semester: subject.semester,
-          reporting_type: subject.reporting_type
+          reporting_type: subject.reporting_type,
         },
         include: {
           professor_subject: {
             include: {
               users: {
                 select: {
-                  login: true
-                }
-              }
-            }
+                  login: true,
+                },
+              },
+            },
           },
           groups_subject: {
             include: {
               groups: {
                 select: {
-                  id: true
-                }
-              }
-            }
-          }
+                  id: true,
+                },
+              },
+            },
+          },
         },
       });
 
       await this.prismaService.professor_subject.createMany({
-        data: subject.professors_login.map(professor_login => {
+        data: subject.professors_login.map((professor_login) => {
           return {
             professor_login,
-            subject_id: newSubject.id
-          }
-        })
-      })
+            subject_id: newSubject.id,
+          };
+        }),
+      });
 
       await this.prismaService.groups_subject.createMany({
-        data: subject.groups_id.map(group_id => {
+        data: subject.groups_id.map((group_id) => {
           return {
             group_id,
-            subject_id: newSubject.id
-          }
-        })
-      })
+            subject_id: newSubject.id,
+          };
+        }),
+      });
     } catch (error) {
       return null;
     }
@@ -102,74 +101,62 @@ export class SubjectsRepository {
     return subject;
   }
 
-  public async findAll(findAllSubjectsDTO: FindAllSubjectsDTO): Promise<SubjectDto[]> {
+  public async findAllForProfessor(
+    professor_login: string
+  ) {
     try {
       const subjects = await this.prismaService.subjects.findMany({
-        skip: findAllSubjectsDTO.skip,
-        take: findAllSubjectsDTO.take,
-        include: {
+        where: {
           professor_subject: {
-            include: {
-              users: {
-                select: {
-                  login: true
-                }
-              }
-            }
-          },
-          groups_subject: {
-            include: {
-              groups: {
-                select: {
-                  id: true
-                }
-              }
+            every: {
+              professor_login: professor_login
             }
           }
-        },
+        }
       });
-      return subjects.map(subject => ({
-        professors_login: subject.professor_subject.map(professor => professor.users.login),
-        groups_id: subject.groups_subject.map(group => group.groups.id),
-        ...subject
-      }));
+      return subjects;
     } catch (error) {
       return null;
     }
   }
 
-  public async update(id: number, updateSubjectDto: UpdateSubjectDto): Promise<SubjectDto | null> {
+  public async update(
+    id: number,
+    updateSubjectDto: UpdateSubjectDto,
+  ): Promise<SubjectDto | null> {
     try {
       const subject = await this.prismaService.subjects.update({
         where: {
-          id: id
+          id: id,
         },
         include: {
           professor_subject: {
             include: {
               users: {
                 select: {
-                  login: true
-                }
-              }
-            }
+                  login: true,
+                },
+              },
+            },
           },
           groups_subject: {
             include: {
               groups: {
                 select: {
-                  id: true
-                }
-              }
-            }
-          }
+                  id: true,
+                },
+              },
+            },
+          },
         },
-        data: updateSubjectDto
+        data: updateSubjectDto,
       });
       return {
-        professors_login: subject.professor_subject.map(professor => professor.users.login),
-        groups_id: subject.groups_subject.map(group => group.groups.id),
-        ...subject
+        professors_login: subject.professor_subject.map(
+          (professor) => professor.users.login,
+        ),
+        groups_id: subject.groups_subject.map((group) => group.groups.id),
+        ...subject,
       };
     } catch (error) {
       return null;
@@ -180,33 +167,35 @@ export class SubjectsRepository {
     try {
       const subject = await this.prismaService.subjects.delete({
         where: {
-          id: id
+          id: id,
         },
         include: {
           professor_subject: {
             include: {
               users: {
                 select: {
-                  login: true
-                }
-              }
-            }
+                  login: true,
+                },
+              },
+            },
           },
           groups_subject: {
             include: {
               groups: {
                 select: {
-                  id: true
-                }
-              }
-            }
-          }
-        }
+                  id: true,
+                },
+              },
+            },
+          },
+        },
       });
       return {
-        professors_login: subject.professor_subject.map(professor => professor.users.login),
-        groups_id: subject.groups_subject.map(group => group.groups.id),
-        ...subject
+        professors_login: subject.professor_subject.map(
+          (professor) => professor.users.login,
+        ),
+        groups_id: subject.groups_subject.map((group) => group.groups.id),
+        ...subject,
       };
     } catch (error) {
       return null;

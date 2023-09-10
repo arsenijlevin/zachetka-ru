@@ -1,4 +1,11 @@
-import { Controller, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -8,10 +15,13 @@ import { ChangePasswordDto } from '../users/dto/change-password.dto';
 @Controller('users')
 @ApiTags('Пользователи')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Patch('update/:login')
-  public update(@Param('login') login: string, @Body() updateUserDto: UpdateUserDto) {
+  public update(
+    @Param('login') login: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.usersService.update(login, updateUserDto);
   }
 

@@ -6,8 +6,12 @@ import { PrismaService } from '../prisma.service';
 
 export const moduleSettings = {
   controllers: [StudentPerformanceController],
-  providers: [StudentPerformanceService, StudentPerformanceRepository, PrismaService]
-}
+  providers: [
+    StudentPerformanceService,
+    StudentPerformanceRepository,
+    PrismaService,
+  ],
+};
 
 @Module(moduleSettings)
-export class StudentPerformanceModule { }
+export class StudentPerformanceModule {}
