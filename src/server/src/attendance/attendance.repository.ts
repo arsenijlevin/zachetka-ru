@@ -10,7 +10,7 @@ export class AttendanceRepository {
   public async findAllForStudent(
     student_login: string,
     subject_id: number,
-  ): Promise<GetAttendanceDto[]> {
+  ): Promise<GetAttendanceDto[] | null> {
     try {
       const attendance = await this.prismaService.attendance.findMany({
         where: {
@@ -89,7 +89,7 @@ export class AttendanceRepository {
         student: {
           login: item.login,
           name: item.name,
-          attendance: item.students_group.attendance.map((i) => ({
+          attendance: item.students_group?.attendance.map((i) => ({
             date: i.date,
             time: i.lessons.time,
             status: i.status,
@@ -113,11 +113,12 @@ export class AttendanceRepository {
         },
       });
       
+      if (!lesson) return;
 
       const attendance = await this.prismaService.attendance.upsert({
         where: {
           student_login_lesson_id_date: {
-            student_login: updateAttendanceDto.student_login,
+            student_login: updateAttendanceDto.student_login ,
             lesson_id: lesson.id,
             date: updateAttendanceDto.date,
           },

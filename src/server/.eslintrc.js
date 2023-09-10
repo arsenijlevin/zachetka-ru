@@ -6,6 +6,9 @@ module.exports = {
     "plugin:@typescript-eslint/stylistic-type-checked",
     "prettier"
   ],
+  parserOptions: {
+    project: true
+  },
   root: true,
   env: {
     node: true,

@@ -13,7 +13,7 @@ export function toProps(props: Record<string, unknown>) {
 export function getUserFromCookie(context?: GetServerSidePropsContext) {
   const cookies = new Cookies(context?.req.cookies);
   const token = cookies.get<string>("token");
-  const decodedCookie: UserDto = jwt_decode(token);
+  const decodedCookie = jwt_decode<UserDto>(token);
 
   return decodedCookie;
 }

@@ -12,7 +12,7 @@ import { GetWeekDayDto } from 'src/lessons/dto/get-week-day.dto';
 export class LessonsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async findOne(id: number): Promise<LessonDto | undefined> {
+  public async findOne(id: number): Promise<LessonDto | null> {
     try {
       const lesson = await this.prismaService.lessons.findUnique({
         where: {
@@ -27,6 +27,9 @@ export class LessonsRepository {
           },
         },
       });
+      
+      if (!lesson) return null;
+
       return {
         groups_id: lesson.groups_lesson.map((group) => group.groups.id),
         ...lesson,
@@ -36,7 +39,7 @@ export class LessonsRepository {
     }
   }
 
-  public async save(lesson: LessonDto): Promise<LessonDto> {
+  public async save(lesson: LessonDto): Promise<LessonDto | null> {
     try {
       const newLesson = await this.prismaService.lessons.create({
         data: {
@@ -115,7 +118,7 @@ export class LessonsRepository {
     }
   }
 
-  public async delete(id: number): Promise<LessonDto | undefined> {
+  public async delete(id: number): Promise<LessonDto | null> {
     try {
       const lesson = await this.prismaService.lessons.delete({
         where: {
@@ -185,6 +188,8 @@ export class LessonsRepository {
           },
         },
       });
+
+      if (!lesson) return;
 
       return {
         id: lesson.id,

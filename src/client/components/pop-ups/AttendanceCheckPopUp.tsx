@@ -54,12 +54,11 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
   const [timeArray, setTimeArray] = useState<string[]>([]);
   const [visibility, setVisibility] = useState<"hidden" | "visible">("hidden");
   const [studentsQuantity, setStudentsQuantity] = useState(0);
-  const [lessonId, setLessonId] = useState(-1);
   const handleTimeChange = async (newTime: string) => {
     try {
       const cookies = new Cookies();
       const token = cookies.get<string>("token");
-      const decodedCookie: UserDto = jwt_decode(token);
+      const decodedCookie = jwt_decode<UserDto>(token);
 
       const body = {
         week_day: selectedDay,
@@ -72,7 +71,6 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
       const request = await axios.post<LessonWithProfessor>(`lessons/findOneByProfessorParameters`, body);
 
       setStudentsQuantity(request.data.students_count ?? 0);
-      setLessonId(request.data.id);
       setVisibility("visible");
     } catch (error) {
       return;
@@ -82,7 +80,7 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
   const handleDayChange = async (newDay: string) => {
     const cookies = new Cookies();
     const token = cookies.get<string>("token");
-    const decodedCookie: UserDto = jwt_decode(token);
+    const decodedCookie = jwt_decode<UserDto>(token);
 
     const body = {
       week_day: newDay,

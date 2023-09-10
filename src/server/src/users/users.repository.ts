@@ -8,7 +8,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async findOne(login: string): Promise<UserUnsafeDto | undefined> {
+  public async findOne(login: string): Promise<UserUnsafeDto | null> {
     try {
       const user = await this.prismaService.users.findUnique({
         where: {
@@ -55,7 +55,7 @@ export class UsersRepository {
     }
   }
 
-  public async delete(login: string): Promise<UserUnsafeDto | undefined> {
+  public async delete(login: string): Promise<UserUnsafeDto  | null> {
     try {
       const user = await this.prismaService.users.delete({
         where: {

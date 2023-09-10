@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { GroupDto } from './dto/group.dto';
 import { PrismaService } from '../prisma.service';
-import { FindAllGroupsDTO } from './dto/find-all.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 
 @Injectable()
 export class GroupsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async save(group: GroupDto): Promise<GroupDto> {
+  public async save(group: GroupDto): Promise<GroupDto | null> {
     try {
       const newGroup = await this.prismaService.groups.create({
         data: group,
@@ -20,7 +19,7 @@ export class GroupsRepository {
     }
   }
 
-  public async findOne(id: number): Promise<GroupDto | undefined> {
+  public async findOne(id: number): Promise<GroupDto | null> {
     try {
       const group = await this.prismaService.groups.findUnique({
         where: {
@@ -77,7 +76,7 @@ export class GroupsRepository {
     }
   }
 
-  public async delete(id: number): Promise<GroupDto | undefined> {
+  public async delete(id: number): Promise<GroupDto | null> {
     try {
       const group = await this.prismaService.groups.delete({
         where: {

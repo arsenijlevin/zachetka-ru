@@ -31,7 +31,7 @@ function App() {
       cookies.set("token", loginRequest.data.token, { path: "/" });
       const token = cookies.get<string>("token");
       if (!token) return { props: { decodedCookie: "" } };
-      const decodedCookie: UserDto = jwt_decode(token);
+      const decodedCookie = jwt_decode<UserDto>(token);
 
       if (decodedCookie.rights_id === 3) {
         return Router.push("/admin-panel");

@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     const cookies = new Cookies(cookiesText);
 
     const token = cookies.get<string>("token");
-    const decodedCookie: Record<string, string> = jwt_decode(token);
+    const decodedCookie = jwt_decode<Record<string, string>>(token);
 
     return toProps({ decodedCookie });
   }

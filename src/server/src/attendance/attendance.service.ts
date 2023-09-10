@@ -20,7 +20,7 @@ export class AttendanceService {
   }
 
   public async findAllForSubjectGroup(subject_id: number, group_id: number) {
-    const attendance = this.attendanceRepository.findAllForSubjectGroup(
+    const attendance = await this.attendanceRepository.findAllForSubjectGroup(
       +subject_id,
       +group_id,
     );

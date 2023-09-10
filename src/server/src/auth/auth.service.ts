@@ -27,8 +27,11 @@ export class AuthService {
       if (!isMatch) {
         return null;
       }
-      const { password, ...result } = user;
-      return result;
+      return {
+        login: user.login,
+        rights_id: user.rights_id,
+        name: user.name
+      };
     }
     return null;
   }
@@ -44,6 +47,8 @@ export class AuthService {
 
     const userFromDatabase = await this.usersService.findOne(user.login);
 
+    if (!userFromDatabase) return;
+
     const payload: UserDto = {
       login: userFromDatabase.login,
       rights_id: userFromDatabase.rights_id,
@@ -58,7 +63,7 @@ export class AuthService {
     };
   }
 
-  public async signup(userDto: UserUnsafeDto): Promise<UserDto> {
+  public async signup(userDto: UserUnsafeDto): Promise<UserDto | null> {
     const user = await this.usersService.findOne(userDto.login);
     if (user) {
       throw new HttpException('Error', HttpStatus.BAD_REQUEST);

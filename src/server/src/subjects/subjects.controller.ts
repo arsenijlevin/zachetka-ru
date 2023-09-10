@@ -10,7 +10,6 @@ import {
 import { SubjectsService } from './subjects.service';
 import { SubjectDto } from './dto/subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
-import { FindAllSubjectsDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('subjects')

@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { SubjectDto } from './dto/subject.dto';
 import { PrismaService } from '../prisma.service';
-import { FindAllSubjectsDTO } from './dto/find-all.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 
 @Injectable()
 export class SubjectsRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async findOne(id: number): Promise<SubjectDto | undefined> {
+  public async findOne(id: number): Promise<SubjectDto | null> {
     try {
       const subject = await this.prismaService.subjects.findUnique({
         where: {
@@ -35,6 +34,9 @@ export class SubjectsRepository {
           },
         },
       });
+
+      if (!subject) return null;
+
       return {
         professors_login: subject.professor_subject.map(
           (professor) => professor.users.login,
@@ -47,7 +49,7 @@ export class SubjectsRepository {
     }
   }
 
-  public async save(subject: SubjectDto): Promise<SubjectDto> {
+  public async save(subject: SubjectDto): Promise<SubjectDto | null> {
     try {
       const newSubject = await this.prismaService.subjects.create({
         data: {
@@ -163,7 +165,7 @@ export class SubjectsRepository {
     }
   }
 
-  public async delete(id: number): Promise<SubjectDto | undefined> {
+  public async delete(id: number): Promise<SubjectDto | null> {
     try {
       const subject = await this.prismaService.subjects.delete({
         where: {

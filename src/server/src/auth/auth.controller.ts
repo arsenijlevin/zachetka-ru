@@ -18,7 +18,7 @@ export class AuthController {
 
   @UseGuards(JWTStrategy)
   @Post('/signup')
-  public signup(@Body() signupDto: UserUnsafeDto): Promise<UserDto> {
+  public signup(@Body() signupDto: UserUnsafeDto): Promise<UserDto | null> {
     return this.authService.signup(signupDto);
   }
 }

@@ -53,7 +53,7 @@ export default function AttendanceTable({
       frozen: boolean;
       width: string;
     }[];
-  const initialRows = attendance.map((item, index) => ({
+  const initialRows = attendance.map((item, _) => ({
     student_name: item.student.name,
     login: item.student.login,
     attendance: item.student.attendance,

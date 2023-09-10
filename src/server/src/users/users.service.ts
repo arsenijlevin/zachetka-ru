@@ -10,7 +10,7 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 export class UsersService {
   constructor(private userRepository: UsersRepository) {}
 
-  public async findOne(login: string): Promise<UserUnsafeDto | undefined> {
+  public async findOne(login: string): Promise<UserUnsafeDto | null> {
     const user = await this.userRepository.findOne(login);
 
     if (!user) {
@@ -20,14 +20,14 @@ export class UsersService {
     return user;
   }
 
-  public async create(user: UserUnsafeDto): Promise<UserDto | undefined> {
+  public async create(user: UserUnsafeDto): Promise<UserDto | null> {
     await this.userRepository.save(user);
     return user;
   }
 
   public async findAll(
     findAllUsersDTO: FindAllUsersDTO,
-  ): Promise<UserUnsafeDto[] | undefined> {
+  ): Promise<UserUnsafeDto[] | null> {
     const users = await this.userRepository.findAll(findAllUsersDTO);
     return users;
   }
@@ -35,7 +35,7 @@ export class UsersService {
   public async update(
     login: string,
     updateUserDto: UpdateUserDto,
-  ): Promise<UserDto | undefined> {
+  ): Promise<UserDto | null> {
     const user = await this.userRepository.update(login, updateUserDto);
 
     if (!user) {
@@ -45,7 +45,7 @@ export class UsersService {
     return user;
   }
 
-  public async delete(login: string): Promise<UserDto | undefined> {
+  public async delete(login: string): Promise<UserDto | null> {
     const user = await this.userRepository.delete(login);
 
     if (!user) {

@@ -3,6 +3,7 @@ import { StudentPerformanceDto } from "./dto/student-performance.dto";
 import { PrismaService } from "../prisma.service";
 import { FindAllStudentPerformanceDTO } from "./dto/find-all.dto";
 import { UpdateStudentPerformanceDto } from "./dto/update-student-performance.dto";
+import { student_performance } from "@prisma/client";
 
 
 @Injectable()
@@ -37,7 +38,7 @@ export class StudentPerformanceRepository {
     }
   }
 
-  public async findOne(studentLogin: string, subjectId: number): Promise<StudentPerformanceDto | undefined> {
+  public async findOne(studentLogin: string, subjectId: number): Promise<student_performance | null> {
     try {
       const studentPerformance = await this.prismaService.student_performance.findUnique({
         where: {
@@ -53,7 +54,7 @@ export class StudentPerformanceRepository {
     }
   }
 
-  public async save(studentPerformance: StudentPerformanceDto): Promise<StudentPerformanceDto> {
+  public async save(studentPerformance: StudentPerformanceDto): Promise<student_performance | null> {
     try {
       const newStudentPerformance = await this.prismaService.student_performance.create({
         data: studentPerformance
@@ -65,7 +66,7 @@ export class StudentPerformanceRepository {
     }
   }
 
-  public async findAll(findAllStudentPerformancesDTO: FindAllStudentPerformanceDTO): Promise<StudentPerformanceDto[]> {
+  public async findAll(findAllStudentPerformancesDTO: FindAllStudentPerformanceDTO): Promise<student_performance[] | null> {
     const studentPerformances = await this.prismaService.student_performance.findMany({
       skip: findAllStudentPerformancesDTO.skip,
       take: findAllStudentPerformancesDTO.take
@@ -90,7 +91,7 @@ export class StudentPerformanceRepository {
   public async upsert(
     studentLogin: string,
     subjectId: number,
-    updateStudentPerformanceDto: UpdateStudentPerformanceDto): Promise<StudentPerformanceDto | null> {
+    updateStudentPerformanceDto: UpdateStudentPerformanceDto): Promise<student_performance | null> {
     try {
       const studentPerformance = await this.prismaService.student_performance.upsert({
         where: {
@@ -112,7 +113,7 @@ export class StudentPerformanceRepository {
     }
   }
 
-  public async delete(studentLogin: string, subjectId: number): Promise<StudentPerformanceDto | undefined> {
+  public async delete(studentLogin: string, subjectId: number): Promise<student_performance | null> {
     try {
       const studentPerformance = await this.prismaService.student_performance.delete({
         where: {
@@ -122,6 +123,9 @@ export class StudentPerformanceRepository {
           }
         }
       });
+
+      if (!studentPerformance) return null;
+
       return studentPerformance;
     } catch (error) {
       return null;
