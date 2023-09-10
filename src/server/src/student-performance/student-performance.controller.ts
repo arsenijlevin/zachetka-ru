@@ -9,6 +9,14 @@ import { ApiTags } from '@nestjs/swagger';
 export class StudentPerformanceController {
   constructor(private readonly studentPerformanceService: StudentPerformanceService) { }
 
+  @Get("findAllForSubjectGroup/:subject_id/:group_id")
+  public findAllForSubjectGroup(
+    @Param('subject_id') subject_id: number,
+    @Param('group_id') group_id: number
+  ) {
+    return this.studentPerformanceService.findAllForSubjectGroup(subject_id, group_id);
+  }
+
   @Get("findAll")
   public findAll(@Body() findAllStudentPerformancesDTO: FindAllStudentPerformanceDTO) {
     return this.studentPerformanceService.findAll(findAllStudentPerformancesDTO);

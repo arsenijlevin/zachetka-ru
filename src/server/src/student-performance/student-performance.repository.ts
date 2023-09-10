@@ -11,6 +11,32 @@ export class StudentPerformanceRepository {
     private readonly prismaService: PrismaService
   ) { }
 
+  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
+    try {
+      const studentGrades = await this.prismaService.users.findMany({
+        where: {
+          students_group: {
+            group_id: group_id,
+            groups: {
+              groups_subject: {
+                some: {
+                  subject_id: subject_id
+                }
+              }
+            }
+          },
+        },
+        include: {
+          student_performance: true
+        }
+      })
+      const safeStudentGrades = studentGrades.map(grade => this.prismaService.exclude(grade, ["password"]))
+      return safeStudentGrades;
+    } catch (error) {
+      return null;
+    }
+  }
+
   public async findOne(studentLogin: string, subjectId: number): Promise<StudentPerformanceDto | undefined> {
     try {
       const studentPerformance = await this.prismaService.student_performance.findUnique({

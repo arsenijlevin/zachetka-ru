@@ -6,8 +6,8 @@ import { LessonsRepository } from './lessons.repository';
 
 export const moduleSettings = {
   controllers: [LessonsController],
-  providers: [LessonsService, PrismaService, LessonsRepository]
-}
+  providers: [LessonsService, PrismaService, LessonsRepository],
+};
 
 @Module(moduleSettings)
-export class LessonsModule { }
+export class LessonsModule {}

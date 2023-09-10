@@ -22,12 +22,12 @@ export const moduleSettings = {
     GroupsModule,
     AttendanceModule,
     StudentPerformanceModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
-  exports: [PrismaService]
+  exports: [PrismaService],
 };
 
 @Module(moduleSettings)
-export class AppModule { }
+export class AppModule {}

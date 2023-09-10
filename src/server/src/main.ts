@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const prismaService = app.get<PrismaService>(PrismaService);
-  prismaService.enableShutdownHooks(app)
+  prismaService.enableShutdownHooks(app);
 
   app.setGlobalPrefix('api');
 
@@ -22,28 +22,30 @@ async function bootstrap() {
     where: {
       login: 'admin_default',
     },
-  })
+  });
 
   if (!defaultAdmin) {
-    const login = "admin_default";
+    const login = 'admin_default';
     const password = await bcrypt.hash(login, 10);
-
 
     await prismaService.users.create({
       data: {
         login: login,
         password: password,
-        name: "Администратор",
-        rights_id: 3
-      }
-    })
+        name: 'Администратор',
+        rights_id: 3,
+      },
+    });
 
     setTimeout(() => {
-      console.warn("Администратор не обнаружен! Создан администратор с стандартными данными admin_default!")
-      console.warn("Сразу после запуска измените пароль у администратора admin_default!")
+      console.warn(
+        'Администратор не обнаружен! Создан администратор с стандартными данными admin_default!',
+      );
+      console.warn(
+        'Сразу после запуска измените пароль у администратора admin_default!',
+      );
     }, 5000);
   }
-
 
   const config = new DocumentBuilder()
     .setTitle(`API веб-приложения "Зачётка.ру"`)
@@ -56,9 +58,9 @@ async function bootstrap() {
         bearerFormat: 'Bearer', // I`ve tested not to use this field, but the result was the same
         scheme: 'Bearer',
         type: 'http', // I`ve attempted type: 'apiKey' too
-        in: 'Header'
+        in: 'Header',
       },
-      'access-token'
+      'access-token',
     )
     .build();
 

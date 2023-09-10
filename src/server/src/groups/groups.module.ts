@@ -6,8 +6,8 @@ import { PrismaService } from '../prisma.service';
 
 export const moduleSettings = {
   controllers: [GroupsController],
-  providers: [GroupsService, GroupsRepository, PrismaService]
-}
+  providers: [GroupsService, GroupsRepository, PrismaService],
+};
 
 @Module(moduleSettings)
-export class GroupsModule { }
+export class GroupsModule {}

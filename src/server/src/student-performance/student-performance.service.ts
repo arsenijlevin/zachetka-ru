@@ -8,6 +8,16 @@ import { FindAllStudentPerformanceDTO } from './dto/find-all.dto';
 export class StudentPerformanceService {
   constructor(private readonly studentPerformanceRepository: StudentPerformanceRepository) { }
 
+  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
+    const studentPerformance = await this.studentPerformanceRepository.findAllForSubjectGroup(subject_id, group_id);
+
+    if (!studentPerformance) {
+      throw new HttpException('Cannot find student-performance with this parameters', 400);
+    }
+
+    return studentPerformance;
+  }
+
   public async create(studentPerformanceDto: StudentPerformanceDto) {
     const newStudentPerformance = await this.studentPerformanceRepository.save(studentPerformanceDto);
 

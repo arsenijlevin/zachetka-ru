@@ -6,8 +6,8 @@ import { PrismaService } from '../prisma.service';
 
 export const moduleSettings = {
   controllers: [AttendanceController],
-  providers: [AttendanceService, AttendanceRepository, PrismaService]
-}
+  providers: [AttendanceService, AttendanceRepository, PrismaService],
+};
 
 @Module(moduleSettings)
-export class AttendanceModule { }
+export class AttendanceModule {}

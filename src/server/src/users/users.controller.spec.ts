@@ -6,7 +6,9 @@ describe('UsersController', () => {
   let controller: UsersController;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule(moduleSettings).compile();
+    const module: TestingModule = await Test.createTestingModule(
+      moduleSettings,
+    ).compile();
 
     controller = module.get<UsersController>(UsersController);
   });
