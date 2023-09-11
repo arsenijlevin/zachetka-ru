@@ -1,9 +1,8 @@
 import { Box, Breadcrumbs, Button, Typography } from "@mui/material";
 import axios from "axios";
-import { getUserFromCookie } from "lib/serverSideUtils";
 import Link from "next/link";
 import { GradesTablePageProps } from "pages/grades-table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DataGrid, { textEditor } from "react-data-grid";
 import "react-data-grid/lib/styles.css";
 import rdiff from "recursive-diff";
@@ -35,11 +34,11 @@ export default function GradesTable({ grades, subjectId, groupId, subject, group
   const initialRows = grades.map((grade) => ({
     student_name: grade.name,
     login: grade.login,
-    point1: "",
-    point2: "",
-    point3: "",
+    point1: grade.student_performance[0]?.point1?.toString() ?? "",
+    point2: grade.student_performance[0]?.point2?.toString() ?? "",
+    point3: grade.student_performance[0]?.point3?.toString() ?? "",
     point_avg: "",
-    exam_mark: "",
+    exam_mark: grade.student_performance[0]?.exam_mark?.toString() ?? "",
     total_points: "",
     final_mark: "",
   }));
@@ -102,14 +101,9 @@ export default function GradesTable({ grades, subjectId, groupId, subject, group
           style={{ flex: 10 }}
           onRowsChange={async (r) => {
             const diff = rdiff.getDiff(rows, r);
-            const timeIndex = parseInt(diff[0].path[1] as string) + 1;
-            const time = columns[timeIndex] as {
-              key: string;
-              name: string;
-            };
 
             const row = rows[diff[0].path[0] as number];
-            console.log(diff[0].val);
+
             const newValue = diff[0].val as string;
 
             if (newValue === null || newValue === undefined || newValue.trim() === "") return;
@@ -118,9 +112,11 @@ export default function GradesTable({ grades, subjectId, groupId, subject, group
               return;
             }
 
-            const user = getUserFromCookie();
+            const body = {
+              [diff[0].path[1]]: parseInt(newValue),
+            };
 
-            const body = {};
+            await axios.post(`student-performance/post-performance/${row.login}/${subjectId}`, body);
 
             setRows(r);
           }}
