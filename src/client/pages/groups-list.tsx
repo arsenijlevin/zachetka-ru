@@ -14,9 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   try {
     const user = getUserFromCookie(context);
 
-    const groups = await axios.get<Group[]>(
-      `groups/getGroupsForSubjectProfessor/${subjectId}/${user.login}`
-    );
+    const groups = await axios.get<Group[]>(`groups/getGroupsForSubjectProfessor/${subjectId}/${user.login}`);
     const subjectTitle = await axios.get<Subject>(`subjects/findOne/${subjectId}`);
     return toProps({ groups: groups.data, subject: subjectTitle.data, subjectId });
   } catch (error) {

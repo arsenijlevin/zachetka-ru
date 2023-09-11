@@ -15,7 +15,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     const subjectTitle = await axios.get<Subject>(`subjects/findOne/${subjectId}`);
     const groupTitle = await axios.get<Group>(`groups/findOne/${groupId}`);
     const grades = await axios.get<Grades>(`student-performance/findAllForSubjectGroup/${subjectId}/${groupId}`);
-    
+
     return toProps({
       grades: grades.data,
       group: groupTitle.data.title,
