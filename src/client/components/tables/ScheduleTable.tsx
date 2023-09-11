@@ -251,12 +251,12 @@ export default function ScheduleTable() {
                     30
                   </td>
                   <td>08:00 - 09:35</td>
-                    <td></td>
+                  <td></td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>09:45 - 11:20</td>
-                   <td></td>
+                  <td></td>
                   <td></td>
                 </tr>
                 <tr>

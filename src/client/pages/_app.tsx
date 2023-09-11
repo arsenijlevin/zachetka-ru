@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import ErrorBoundary from "../components/pop-ups/utility/ErrorBoundary";
 import axios from "axios";
-import { HashLoader } from 'react-spinners';
+import { HashLoader } from "react-spinners";
 import Router from "next/router";
 import { CSSProperties, useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ const loadingSpinnerStyles: CSSProperties = {
   position: "absolute",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)"
+  transform: "translate(-50%, -50%)",
 };
 
 export default function App({ Component, pageProps }: AppProps) {
