@@ -27,10 +27,13 @@ export class GroupsController {
     @Param('subject_id') subject_id: number,
     @Param('professor_login') professor_login: string,
   ) {
-    return this.groupsService.getGroupsForSubjectProfessor(subject_id, professor_login)
+    return this.groupsService.getGroupsForSubjectProfessor(
+      subject_id,
+      professor_login,
+    );
   }
 
-    @Get('findOne/:id')
+  @Get('findOne/:id')
   public findOne(@Param('id') id: string) {
     return this.groupsService.findOne(+id);
   }

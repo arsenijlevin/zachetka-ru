@@ -27,7 +27,7 @@ export class LessonsRepository {
           },
         },
       });
-      
+
       if (!lesson) return null;
 
       return {
@@ -254,19 +254,16 @@ export class LessonsRepository {
     });
   }
 
-  public async findAllForSubjectGroup(
-    subject_id: number,
-    group_id: number,
-  ) {
+  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
     return await this.prismaService.lessons.findMany({
       where: {
         groups_lesson: {
           every: {
-            group_id: group_id
-          }
+            group_id: group_id,
+          },
         },
-        subject_id: subject_id
-      }
-    })
+        subject_id: subject_id,
+      },
+    });
   }
 }

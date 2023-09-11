@@ -23,7 +23,9 @@ export class SubjectsController {
   }
 
   @Get('findAllForProfessor/:professor_login')
-  public findAllForProfessor(@Param('professor_login') professor_login: string) {
+  public findAllForProfessor(
+    @Param('professor_login') professor_login: string,
+  ) {
     return this.subjectsService.findAllForProfessor(professor_login);
   }
 

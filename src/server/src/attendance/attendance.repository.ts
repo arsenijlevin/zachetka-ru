@@ -75,10 +75,10 @@ export class AttendanceRepository {
                 include: {
                   lessons: {
                     select: {
-                      time: true
-                    }
-                  }
-                }
+                      time: true,
+                    },
+                  },
+                },
               },
             },
           },
@@ -112,13 +112,13 @@ export class AttendanceRepository {
           frequency: updateAttendanceDto.frequency,
         },
       });
-      
+
       if (!lesson) return;
 
       const attendance = await this.prismaService.attendance.upsert({
         where: {
           student_login_lesson_id_date: {
-            student_login: updateAttendanceDto.student_login ,
+            student_login: updateAttendanceDto.student_login,
             lesson_id: lesson.id,
             date: updateAttendanceDto.date,
           },
@@ -146,8 +146,6 @@ export class AttendanceRepository {
         time: attendance.lessons.time,
       };
     } catch (error) {
-      console.log(error);
-
       return null;
     }
   }

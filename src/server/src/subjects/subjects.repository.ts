@@ -103,18 +103,16 @@ export class SubjectsRepository {
     return subject;
   }
 
-  public async findAllForProfessor(
-    professor_login: string
-  ) {
+  public async findAllForProfessor(professor_login: string) {
     try {
       const subjects = await this.prismaService.subjects.findMany({
         where: {
           professor_subject: {
             every: {
-              professor_login: professor_login
-            }
-          }
-        }
+              professor_login: professor_login,
+            },
+          },
+        },
       });
       return subjects;
     } catch (error) {

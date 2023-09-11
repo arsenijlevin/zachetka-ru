@@ -20,8 +20,10 @@ export class SubjectsService {
     return newSubject;
   }
 
-  public async findAllForProfessor(professor_login : string) {
-    const subjects = await this.subjectsRepository.findAllForProfessor(professor_login);
+  public async findAllForProfessor(professor_login: string) {
+    const subjects = await this.subjectsRepository.findAllForProfessor(
+      professor_login,
+    );
 
     if (!subjects) {
       throw new HttpException(
