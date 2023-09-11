@@ -26,6 +26,7 @@
     "react-icons": "^4.8.0",
     "react-qr-code": "^2.0.12",
     "react-select": "^5.7.2",
+    "react-spinners": "^0.13.8",
     "recursive-diff": "^1.0.9",
     "universal-cookie": "^4.0.4"
   },
