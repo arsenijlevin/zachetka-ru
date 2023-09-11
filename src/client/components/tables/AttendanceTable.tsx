@@ -199,6 +199,12 @@ export default function AttendanceTable({
             const newValue = diff[0].val as string;
             const user = getUserFromCookie();
 
+            const allowedStatuses = ["Н", "П", "Б", ""];
+
+            if (!allowedStatuses.includes(newValue.trim())) {
+              return;
+            }
+
             const body = {
               student_login: row.login,
               status: newValue,
