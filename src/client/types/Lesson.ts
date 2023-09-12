@@ -5,5 +5,5 @@ export interface Lesson {
   time: string;
   subject_id: number;
   place: string;
-  frequency: string
+  frequency: string;
 }

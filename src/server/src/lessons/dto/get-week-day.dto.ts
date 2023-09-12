@@ -1,4 +1,4 @@
 export class GetWeekDayDto {
-  professor_login: string
-  subject_id: number
+  professor_login: string;
+  subject_id: number;
 }

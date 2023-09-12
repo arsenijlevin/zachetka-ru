@@ -19,8 +19,13 @@ export class AttendanceService {
     return attendance;
   }
 
-  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
+  public async findAllForSubjectGroup(
+    professor_login: string,
+    subject_id: number,
+    group_id: number,
+  ) {
     const attendance = await this.attendanceRepository.findAllForSubjectGroup(
+      professor_login,
       +subject_id,
       +group_id,
     );

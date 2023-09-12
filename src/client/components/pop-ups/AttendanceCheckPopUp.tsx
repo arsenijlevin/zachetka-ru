@@ -144,8 +144,6 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
     return result;
   }
 
-
-
   function handleChangeStateToMiddle() {
     setCodeText(makeCode(7));
     setState(1);
@@ -242,7 +240,6 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
   }
 
   if (state === 1) {
-
     return (
       <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white mt-16">
@@ -251,12 +248,12 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
             <Typography variant="h6" textAlign={"center"}>
               Идёт проверка посещаемости
             </Typography>
-          
+
             <Countdown
               date={DateTime.now()
                 .plus({
                   minute: time.minute,
-                  second: time.second
+                  second: time.second,
                 })
                 .toMillis()}
               renderer={renderer}

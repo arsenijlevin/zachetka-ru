@@ -4,7 +4,6 @@ import { UserDto } from "types/User";
 import { GetServerSidePropsContext } from "next";
 
 export function toProps(props: Record<string, unknown>) {
-
   return {
     props: props,
   };

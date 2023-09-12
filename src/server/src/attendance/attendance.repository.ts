@@ -45,7 +45,11 @@ export class AttendanceRepository {
     }
   }
 
-  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
+  public async findAllForSubjectGroup(
+    professor_login: string,
+    subject_id: number,
+    group_id: number,
+  ) {
     try {
       const attendance = await this.prismaService.users.findMany({
         where: {
@@ -55,6 +59,7 @@ export class AttendanceRepository {
           lessons: {
             every: {
               subject_id: subject_id,
+              professor_login: professor_login,
             },
           },
         },
@@ -66,8 +71,11 @@ export class AttendanceRepository {
                   lessons: {
                     subject_id: subject_id,
                     groups_lesson: {
-                      every: {
+                      some: {
                         group_id: group_id,
+                        lessons: {
+                          professor_login: professor_login,
+                        },
                       },
                     },
                   },
@@ -75,10 +83,10 @@ export class AttendanceRepository {
                 include: {
                   lessons: {
                     select: {
-                      time: true
-                    }
-                  }
-                }
+                      time: true,
+                    },
+                  },
+                },
               },
             },
           },
@@ -112,13 +120,13 @@ export class AttendanceRepository {
           frequency: updateAttendanceDto.frequency,
         },
       });
-      
+
       if (!lesson) return;
 
       const attendance = await this.prismaService.attendance.upsert({
         where: {
           student_login_lesson_id_date: {
-            student_login: updateAttendanceDto.student_login ,
+            student_login: updateAttendanceDto.student_login,
             lesson_id: lesson.id,
             date: updateAttendanceDto.date,
           },
@@ -146,8 +154,6 @@ export class AttendanceRepository {
         time: attendance.lessons.time,
       };
     } catch (error) {
-      console.log(error);
-
       return null;
     }
   }

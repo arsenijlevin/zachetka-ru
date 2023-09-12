@@ -55,7 +55,7 @@ export class UsersRepository {
     }
   }
 
-  public async delete(login: string): Promise<UserUnsafeDto  | null> {
+  public async delete(login: string): Promise<UserUnsafeDto | null> {
     try {
       const user = await this.prismaService.users.delete({
         where: {
