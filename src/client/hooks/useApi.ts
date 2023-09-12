@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 
 axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_API_HOST ?? ""}`;
@@ -21,11 +21,7 @@ const useAPI = <T>(url: string, options: AxiosRequestConfig) => {
       });
   };
 
-  useEffect(() => {
-    void fetchData();
-  }, []);
-
-  return { loading, data, error };
+  return { loading, data, error, fetchData };
 };
 
 export default useAPI;

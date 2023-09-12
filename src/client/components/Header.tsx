@@ -1,12 +1,26 @@
-import { Box, AppBar, Button } from "@mui/material";
+import { Box, AppBar, Button, Typography } from "@mui/material";
 import Link from "next/link";
+import { UserDto } from "types/User";
 import Cookies from "universal-cookie";
+import jwt_decode from "jwt-decode";
+import { useEffect, useState } from "react";
 
 function Header() {
+  const [user, setUser] = useState<UserDto | null>(null);
   const handleLogout = async () => {
     const cookies = new Cookies();
     cookies.set("token", "", { path: "/", maxAge: -1 });
   };
+
+  useEffect(() => {
+    const cookies = new Cookies({ path: "/" });
+
+    if (!cookies.get("token")) return;
+
+    const userDto = jwt_decode<UserDto>(cookies.get("token") as string);
+
+    setUser(userDto);
+  }, []);
 
   return (
     <Box>
@@ -19,7 +33,12 @@ function Header() {
             justifyContent: "flex-end",
           }}
         >
-          <Box sx={{ display: "flex", gap: 5 }}>
+          <Box className={"w-full flex flex-wrap gap-5"}>
+            <Box marginRight={"auto"}>
+              <Typography variant="h5" color={"black"}>
+                {user?.name}
+              </Typography>
+            </Box>
             <Link href="password-change" passHref>
               <Button variant="contained" style={{ width: "250px", backgroundColor: "rgb(30, 144, 255)" }}>
                 Сменить пароль

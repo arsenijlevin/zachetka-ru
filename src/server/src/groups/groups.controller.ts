@@ -38,6 +38,11 @@ export class GroupsController {
     return this.groupsService.findOne(+id);
   }
 
+  @Get('findForStudent/:student_login')
+  public findForStudent(@Param('student_login') student_login: string) {
+    return this.groupsService.findForStudent(student_login);
+  }
+
   @Patch('update/:id')
   public update(
     @Param('id') id: string,

@@ -164,29 +164,31 @@ export class StudentPerformanceRepository {
         studentScheduleDto.end_date,
         'dd-MM-yyyy',
       );
+
       if (!startDate.isValid || !endDate.isValid) return [];
 
       const interval = Interval.fromDateTimes(startDate, endDate);
       const split = interval.splitBy({ day: 1 }).map((d: Interval) => d.start);
 
-      const lessons = await this.prismaService.lessons.findMany({
+      const lessons = await this.prismaService.groups_lesson.findMany({
         where: {
-          groups_lesson: {
-            every: {
-              groups: {
-                students_group: {
-                  every: {
-                    login: student_login,
-                  },
-                },
+          groups: {
+            students_group: {
+              some: {
+                login: student_login,
               },
             },
           },
         },
         include: {
-          subjects: {
-            select: {
-              title: true,
+          lessons: {
+            include: {
+              subjects: true,
+              users: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
         },
@@ -196,19 +198,23 @@ export class StudentPerformanceRepository {
 
       for (const day of split) {
         for (const lesson of lessons) {
-          if (lesson.frequency === 'Знаменатель') {
+          if (lesson.lessons.frequency === 'Знаменатель') {
             if (day?.weekNumber && day?.weekNumber % 2 === 0) {
-              const lessonWeekDayNumber = getWeekDayNumber(lesson.week_day);
+              const lessonWeekDayNumber = getWeekDayNumber(
+                lesson.lessons.week_day,
+              );
 
               if (day.weekday === lessonWeekDayNumber) {
                 const schedule = studentSchedule.filter(
                   (s) => s.date === day?.toISO(),
                 );
+
                 const attendanceInDate =
                   await this.prismaService.attendance.findFirst({
                     where: {
-                      lesson_id: lesson.id,
-                      date: day.toISO() ?? '',
+                      student_login: student_login,
+                      lesson_id: lesson.lessons.id,
+                      date: day.plus({ hours: 3 }).toISO() ?? '',
                     },
                   });
                 if (schedule.length === 0) {
@@ -216,21 +222,34 @@ export class StudentPerformanceRepository {
                     date: day.toISO() ?? '',
                     lessons: [
                       {
-                        time: lesson.time ?? '',
-                        title: lesson.subjects.title ?? '',
+                        time: lesson.lessons.time ?? '',
+                        title: lesson.lessons.subjects.title ?? '',
                         attendance: attendanceInDate?.status ?? '',
-                        place: lesson.place ?? '',
+                        place: lesson.lessons.place ?? '',
+                        professorName: lesson.lessons.users.name ?? '',
                       },
                     ],
                   });
+                } else {
+                  studentSchedule
+                    .find((s) => s.date === day.toISO())
+                    ?.lessons.push({
+                      time: lesson.lessons.time ?? '',
+                      title: lesson.lessons.subjects.title ?? '',
+                      attendance: attendanceInDate?.status ?? '',
+                      place: lesson.lessons.place ?? '',
+                      professorName: lesson.lessons.users.name ?? '',
+                    });
                 }
               }
             }
           }
 
-          if (lesson.frequency === 'Числитель') {
+          if (lesson.lessons.frequency === 'Числитель') {
             if (day?.weekNumber && day?.weekNumber % 2 === 1) {
-              const lessonWeekDayNumber = getWeekDayNumber(lesson.week_day);
+              const lessonWeekDayNumber = getWeekDayNumber(
+                lesson.lessons.week_day,
+              );
 
               if (day.weekday === lessonWeekDayNumber) {
                 const schedule = studentSchedule.filter(
@@ -239,8 +258,9 @@ export class StudentPerformanceRepository {
                 const attendanceInDate =
                   await this.prismaService.attendance.findFirst({
                     where: {
-                      lesson_id: lesson.id,
-                      date: day.toISO() ?? '',
+                      student_login: student_login,
+                      lesson_id: lesson.lessons.id,
+                      date: day.plus({ hours: 3 }).toISO() ?? '',
                     },
                   });
                 if (schedule.length === 0) {
@@ -248,13 +268,24 @@ export class StudentPerformanceRepository {
                     date: day.toISO() ?? '',
                     lessons: [
                       {
-                        time: lesson.time ?? '',
-                        title: lesson.subjects.title ?? '',
+                        time: lesson.lessons.time ?? '',
+                        title: lesson.lessons.subjects.title ?? '',
                         attendance: attendanceInDate?.status ?? '',
-                        place: lesson.place ?? '',
+                        place: lesson.lessons.place ?? '',
+                        professorName: lesson.lessons.users.name ?? '',
                       },
                     ],
                   });
+                } else {
+                  studentSchedule
+                    .find((s) => s.date === day.toISO())
+                    ?.lessons.push({
+                      time: lesson.lessons.time ?? '',
+                      title: lesson.lessons.subjects.title ?? '',
+                      attendance: attendanceInDate?.status ?? '',
+                      place: lesson.lessons.place ?? '',
+                      professorName: lesson.lessons.users.name ?? '',
+                    });
                 }
               }
             }

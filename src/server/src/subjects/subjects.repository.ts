@@ -108,7 +108,7 @@ export class SubjectsRepository {
       const subjects = await this.prismaService.subjects.findMany({
         where: {
           professor_subject: {
-            every: {
+            some: {
               professor_login: professor_login,
             },
           },

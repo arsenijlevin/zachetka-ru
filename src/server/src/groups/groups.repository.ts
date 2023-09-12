@@ -31,6 +31,21 @@ export class GroupsRepository {
       return null;
     }
   }
+  public async findForStudent(student_login: string) {
+    try {
+      const group = await this.prismaService.students_group.findUnique({
+        where: {
+          login: student_login,
+        },
+        include: {
+          groups: true,
+        },
+      });
+      return group;
+    } catch (error) {
+      return null;
+    }
+  }
 
   public async getGroupsForSubjectProfessor(
     subject_id: number,
@@ -44,7 +59,7 @@ export class GroupsRepository {
               subject_id: subject_id,
               subjects: {
                 professor_subject: {
-                  every: {
+                  some: {
                     professor_login: professor_login,
                   },
                 },

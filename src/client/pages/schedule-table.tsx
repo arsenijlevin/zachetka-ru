@@ -3,14 +3,16 @@ import Header from "components/Header";
 import { GetServerSidePropsContext } from "next";
 import axios from "axios";
 import { getUserFromCookie, toProps } from "lib/serverSideUtils";
+import { UserDto } from "types/User";
 
-interface StudentSchedule {
+export interface StudentSchedule {
   date: string; // 31.03.2023 ISO
   lessons: {
     time: string; // 08:00 - {{ time + 1 hours 30 min }}
     title: string;
     attendance?: string; // "", NULL, "Н", "П", "Б",
     place?: string;
+    professorName?: string;
   }[];
 }
 
@@ -20,33 +22,30 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (!user?.login) return;
 
   try {
-    const body = {
-      start_date: "01-09-2023",
-      end_date: "31-12-2023",
-    };
+    const semester = await axios.get<{
+      login: string;
+      group_id: number;
+      groups: {
+        id: number;
+        title: string;
+        semester: number;
+      };
+    }>(`groups/findForStudent/${user.login}`);
 
-    const studentSchedule = await axios.post<StudentSchedule>(
-      `student-performance/getStudentSchedule/${user.login}`,
-      body
-    );
-
-    const data = studentSchedule.data;
-    
     return toProps({
-      studentSchedule: data,
+      semester: semester.data.groups.semester,
+      user: user,
     });
   } catch (error) {
     return toProps({});
   }
 };
 
-function Table({ studentSchedule }: { studentSchedule: StudentSchedule }) {
-  console.log(studentSchedule);
-
+function Table({ semester, user }: { semester: number; user: UserDto }) {
   return (
     <>
       <Header />
-      <ScheduleTable />
+      <ScheduleTable semester={semester} user={user} />
     </>
   );
 }

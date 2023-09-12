@@ -209,7 +209,13 @@ export default function AttendanceTable({
               student_login: row.login,
               status: newValue,
               time: time.name.split(" ")[1],
-              date: DateTime.fromFormat(time.name, "dd-MM-yyyy HH:mm").toISO(),
+              date: DateTime.fromFormat(time.name, "dd-MM-yyyy HH:mm")
+                .set({
+                  hour: 0,
+                  minute: 0,
+                })
+                .plus({ hour: 3 })
+                .toISO(),
               week_day: getDayNumberByWeekDay(DateTime.fromFormat(time.name, "dd-MM-yyyy HH:mm").weekday - 1),
               subject_id: parseInt(subjectId),
               frequency: getWeekFrequencyFromDay(DateTime.fromFormat(time.name, "dd-MM-yyyy HH:mm")),

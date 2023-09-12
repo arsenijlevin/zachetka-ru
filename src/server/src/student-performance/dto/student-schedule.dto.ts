@@ -5,5 +5,6 @@ export interface StudentSchedule {
     title: string;
     attendance?: string; // "", NULL, "Н", "П", "Б",
     place?: string;
+    professorName?: string;
   }[];
 }

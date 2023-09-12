@@ -5,18 +5,25 @@ import axios from "axios";
 import { Subject } from "types/Subject";
 import { Group } from "types/Group";
 import { Attendance } from "types/Attendance";
-import { toProps } from "lib/serverSideUtils";
+import { getUserFromCookie, toProps } from "lib/serverSideUtils";
 import { Lesson } from "types/Lesson";
 import { DateTime, Interval } from "luxon";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const subjectId = context.query.subjectId as string;
   const groupId = context.query.groupId as string;
+
+  const user = getUserFromCookie(context);
+
   try {
     const subjectTitle = await axios.get<Subject>(`subjects/findOne/${subjectId}`);
     const groupTitle = await axios.get<Group>(`groups/findOne/${groupId}`);
-    const attendance = await axios.get<Attendance>(`attendance/findAllForSubjectGroup/${subjectId}/${groupId}`);
-    const lessons = await axios.get<Lesson>(`lessons/findAllForSubjectGroup/${subjectId}/${groupId}`);
+    const attendance = await axios.get<Attendance>(
+      `attendance/findAllForSubjectGroupProfessor/${user.login}/${subjectId}/${groupId}`
+    );
+    const lessons = await axios.get<Lesson>(
+      `lessons/findAllForProfessorSubjectGroup/${user.login}/${subjectId}/${groupId}`
+    );
 
     return toProps({
       attendance: attendance.data,
@@ -58,7 +65,7 @@ function Table({ attendance, lessons, subjectId, groupId, subject, group }: Atte
       minute: 0,
       second: 0,
       month: 9,
-      day: 1,
+      day: 4,
     });
     const endDay = DateTime.now().set({
       hour: 0,
