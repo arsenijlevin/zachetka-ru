@@ -16,12 +16,14 @@ export class AttendanceController {
     return this.attendanceService.findAllForStudent(student_login, +subject_id);
   }
 
-  @Get('findAllForSubjectGroup/:subject_id/:group_id')
+  @Get('findAllForSubjectGroupProfessor/:professor_login/:subject_id/:group_id')
   public findAllForSubjectGroup(
+    @Param('professor_login') professor_login: string,
     @Param('subject_id') subject_id: number,
     @Param('group_id') group_id: number,
   ) {
     return this.attendanceService.findAllForSubjectGroup(
+      professor_login,
       +subject_id,
       +group_id,
     );

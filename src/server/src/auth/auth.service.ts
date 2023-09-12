@@ -30,7 +30,7 @@ export class AuthService {
       return {
         login: user.login,
         rights_id: user.rights_id,
-        name: user.name
+        name: user.name,
       };
     }
     return null;

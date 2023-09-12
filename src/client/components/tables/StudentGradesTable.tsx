@@ -16,9 +16,7 @@ export default function StudentGradesTable() {
           <Typography variant="h3">Моя успеваемость</Typography>
         </Box>
         <Box display={"flex"} alignItems={"end"} marginY={4}>
-          <Box flex={0.51} height={"100%"}>
-            <Typography variant="h5">Иванов Иван Иванович</Typography>
-          </Box>
+          <Box flex={0.51} height={"100%"}></Box>
           <Box flex={0.49} display={"flex"} gap={5}>
             <Button variant="outlined" style={{ width: "100%" }} onClick={handleOpenCodeCheck}>
               Код посещаемости

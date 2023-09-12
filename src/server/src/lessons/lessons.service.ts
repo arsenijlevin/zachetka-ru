@@ -87,8 +87,13 @@ export class LessonsService {
     );
   }
 
-  public async findAllForSubjectGroup(subject_id: number, group_id: number) {
+  public async findAllForSubjectGroup(
+    professor_login: string,
+    subject_id: number,
+    group_id: number,
+  ) {
     return await this.lessonsRepository.findAllForSubjectGroup(
+      professor_login,
       subject_id,
       group_id,
     );

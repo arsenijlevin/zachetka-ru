@@ -43,6 +43,16 @@ export class GroupsService {
     return group;
   }
 
+  public async findForStudent(student_login: string) {
+    const group = await this.groupsRepository.findForStudent(student_login);
+
+    if (!group) {
+      throw new HttpException('Group not found', 404);
+    }
+
+    return group;
+  }
+
   public async update(id: number, updateGroupDto: UpdateGroupDto) {
     const updatedGroup = await this.groupsRepository.update(id, updateGroupDto);
 
