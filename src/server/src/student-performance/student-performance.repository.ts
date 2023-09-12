@@ -17,10 +17,10 @@ export class StudentPerformanceRepository {
       const studentGrades = await this.prismaService.users.findMany({
         where: {
           students_group: {
-            group_id: group_id,
             groups: {
               groups_subject: {
                 some: {
+                  group_id: group_id,
                   subject_id: subject_id,
                 },
               },
@@ -28,7 +28,18 @@ export class StudentPerformanceRepository {
           },
         },
         include: {
-          student_performance: true,
+          student_performance: {
+            where: {
+              subjects: {
+                id: subject_id,
+                groups_subject: {
+                  some: {
+                    group_id: group_id,
+                  },
+                },
+              },
+            },
+          },
         },
       });
       const safeStudentGrades = studentGrades.map((grade) =>
@@ -88,12 +99,37 @@ export class StudentPerformanceRepository {
 
   public async findAllForStudent(studentLogin: string) {
     try {
-      const studentPerformances =
-        await this.prismaService.student_performance.findMany({
-          where: {
-            student_login: studentLogin,
+      const studentPerformances = await this.prismaService.subjects.findMany({
+        where: {
+          groups_subject: {
+            some: {
+              groups: {
+                students_group: {
+                  some: {
+                    login: studentLogin,
+                  },
+                },
+              },
+            },
           },
-        });
+        },
+        include: {
+          student_performance: {
+            where: {
+              student_login: studentLogin,
+            },
+          },
+          professor_subject: {
+            select: {
+              users: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
 
       return studentPerformances;
     } catch (error) {

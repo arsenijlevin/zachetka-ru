@@ -32,7 +32,7 @@ export class StudentPerformanceController {
     );
   }
 
-  @Get('findAll/:student_login')
+  @Get('findAllForStudent/:student_login')
   public findAllForStudent(@Param('student_login') studentLogin: string) {
     return this.studentPerformanceService.findAllForStudent(studentLogin);
   }

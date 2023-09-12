@@ -129,7 +129,7 @@ export default function GradesTable({ grades, subjectId, groupId, subject, group
   );
 }
 
-function getFinalMarkForPoints(points: number) {
+export function getFinalMarkForPoints(points: number) {
   if (points >= 0 && points < 25) {
     return "Неудовлетворительно";
   }
