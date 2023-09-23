@@ -1,5 +1,7 @@
 import { Modal, Box, Input, Button, Typography } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
+import { useState } from "react";
+import axios from "axios";
 
 interface AddGroupPopUpProps {
   open: boolean;
@@ -8,6 +10,26 @@ interface AddGroupPopUpProps {
 
 function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
   const handleClose = () => setOpen(0);
+
+  const [title, setTitle] = useState("");
+  const [semester, setSemester] = useState(0);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+
+  async function handleSubmit() {
+    try{
+      await axios.post("groups/create", { title, semester});
+      setSuccessMessage("Успех");
+      console.log("Успех");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          setError("Неверные данные");
+        }
+      }
+    }
+  }
 
   return (
     <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -23,7 +45,7 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
           {/* Ввод код группы*/}
           <Box>
             <Typography variant="body1">Введите код группы</Typography>
-            <Input className="mt-2 p-1" />
+            <Input className="mt-2 p-1" onChange={(e) => setTitle(e.target.value)}/>
           </Box>
 
           {/* Ввод семестра обучения*/}
@@ -37,10 +59,17 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
                 min: 1,
                 max: 12,
               }}
+              onChange={(e) => setSemester(parseInt(e.target.value))}
             />
           </Box>
+          <Typography variant="body1" color={"green"}>
+              {successMessage}
+          </Typography>
+          <Typography variant="body1" color={"red"}>
+              {error}
+          </Typography>
 
-          <Button variant="contained" size="medium" className="px-2 py-1">
+          <Button variant="contained" size="medium" className="px-2 py-1" onClick={handleSubmit}>
             Добавить
           </Button>
         </Box>
