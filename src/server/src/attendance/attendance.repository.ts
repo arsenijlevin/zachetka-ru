@@ -157,4 +157,58 @@ export class AttendanceRepository {
       return null;
     }
   }
+
+  public async checkAttendance(student_login: string, code: string) {
+    console.log(student_login, code);
+
+    try {
+      const attendanceCode =
+        await this.prismaService.attendance_codes.findFirst({
+          where: {
+            code,
+            lessons: {
+              groups_lesson: {
+                some: {
+                  groups: {
+                    students_group: {
+                      some: {
+                        users: {
+                          login: student_login,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        });
+
+      return !!attendanceCode;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public async startAttendanceCodeCheck(lesson_id: number, code: string) {
+    try {
+      const attendanceCode = await this.prismaService.attendance_codes.upsert({
+        where: {
+          code,
+        },
+        update: {
+          code: code,
+          lesson_id: lesson_id,
+        },
+        create: {
+          lesson_id: lesson_id,
+          code: code,
+        },
+      });
+
+      return attendanceCode;
+    } catch (error) {
+      return null;
+    }
+  }
 }

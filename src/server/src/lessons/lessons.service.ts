@@ -2,7 +2,6 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { LessonsRepository } from './lessons.repository';
 import { LessonDto } from './dto/lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
-import { FindAllLessonsDTO } from './dto/find-all.dto';
 import { FindLessonByProfessorParametersDto } from 'src/lessons/dto/find-lesson-by-professor-params.dto';
 import { FindLessonByStudentParametersDto } from 'src/lessons/dto/find-lesson-by-student-parameters.dto';
 import { GetTimesDto } from 'src/lessons/dto/get-times.dto';
@@ -20,10 +19,6 @@ export class LessonsService {
     }
 
     return newLesson;
-  }
-
-  public async findAll(findAllLessonsDTO: FindAllLessonsDTO) {
-    return await this.lessonsRepository.findAll(findAllLessonsDTO);
   }
 
   public async findOne(id: number) {

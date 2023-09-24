@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LessonDto } from './dto/lesson.dto';
 import { PrismaService } from '../prisma.service';
-import { FindAllLessonsDTO } from './dto/find-all.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { FindLessonByProfessorParametersDto } from 'src/lessons/dto/find-lesson-by-professor-params.dto';
 import { FindLessonByStudentParametersDto } from 'src/lessons/dto/find-lesson-by-student-parameters.dto';
@@ -67,27 +66,6 @@ export class LessonsRepository {
     } catch (error) {
       return null;
     }
-  }
-
-  public async findAll(
-    findAllLessonsDTO: FindAllLessonsDTO,
-  ): Promise<LessonDto[]> {
-    const lessons = await this.prismaService.lessons.findMany({
-      skip: findAllLessonsDTO.skip,
-      take: findAllLessonsDTO.take,
-      include: {
-        groups_lesson: {
-          include: {
-            groups: true,
-            lessons: true,
-          },
-        },
-      },
-    });
-    return lessons.map((lesson) => ({
-      groups_id: lesson.groups_lesson.map((group) => group.groups.id),
-      ...lesson,
-    }));
   }
 
   public async update(

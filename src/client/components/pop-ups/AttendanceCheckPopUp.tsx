@@ -54,6 +54,8 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
   const [timeArray, setTimeArray] = useState<string[]>([]);
   const [visibility, setVisibility] = useState<"hidden" | "visible">("hidden");
   const [studentsQuantity, setStudentsQuantity] = useState(0);
+  const [lessonId, setLessonId] = useState(-1);
+
   const handleTimeChange = async (newTime: string) => {
     try {
       const cookies = new Cookies();
@@ -71,6 +73,7 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
       const request = await axios.post<LessonWithProfessor>(`lessons/findOneByProfessorParameters`, body);
 
       setStudentsQuantity(request.data.students_count ?? 0);
+      setLessonId(request.data.id)
       setVisibility("visible");
     } catch (error) {
       return;
@@ -151,6 +154,10 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
 
   function handleChangeStateToEnd() {
     setState(2);
+  }
+
+  function postCode(lesson_id: number, code: string) {
+    void axios.post(`${process.env.NEXT_PUBLIC_API_HOST ?? ""}attendance/startAttendanceCodeCheck/${lesson_id}/${code}`);
   }
 
   const frequency = [
@@ -240,6 +247,8 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
   }
 
   if (state === 1) {
+    postCode(lessonId, codeText);
+
     return (
       <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
         <Box className="m-auto w-1/2 flex flex-col border border-grey px-16 py-8 bg-white mt-16">
