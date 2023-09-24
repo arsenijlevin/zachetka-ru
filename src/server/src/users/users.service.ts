@@ -1,5 +1,4 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { FindAllUsersDTO } from './dto/find-all.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
 import * as bcrypt from 'bcrypt';
@@ -10,47 +9,12 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 export class UsersService {
   constructor(private userRepository: UsersRepository) {}
 
-  public async findOne(login: string): Promise<UserUnsafeDto | null> {
-    const user = await this.userRepository.findOne(login);
+  public async add(user: UserUnsafeDto): Promise<UserDto | null> {
+    const passwordHash = await bcrypt.hash(user.password, 10);
 
-    if (!user) {
-      throw new HttpException('User not found', 404);
-    }
+    user.password = passwordHash;
 
-    return user;
-  }
-
-  public async create(user: UserUnsafeDto): Promise<UserDto | null> {
     await this.userRepository.save(user);
-    return user;
-  }
-
-  public async findAll(
-    findAllUsersDTO: FindAllUsersDTO,
-  ): Promise<UserUnsafeDto[] | null> {
-    const users = await this.userRepository.findAll(findAllUsersDTO);
-    return users;
-  }
-
-  public async update(
-    login: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UserDto | null> {
-    const user = await this.userRepository.update(login, updateUserDto);
-
-    if (!user) {
-      throw new HttpException('User not found', 404);
-    }
-
-    return user;
-  }
-
-  public async delete(login: string): Promise<UserDto | null> {
-    const user = await this.userRepository.delete(login);
-
-    if (!user) {
-      throw new HttpException('User not found', 404);
-    }
 
     return user;
   }
@@ -76,5 +40,28 @@ export class UsersService {
     user.password = newPassword;
 
     return this.update(changePassword.login, user);
+  }
+
+  public async findOne(login: string): Promise<UserUnsafeDto | null> {
+    const user = await this.userRepository.findOne(login);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
+    return user;
+  }
+
+  private async update(
+    login: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserDto | null> {
+    const user = await this.userRepository.update(login, updateUserDto);
+
+    if (!user) {
+      throw new HttpException('User not found', 404);
+    }
+
+    return user;
   }
 }

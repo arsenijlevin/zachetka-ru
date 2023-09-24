@@ -1,4 +1,4 @@
-import { IsString, MinLength } from 'class-validator';
+import { IsNumber, IsString, MinLength } from 'class-validator';
 
 export class UserDto {
   @IsString()
@@ -8,7 +8,7 @@ export class UserDto {
   @IsString()
   name: string;
 
-  @IsString()
+  @IsNumber()
   rights_id: number;
 }
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LessonDto } from './dto/lesson.dto';
 import { PrismaService } from '../prisma.service';
-import { FindAllLessonsDTO } from './dto/find-all.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { FindLessonByProfessorParametersDto } from 'src/lessons/dto/find-lesson-by-professor-params.dto';
 import { FindLessonByStudentParametersDto } from 'src/lessons/dto/find-lesson-by-student-parameters.dto';
