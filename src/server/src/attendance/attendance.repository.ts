@@ -162,27 +162,27 @@ export class AttendanceRepository {
     console.log(student_login, code);
 
     try {
-      const attendanceCode = await this.prismaService.attendance_codes.findFirst({
-        where: {
-          code,
-          lessons: {
-            groups_lesson: {
-              some: {
-                groups: {
-                  students_group: {
-                    some: {
-                      users: {
-                        login: student_login
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      })
-
+      const attendanceCode =
+        await this.prismaService.attendance_codes.findFirst({
+          where: {
+            code,
+            lessons: {
+              groups_lesson: {
+                some: {
+                  groups: {
+                    students_group: {
+                      some: {
+                        users: {
+                          login: student_login,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        });
 
       return !!attendanceCode;
     } catch (error) {
@@ -190,21 +190,21 @@ export class AttendanceRepository {
     }
   }
 
-    public async startAttendanceCodeCheck(lesson_id: number, code: string) {
+  public async startAttendanceCodeCheck(lesson_id: number, code: string) {
     try {
       const attendanceCode = await this.prismaService.attendance_codes.upsert({
         where: {
-          code
+          code,
         },
         update: {
           code: code,
-          lesson_id: lesson_id
+          lesson_id: lesson_id,
         },
         create: {
           lesson_id: lesson_id,
-          code: code
-        }
-      })
+          code: code,
+        },
+      });
 
       return attendanceCode;
     } catch (error) {

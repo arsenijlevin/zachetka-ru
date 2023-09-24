@@ -28,7 +28,6 @@ export class UsersRepository {
       });
 
       console.log(user, newUser);
-      
 
       return newUser;
     } catch (error) {

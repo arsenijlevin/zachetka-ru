@@ -191,16 +191,16 @@ export class LessonsRepository {
     try {
       const times = await this.prismaService.lessons.findMany({
         where: {
-          ...getTimesDto
+          ...getTimesDto,
         },
         select: {
           time: true,
-          id: true
-        }
-      })
-      return [...new Set(times.map(time => time.time))]
+          id: true,
+        },
+      });
+      return [...new Set(times.map((time) => time.time))];
     } catch (error) {
-      return null
+      return null;
     }
   }
 
@@ -208,15 +208,15 @@ export class LessonsRepository {
     try {
       const weekDays = await this.prismaService.lessons.findMany({
         where: {
-          ...getWeekDays
+          ...getWeekDays,
         },
         select: {
-          week_day: true
+          week_day: true,
         },
-      })
-      return [...new Set(weekDays.map(day => day.week_day))]
+      });
+      return [...new Set(weekDays.map((day) => day.week_day))];
     } catch (error) {
-      return null
+      return null;
     }
   }
 
