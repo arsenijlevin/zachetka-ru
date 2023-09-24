@@ -10,7 +10,6 @@ import {
 import { LessonsService } from './lessons.service';
 import { LessonDto } from './dto/lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
-import { FindAllLessonsDTO } from './dto/find-all.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FindLessonByProfessorParametersDto } from 'src/lessons/dto/find-lesson-by-professor-params.dto';
 import { GetTimesDto } from 'src/lessons/dto/get-times.dto';
@@ -24,11 +23,6 @@ export class LessonsController {
   @Post('create')
   public create(@Body() lessonDto: LessonDto) {
     return this.lessonsService.create(lessonDto);
-  }
-
-  @Get('findAll')
-  public findAll(@Body() findAllLessonsDTO: FindAllLessonsDTO) {
-    return this.lessonsService.findAll(findAllLessonsDTO);
   }
 
   @Get('findOne/:id')
