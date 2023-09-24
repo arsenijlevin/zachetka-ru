@@ -69,27 +69,6 @@ export class LessonsRepository {
     }
   }
 
-  public async findAll(
-    findAllLessonsDTO: FindAllLessonsDTO,
-  ): Promise<LessonDto[]> {
-    const lessons = await this.prismaService.lessons.findMany({
-      skip: findAllLessonsDTO.skip,
-      take: findAllLessonsDTO.take,
-      include: {
-        groups_lesson: {
-          include: {
-            groups: true,
-            lessons: true,
-          },
-        },
-      },
-    });
-    return lessons.map((lesson) => ({
-      groups_id: lesson.groups_lesson.map((group) => group.groups.id),
-      ...lesson,
-    }));
-  }
-
   public async update(
     id: number,
     updateLessonDto: UpdateLessonDto,
@@ -213,16 +192,16 @@ export class LessonsRepository {
     try {
       const times = await this.prismaService.lessons.findMany({
         where: {
-          ...getTimesDto,
+          ...getTimesDto
         },
         select: {
           time: true,
-          id: true,
-        },
-      });
-      return [...new Set(times.map((time) => time.time))];
+          id: true
+        }
+      })
+      return [...new Set(times.map(time => time.time))]
     } catch (error) {
-      return null;
+      return null
     }
   }
 
@@ -230,15 +209,15 @@ export class LessonsRepository {
     try {
       const weekDays = await this.prismaService.lessons.findMany({
         where: {
-          ...getWeekDays,
+          ...getWeekDays
         },
         select: {
-          week_day: true,
+          week_day: true
         },
-      });
-      return [...new Set(weekDays.map((day) => day.week_day))];
+      })
+      return [...new Set(weekDays.map(day => day.week_day))]
     } catch (error) {
-      return null;
+      return null
     }
   }
 

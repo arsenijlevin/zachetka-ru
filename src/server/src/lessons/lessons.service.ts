@@ -22,10 +22,6 @@ export class LessonsService {
     return newLesson;
   }
 
-  public async findAll(findAllLessonsDTO: FindAllLessonsDTO) {
-    return await this.lessonsRepository.findAll(findAllLessonsDTO);
-  }
-
   public async findOne(id: number) {
     const lesson = await this.lessonsRepository.findOne(id);
 

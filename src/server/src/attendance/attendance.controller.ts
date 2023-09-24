@@ -33,4 +33,19 @@ export class AttendanceController {
   public post(@Body() updateAttendanceDto: PostAttendanceDto) {
     return this.attendanceService.post(updateAttendanceDto);
   }
+
+  @Post('checkAttendance/:student_login/:code')
+  public checkAttendance(
+    @Param('student_login') student_login: string,
+    @Param('code') code: string,
+  ) {
+    return this.attendanceService.checkAttendance(student_login, code);
+  }
+  @Post('startAttendanceCodeCheck/:lesson_id/:code')
+  public startAttendanceCodeCheck(
+    @Param('lesson_id') lesson_id: number,
+    @Param('code') code: string,
+  ) {
+    return this.attendanceService.startAttendanceCodeCheck(+lesson_id, code);
+  }
 }
