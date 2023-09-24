@@ -1,6 +1,7 @@
 import { Modal, Input, Button, Box, Typography } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import Select from "react-select";
+import  React from "react";
 
 interface ChangeSubjectPopUpProps {
   open: boolean;
@@ -9,6 +10,8 @@ interface ChangeSubjectPopUpProps {
 
 function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
   const handleClose = () => setOpen(0);
+
+  const[title, setTitle] = React.useState('');
 
   const subjects = [
     { value: "ТП", label: "ТП" },

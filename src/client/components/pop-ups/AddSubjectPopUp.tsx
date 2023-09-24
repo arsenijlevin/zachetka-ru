@@ -1,6 +1,8 @@
 import { Modal, Input, Button, Box, Typography } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import Select from "react-select";
+import axios from "axios";
+import { useState } from "react";
 
 interface AddSubjectPopUpProps {
   open: boolean;
@@ -9,6 +11,8 @@ interface AddSubjectPopUpProps {
 
 function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
   const handleClose = () => setOpen(0);
+  const [title, setTitle] = useState("");
+  
 
   const lecturers = [
     { value: "Преподаватель 1", label: "Преподаватель 1" },

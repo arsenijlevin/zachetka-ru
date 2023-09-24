@@ -16,7 +16,6 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-
   async function handleSubmit() {
     try{
       await axios.post("groups/create", { title, semester});
