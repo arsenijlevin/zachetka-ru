@@ -85,5 +85,5 @@
 
 #### ***Администратор***
 
-Логин: admin_default
+Логин: admin_default  
 Пароль: admin_default
