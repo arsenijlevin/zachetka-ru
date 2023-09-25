@@ -16,7 +16,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (!token || typeof code !== "string") return { props: { code: "unauth" } };
 
   const decodedCookie = jwt_decode<UserDto>(token);
-  
+
   if (!decodedCookie) return { props: { code: "unauth" } };
 
   try {

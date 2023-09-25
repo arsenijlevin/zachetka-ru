@@ -73,7 +73,7 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
       const request = await axios.post<LessonWithProfessor>(`lessons/findOneByProfessorParameters`, body);
 
       setStudentsQuantity(request.data.students_count ?? 0);
-      setLessonId(request.data.id)
+      setLessonId(request.data.id);
       setVisibility("visible");
     } catch (error) {
       return;
@@ -157,7 +157,9 @@ function AttendanceCheckPopUp({ subject, open, setOpen, groups }: AttendanceChec
   }
 
   function postCode(lesson_id: number, code: string) {
-    void axios.post(`${process.env.NEXT_PUBLIC_API_HOST ?? ""}attendance/startAttendanceCodeCheck/${lesson_id}/${code}`);
+    void axios.post(
+      `${process.env.NEXT_PUBLIC_API_HOST ?? ""}attendance/startAttendanceCodeCheck/${lesson_id}/${code}`
+    );
   }
 
   const frequency = [
