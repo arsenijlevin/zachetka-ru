@@ -48,9 +48,9 @@
 
 ## **Развёрнутое веб-приложение. Swagger**
 
-*[Swagger](https://zachetka-ru-server.onrender.com/swagger)*
+*[Swagger](https://zachetka-ru-server-ax9m.onrender.com/swagger)*
 
-*[https://zachetka-ru-client.onrender.com/](https://zachetka-ru-client.onrender.com/)*
+*[Развёрнутое веб приложение](https://zachetka-ru.onrender.com/)*
 
 ### **Учётные данные**
 
