@@ -36,8 +36,7 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
   const [successMessage, setSuccessMessage] = useState("");
 
   async function handleSubmit() {
-    try{
-
+    try {
       const cookies = new Cookies();
       const token = cookies.get<string>("token");
 
@@ -50,7 +49,7 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
       };
       setError("");
       setSuccessMessage("");
-      await axios.post("users/add", { password, login, name, rights_id : 2 }, { headers: header });
+      await axios.post("users/add", { password, login, name, rights_id: 2 }, { headers: header });
       setSuccessMessage("Успех");
       console.log("Успех");
     } catch (error) {
@@ -73,7 +72,7 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
           </Typography>
           <Box>
             <Typography variant="body1">Введите Ф.И.О.</Typography>
-            <Input type="text" className="mt-2 p-1" fullWidth onChange={(e) => setName(e.target.value)}/>
+            <Input type="text" className="mt-2 p-1" fullWidth onChange={(e) => setName(e.target.value)} />
           </Box>
           <Box>
             <Typography variant="body1">Введите логин</Typography>
@@ -84,10 +83,10 @@ function AddStudentPopUp({ open, setOpen }: AddStudentPopUpProps) {
             <Input type="password" className="mt-2 p-1" fullWidth onChange={(e) => setPassword(e.target.value)} />
           </Box>
           <Typography variant="body1" color={"green"}>
-              {successMessage}
+            {successMessage}
           </Typography>
           <Typography variant="body1" color={"red"}>
-              {error}
+            {error}
           </Typography>
           <Button variant="contained" size="medium" className="px-2 py-1" onClick={handleSubmit}>
             Добавить

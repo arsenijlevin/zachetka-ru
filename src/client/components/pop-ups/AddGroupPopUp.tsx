@@ -17,8 +17,8 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
   const [successMessage, setSuccessMessage] = useState("");
 
   async function handleSubmit() {
-    try{
-      await axios.post("groups/create", { title, semester});
+    try {
+      await axios.post("groups/create", { title, semester });
       setSuccessMessage("Успех");
       console.log("Успех");
     } catch (error) {
@@ -44,7 +44,7 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
           {/* Ввод код группы*/}
           <Box>
             <Typography variant="body1">Введите код группы</Typography>
-            <Input className="mt-2 p-1" onChange={(e) => setTitle(e.target.value)}/>
+            <Input className="mt-2 p-1" onChange={(e) => setTitle(e.target.value)} />
           </Box>
 
           {/* Ввод семестра обучения*/}
@@ -62,10 +62,10 @@ function AddGroupPopUp({ open, setOpen }: AddGroupPopUpProps) {
             />
           </Box>
           <Typography variant="body1" color={"green"}>
-              {successMessage}
+            {successMessage}
           </Typography>
           <Typography variant="body1" color={"red"}>
-              {error}
+            {error}
           </Typography>
 
           <Button variant="contained" size="medium" className="px-2 py-1" onClick={handleSubmit}>

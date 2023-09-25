@@ -1,6 +1,5 @@
 import { Modal, Button, Box, Typography, Input } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
-import Select from "react-select";
 import axios from "axios";
 import { useState } from "react";
 
@@ -15,9 +14,8 @@ function DeleteSubjectPopUp({ open, setOpen }: DeleteSubjectPopUpProps) {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-
   async function handleSubmit() {
-    try{
+    try {
       await axios.delete(`subjects/delete/${id}`);
       setSuccessMessage("Успех");
       console.log("Успех");
@@ -41,13 +39,13 @@ function DeleteSubjectPopUp({ open, setOpen }: DeleteSubjectPopUpProps) {
           </Typography>
           <Box>
             <Typography variant="body1">Введите ID дисциплины</Typography>
-            <Input type="text" className="mt-2 p-1" fullWidth onChange={(e) => setId(parseInt(e.target.value))}/>
+            <Input type="text" className="mt-2 p-1" fullWidth onChange={(e) => setId(parseInt(e.target.value))} />
           </Box>
           <Typography variant="body1" color={"green"}>
-              {successMessage}
+            {successMessage}
           </Typography>
           <Typography variant="body1" color={"red"}>
-              {error}
+            {error}
           </Typography>
           <Button variant="contained" size="medium" className="px-2 py-1" onClick={handleSubmit}>
             Удалить

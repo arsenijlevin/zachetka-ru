@@ -1,6 +1,5 @@
 import { Modal, Button, Box, Typography, Input } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
-import Select from "react-select";
 import axios from "axios";
 import { useState } from "react";
 
@@ -12,11 +11,11 @@ interface DeleteLecturePopUpProps {
 function DeleteLecturePopUp({ open, setOpen }: DeleteLecturePopUpProps) {
   const handleClose = () => setOpen(0);
   const [lessonId, setLessonId] = useState(0);
-  const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [, setError] = useState("");
+  const [, setSuccessMessage] = useState("");
 
   async function handleSubmit() {
-    try{
+    try {
       await axios.delete(`lessons/delete/${lessonId}`);
       setSuccessMessage("Успех");
       console.log("Успех");
