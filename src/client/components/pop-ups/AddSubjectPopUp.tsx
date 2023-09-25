@@ -12,9 +12,8 @@ interface AddSubjectPopUpProps {
 function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
   const handleClose = () => setOpen(0);
   const [title, setTitle] = useState("");
-  const [teacherLogins, setTeacherLogins] = useState([]);
+  const [teacherLogins, setTeacherLogins] = useState<string[]>([]);
   const [groupsId, setGroupsId] = useState([0]);
-  const [groupId, setGroupId] = useState(0);
   const [semester, setSemester] = useState(0);
   const [reportingType, setReportingType] = useState("");
   const [error, setError] = useState("");
@@ -23,8 +22,14 @@ function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
   async function handleSubmit() {
     setError("");
     setSuccessMessage("");
-    try{
-      await axios.post("subjects/create", { title, professors_login: teacherLogins, groups_id: groupsId, semester, reporting_type: reportingType });
+    try {
+      await axios.post("subjects/create", {
+        title,
+        professors_login: teacherLogins,
+        groups_id: groupsId,
+        semester,
+        reporting_type: reportingType,
+      });
       setSuccessMessage("Успех");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -35,14 +40,14 @@ function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
     }
   }
 
-  function handleChange(e : any) {
-    e = e.split(/[ ,]+/);
-    return e;
+  function handleChange(e: string) {
+    const stringSplit = e.split(/[ ,]+/);
+    return stringSplit;
   }
 
-  function handleIds(e : any) {
-    e = e.split(/[ ,]+/);
-    var arr = e.map(Number);
+  function handleIds(e: string) {
+    const stringSplit = e.split(/[ ,]+/);
+    const arr = stringSplit.map(Number);
     return arr;
   }
 
@@ -61,32 +66,38 @@ function AddSubjectPopUp({ open, setOpen }: AddSubjectPopUpProps) {
           </Typography>
           <Box>
             <Typography variant="body1">Введите название</Typography>
-            <Input className="mt-2 p-1" onChange={(e) => setTitle(e.target.value)}/>
+            <Input className="mt-2 p-1" onChange={(e) => setTitle(e.target.value)} />
           </Box>
           <Box>
             <Typography variant="body1">Введите семестр</Typography>
-            <Input className="mt-2 p-1" onChange={(e) => setSemester(parseInt(e.target.value))}/>
+            <Input className="mt-2 p-1" onChange={(e) => setSemester(parseInt(e.target.value))} />
           </Box>
           <Box>
             <Typography variant="body1">Выбор преподавателей</Typography>
-            <Input className="mt-2 p-1" onChange={(e) => setTeacherLogins(handleChange(e.target.value))}/>
+            <Input className="mt-2 p-1" onChange={(e) => setTeacherLogins(handleChange(e.target.value))} />
           </Box>
           <Box>
             <Typography variant="body1">Выберите группы</Typography>
-            <Input className="mt-2 p-1" onChange={(e) => setGroupsId(handleIds(e.target.value))}/>
+            <Input className="mt-2 p-1" onChange={(e) => setGroupsId(handleIds(e.target.value))} />
           </Box>
           <Box>
             <Typography variant="body1">Выберите отчётность</Typography>
-            <Select placeholder="Выберите..." options={examType} className="mt-2" onChange={(e) => {
-              if (e !== null) {
-                setReportingType(e.value)
-                }}}/>
+            <Select
+              placeholder="Выберите..."
+              options={examType}
+              className="mt-2"
+              onChange={(e) => {
+                if (e !== null) {
+                  setReportingType(e.value);
+                }
+              }}
+            />
           </Box>
           <Typography variant="body1" color={"green"}>
-              {successMessage}
+            {successMessage}
           </Typography>
           <Typography variant="body1" color={"red"}>
-              {error}
+            {error}
           </Typography>
           <Button variant="contained" size="medium" className="px-2 py-1" onClick={handleSubmit}>
             Добавить
