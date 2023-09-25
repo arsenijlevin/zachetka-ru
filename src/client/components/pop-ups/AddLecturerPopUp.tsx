@@ -1,12 +1,31 @@
 import { Modal, Input, Button, Box, Typography } from "@mui/material";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { AiOutlineClose } from "react-icons/ai";
 import { useState } from "react";
 import axios from "axios";
+import { toProps } from "lib/serverSideUtils";
+import Cookies from "universal-cookie";
+import jwt_decode from "jwt-decode";
 
 interface AddLecturerPopUpProps {
   open: boolean;
   setOpen: (value: number) => void;
 }
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  const cookiesText = context.req.headers.cookie;
+
+  if (cookiesText) {
+    const cookies = new Cookies(cookiesText);
+
+    const token = cookies.get<string>("token");
+    const decodedCookie = jwt_decode<Record<string, string>>(token);
+
+    return toProps({ decodedCookie });
+  }
+
+  return toProps({ decodedCookie: {} });
+};
 
 function AddLecturerPopUp({ open, setOpen }: AddLecturerPopUpProps) {
   const handleClose = () => setOpen(0);
@@ -18,7 +37,21 @@ function AddLecturerPopUp({ open, setOpen }: AddLecturerPopUpProps) {
 
   async function handleSubmit() {
     try{
-      await axios.post("users/add", { password, login, name, rights : 1 });
+
+      const cookies = new Cookies();
+      const token = cookies.get<string>("token");
+
+      if (!token) {
+        throw new Error();
+      }
+
+      const header = {
+        Authorization: `Bearer ${token}`,
+      };
+      setError("");
+      setSuccessMessage("");
+
+      await axios.post("users/add", { password, login, name, rights : 1 }, { headers: header });
       setSuccessMessage("Успех");
       console.log("Успех");
     } catch (error) {

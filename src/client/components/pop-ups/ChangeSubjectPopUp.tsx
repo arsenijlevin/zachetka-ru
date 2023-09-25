@@ -1,7 +1,8 @@
 import { Modal, Input, Button, Box, Typography } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import Select from "react-select";
-import  React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 interface ChangeSubjectPopUpProps {
   open: boolean;
@@ -10,26 +11,40 @@ interface ChangeSubjectPopUpProps {
 
 function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
   const handleClose = () => setOpen(0);
+  const [subjectId, setSubjectId] = useState(0);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [title, setTitle] = useState("");
+  const [lecturers, setLecturers] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const [semester, setSemester] = useState(0);
+  const [reportingType, setReportingType] = useState("");
 
-  const[title, setTitle] = React.useState('');
+  async function handleSubmit() {
+    setError("");
+    setSuccessMessage("");
+    try{
+      await axios.patch(`subjects/update/${subjectId}`, { title, professors_login : lecturers, groups_id : groups, semester, reporting_type : reportingType });
+      setSuccessMessage("Успех");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          setError("Неверные данные");
+        }
+      }
+    }
+  }
 
-  const subjects = [
-    { value: "ТП", label: "ТП" },
-    { value: "ИПС", label: "ИПС" },
-    { value: "ИСиС", label: "ИСиС" },
-  ];
+  function handleChange(e : any) {
+    e = e.split(/[ ,]+/);
+    return e;
+  }
 
-  const lecturers = [
-    { value: "Преподаватель 1", label: "Преподаватель 1" },
-    { value: "Преподаватель 2", label: "Преподаватель 2" },
-    { value: "Преподаватель 3", label: "Преподаватель 3" },
-  ];
-
-  const groups = [
-    { value: "1", label: "1" },
-    { value: "2", label: "2" },
-    { value: "3", label: "3" },
-  ];
+  function handleIds(e : any) {
+    e = e.split(/[ ,]+/);
+    var arr = e.map(Number);
+    return arr;
+  }
 
   const examType = [
     { value: "Экзамен", label: "Экзамен" },
@@ -46,7 +61,6 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
           <Typography variant="h5" fontWeight="bold">
             Изменить дисциплину
           </Typography>
-          {/* Выбор семестра*/}
           <Box>
             <Typography variant="body1">Выбор семестра</Typography>
             <Input
@@ -57,27 +71,27 @@ function ChangeSubjectPopUp({ open, setOpen }: ChangeSubjectPopUpProps) {
                 max: 12,
               }}
               fullWidth
+              onChange={(e) => setSemester(parseInt(e.target.value))}
             />
           </Box>
-          {/* Выбор дисциплины*/}
           <Box>
-            <Typography variant="body1">Выбор дисциплины</Typography>
-            <Select placeholder="Выберите..." options={subjects} className="mt-2" />
+            <Typography variant="body1">Введите ID дисциплины</Typography>
+            <Input className="mt-2 p-1" fullWidth onChange={(e) => setSubjectId(parseInt(e.target.value))}/>
           </Box>
           <Box>
             <Typography variant="body1">Выбор преподавателей</Typography>
-            <Select placeholder="Выберите..." isMulti options={lecturers} className="mt-2" />
-            {/* Выбор преподавателей*/}
+            <Input className="mt-2 p-1" fullWidth onChange={(e) => setLecturers(handleChange(e.target.value))}/>
           </Box>
           <Box>
-            <Typography variant="body1">Выбор группы</Typography>
-            <Select placeholder="Выберите..." isMulti options={groups} className="mt-2" />
-            {/* Выбор группы*/}
+            <Typography variant="body1">Выбор групп</Typography>
+            <Input className="mt-2 p-1" fullWidth onChange={(e) => setGroups(handleIds(e.target.value))}/>
           </Box>
           <Box>
-            <Typography variant="body1">Выбор отчётности</Typography>
-            <Select placeholder="Выберите..." options={examType} className="mt-2" />
-            {/* Выбор отчётности*/}
+            <Typography variant="body1">Выберите отчётность</Typography>
+            <Select placeholder="Выберите..." options={examType} className="mt-2" onChange={(e) => {
+              if (e !== null) {
+                setReportingType(e.value)
+                }}}/>
           </Box>
           <Button variant="contained" size="medium" className="px-2 py-1">
             Применить
