@@ -2,11 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UserDto, UserUnsafeDto } from '../users/dto/user.dto';
+import { UserDto } from '../users/dto/user.dto';
 import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
-
-const saltOrRounds = 10;
 
 @Injectable()
 export class AuthService {
@@ -61,19 +59,5 @@ export class AuthService {
         expiresIn: '6000s',
       }),
     };
-  }
-
-  public async signup(userDto: UserUnsafeDto): Promise<UserDto | null> {
-    const user = await this.usersService.findOne(userDto.login);
-    if (user) {
-      throw new HttpException('Error', HttpStatus.BAD_REQUEST);
-    }
-    const hash = await bcrypt.hash(userDto.password, saltOrRounds);
-
-    userDto.password = hash;
-
-    const newSafeUser = await this.usersService.create(userDto);
-
-    return newSafeUser;
   }
 }

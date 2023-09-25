@@ -48,4 +48,30 @@ export class AttendanceService {
 
     return attendance;
   }
+
+  public async checkAttendance(student_login: string, code: string) {
+    const attendance = await this.attendanceRepository.checkAttendance(
+      student_login,
+      code,
+    );
+
+    if (attendance === null) {
+      return new HttpException('Cannot find attendance. Wrong data', 400);
+    }
+
+    return attendance;
+  }
+
+  public async startAttendanceCodeCheck(lesson_id: number, code: string) {
+    const attendance = await this.attendanceRepository.startAttendanceCodeCheck(
+      lesson_id,
+      code,
+    );
+
+    if (!attendance) {
+      return new HttpException('Cannot find attendance. Wrong data', 400);
+    }
+
+    return attendance;
+  }
 }

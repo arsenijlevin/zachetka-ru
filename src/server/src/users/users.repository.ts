@@ -21,11 +21,18 @@ export class UsersRepository {
     }
   }
 
-  public async save(user: UserUnsafeDto): Promise<UserUnsafeDto> {
-    const newUser = await this.prismaService.users.create({
-      data: user,
-    });
-    return newUser;
+  public async save(user: UserUnsafeDto): Promise<UserUnsafeDto | null> {
+    try {
+      const newUser = await this.prismaService.users.create({
+        data: user,
+      });
+
+      console.log(user, newUser);
+
+      return newUser;
+    } catch (error) {
+      return null;
+    }
   }
 
   public async findAll(

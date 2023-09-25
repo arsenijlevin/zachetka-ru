@@ -1,6 +1,8 @@
-import { Modal, Button, Box, Typography } from "@mui/material";
+import { Modal, Button, Box, Typography, Input } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import Select from "react-select";
+import axios from "axios";
+import { useState } from "react";
 
 interface DeleteLecturePopUpProps {
   open: boolean;
@@ -9,24 +11,23 @@ interface DeleteLecturePopUpProps {
 
 function DeleteLecturePopUp({ open, setOpen }: DeleteLecturePopUpProps) {
   const handleClose = () => setOpen(0);
+  const [lessonId, setLessonId] = useState(0);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const subjects = [
-    { value: "ТП", label: "ТП" },
-    { value: "ИПС", label: "ИПС" },
-    { value: "ИСиС", label: "ИСиС" },
-  ];
-
-  const groups = [
-    { value: "1", label: "1" },
-    { value: "2", label: "2" },
-    { value: "3", label: "3" },
-  ];
-
-  const lectures = [
-    { value: "вт 9:45", label: "вт 9:45" },
-    { value: "пт 11:30", label: "пт 11:30" },
-    { value: "пт 13:25", label: "пт 13:25" },
-  ];
+  async function handleSubmit() {
+    try{
+      await axios.delete(`lessons/delete/${lessonId}`);
+      setSuccessMessage("Успех");
+      console.log("Успех");
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 400) {
+          setError("Неверные данные");
+        }
+      }
+    }
+  }
 
   return (
     <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -38,21 +39,10 @@ function DeleteLecturePopUp({ open, setOpen }: DeleteLecturePopUpProps) {
             Удалить пару
           </Typography>
           <Box>
-            <Typography variant="body1">Выберите дисциплину</Typography>
-            <Select placeholder="Выберите..." options={subjects} className="mt-2" />
-            {/* Выбор дисциплины*/}
+            <Typography variant="body1">Введите ID пары</Typography>
+            <Input type="text" className="mt-2 p-1" fullWidth onChange={(e) => setLessonId(parseInt(e.target.value))} />
           </Box>
-          <Box>
-            <Typography variant="body1">Выберите группу</Typography>
-            <Select placeholder="Выберите..." options={groups} className="mt-2" />
-            {/* Выбор группы*/}
-          </Box>
-          <Box>
-            <Typography variant="body1">Выберите пару</Typography>
-            <Select placeholder="Выберите..." options={lectures} className="mt-2" />
-            {/* Выбор пары*/}
-          </Box>
-          <Button variant="contained" size="medium" className="px-2 py-1">
+          <Button variant="contained" size="medium" className="px-2 py-1" onClick={handleSubmit}>
             Удалить
           </Button>
         </Box>
