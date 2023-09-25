@@ -46,6 +46,8 @@
 
 *[Развёртывание проекта](https://disk.yandex.ru/d/5gSs0GdCkSTc2w)*
 
+*[Демонстрация работы проекта](https://disk.yandex.ru/d/72ieJ3paOp6r1g)*
+
 ## **Развёрнутое веб-приложение. Swagger**
 
 *[Swagger](https://zachetka-ru-server.onrender.com/swagger)*
@@ -81,5 +83,7 @@
 Логин: eremin_m_m  
 Пароль: student_test  
 
+#### ***Администратор***
 
-
+Логин: admin_default
+Пароль: admin_default
