@@ -1,9 +1,9 @@
 name: Testing client/server workflow [lint & build]
-on: 
+on:
   workflow_dispatch:
   pull_request:
     branches:
-    - '**'
+      - "**"
     types: [opened, edited, reopened, synchronize]
 jobs:
   build_client:
@@ -46,6 +46,11 @@ jobs:
         run: |
           cd ./server
           npm ci
+      - name: Generate prisma types
+        working-directory: ./src
+        run: |
+          cd ./server
+          npm run prisma:generate
       - name: Application building
         working-directory: ./src
         run: |
@@ -61,6 +66,11 @@ jobs:
         run: |
           cd ./server
           npm ci
+      - name: Generate prisma types
+        working-directory: ./src
+        run: |
+          cd ./server
+          npm run prisma:generate
       - name: Application building
         working-directory: ./src
         run: |
